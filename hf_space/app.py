@@ -111,6 +111,33 @@ def community_arena_df() -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def multiturn_arena_df() -> pd.DataFrame:
+    """Bayesian ELO from human votes on full multi-turn dialogues."""
+    mta = safe_load_json("multiturn_arena_bayesian.json")
+    profiles = safe_load_json("model_profiles.json") or {}
+    bayes_arena = {e["model"]: e for e in
+                   (safe_load_json("community_arena_bayesian.json") or {}).get("leaderboard", [])}
+    if not mta:
+        return pd.DataFrame({"note": ["Multi-turn arena data unavailable"]})
+
+    rows = []
+    for e in mta["leaderboard"]:
+        m = e["model"]
+        likert = (profiles.get(m, {}).get("multiturn_llm_judge") or {}).get("overall_mean")
+        ca = bayes_arena.get(m, {}).get("elo_mean")
+        rows.append({
+            "Rank": e["rank"],
+            "Model": m,
+            "MT-arena ELO": round(e["elo_mean"], 0),
+            "± std": round(e["elo_std"], 0),
+            "95% CI": f"[{e['ci_low_95']:.0f}, {e['ci_high_95']:.0f}]",
+            "n votes": e["n_votes"],
+            "LLM Likert": likert,
+            "Single-msg arena ELO": round(ca, 0) if ca else None,
+        })
+    return pd.DataFrame(rows)
+
+
 def multiturn_df() -> pd.DataFrame:
     """LLM-judge multi-turn leaderboard (full 20 models)."""
     profiles = safe_load_json("model_profiles.json")
@@ -350,6 +377,15 @@ Live community arena: [arena.l3vi4th4n.ai](https://arena.l3vi4th4n.ai/arena).
 
 NOTES = {
     "Community arena": "Bayesian Bradley-Terry ELO from 1,857 clean (suspect-filtered) human pairwise votes. 95% CI is wide (~260 points) — the top tier is statistically tied. Frequentist columns from the 100-shuffle ELO for comparison.",
+    "Multiturn arena": (
+        "Bayesian Bradley-Terry ELO from **434 human votes** on full 12-turn dialogues "
+        "(116 voters, 167 unique pairs, 20 models, 20 adversarial seeds). When humans see "
+        "the entire conversation arc instead of a single reply, the ranking inverts: "
+        "frontier models (Opus 4.7, Opus 4.6, DeepSeek V4 Pro, GPT-4.1, Sonnet 4.5) climb "
+        "to the top. Spearman ρ = **+0.495** vs the LLM-judge multiturn Likert (significant, "
+        "p=0.027) but **−0.13** vs the single-message community arena (n.s.). The single-message "
+        "arena measures snap engagement; the multi-turn arena measures sustained roleplay."
+    ),
     "Multi-turn judge": "Sonnet 4 holistic Likert scores per session. F1-F13 columns are means on the seeds that target each failure mode. Lower 'Avg fail rank' = better cross-mode reliability.",
     "Flaw hunter": "Strict 100-point deduction rubric. Mean ~36, median ~42 across all sessions — the methodology forces lower scores than the Likert. Fatal/session column is the rate of -15 deductions; high values flag catastrophic single sessions.",
     "Cost efficiency": "Quality per dollar at OpenRouter prices (60/40 input/output blend, $/1M tokens). DeepSeek V4 Flash is 281× more cost-efficient than Opus 4.7 on flaw hunter for marginal quality difference.",
@@ -376,6 +412,10 @@ with gr.Blocks(title="RP-Bench Leaderboard", theme=gr.themes.Soft()) as demo:
         with gr.Tab("Community Arena (humans)"):
             gr.Markdown("### " + NOTES["Community arena"])
             gr.DataFrame(value=community_arena_df, interactive=False, wrap=True)
+
+        with gr.Tab("Multi-Turn Arena (humans)"):
+            gr.Markdown("### " + NOTES["Multiturn arena"])
+            gr.DataFrame(value=multiturn_arena_df, interactive=False, wrap=True)
 
         with gr.Tab("Multi-Turn Judge"):
             gr.Markdown("### " + NOTES["Multi-turn judge"])

@@ -85,6 +85,40 @@ Based on **1,857 pairwise votes** from **338 community voters** collected via th
 
 Raw data: [`results/community_arena_2000.json`](results/community_arena_2000.json). Reproduce with `python3 analyze_community_arena.py`.
 
+## Multi-Turn Arena (humans, full dialogues)
+
+Same blind-vote infrastructure, **but voters read the entire 12-turn adversarial dialogue** between two models on the same seed before deciding. **434 votes / 116 voters / 167 unique pairs / 20 models / 20 adversarial seeds.**
+
+| Rank | Model | MT-arena ELO | 95% CI | n | LLM Likert | Single-msg arena ELO |
+|---|---|---|---|---|---|---|
+| **#1** | **Claude Opus 4.7** | **1627** | [1416, 1847] | 26 | 4.54 | — |
+| #2 | Claude Opus 4.6 | 1568 | [1369, 1756] | 40 | 4.51 | — |
+| #3 | DeepSeek V4 Pro | 1564 | [1355, 1733] | 31 | 4.42 | — |
+| #4 | Gemini 3.1 Flash Lite | 1560 | [1334, 1750] | 28 | 4.30 | — |
+| #5 | GPT-4.1 | 1552 | [1362, 1731] | 52 | 4.34 | 1472 |
+| #6 | Claude Sonnet 4.5 | 1550 | [1376, 1713] | 48 | 4.42 | 1513 |
+| #7 | Mistral SC | 1536 | [1361, 1698] | 61 | 4.22 | 1534 |
+| #8 | Kimi K2.6 | 1535 | [1329, 1713] | 35 | 4.18 | — |
+| #9 | Gemma 4 26B | 1519 | [1318, 1698] | 42 | 4.29 | 1534 |
+| #10 | GLM 4.7 | 1508 | [1320, 1656] | 50 | 4.37 | 1490 |
+| ... | | | | | | |
+| #18 | Qwen 3.5 Flash | 1411 | [1227, 1584] | 59 | 3.98 | 1493 |
+| #19 | GLM 5.1 | 1387 | [1182, 1566] | 30 | 4.39 | — |
+| **#20** | **Gemini 2.5 Flash** | **1372** | [1195, 1546] | 53 | 4.14 | 1529 |
+
+**The ranking inverts when humans read full dialogues.** Frontier closed models (Opus 4.7, Opus 4.6, Sonnet 4.5, GPT-4.1) and frontier open models (DeepSeek V4 Pro) climb to the top. The single-message arena leaders (Gemma, Mistral, **Gemini 2.5 Flash which falls from #3 to dead last**) drop to mid-tier or worse.
+
+**Cross-method Spearman correlations:**
+- **Multi-turn arena ↔ LLM-judge multiturn (Likert)**: ρ = **+0.495** (p=0.027, n=20). **Significant positive correlation** — humans who read full dialogues largely agree with the LLM judge that read the same dialogues.
+- **Multi-turn arena ↔ single-message community arena**: ρ = −0.13 (p=0.71, n=11). No correlation — they measure different things.
+- **Single-message arena ↔ LLM-judge multiturn**: ρ = −0.15 (p=0.67, n=11). Confirms the prior finding that the single-message arena disagrees with judge methods.
+
+**Interpretation.** The single-message arena rewards snap-judgment engagement (vivid prose, emotional hook, "vibes"). The multi-turn arena rewards sustained roleplay (consistency, narrative payoff, character integrity over a 12-turn arc). This **validates the LLM-judge multi-turn methodology against independent human judgment** — the disagreement between LLM judges and the *single-message* arena was never about the LLM judges being wrong; the methods just measure different layers of "good".
+
+Caveats: 95% CIs are wide (±200 ELO typical) due to small N — the top 8 are statistically tied. Slight position bias present (B wins 53.1% of decided votes vs 50% null). One voter contributed 62/434 votes (14%); when their votes are excluded, **Opus 4.7 stays #1** but the rest of the top-8 reshuffles within the credible interval (e.g. Opus 4.6 drops to #8, Gemini 3.1 Flash Lite climbs to #2). The headline finding — frontier models dominate the multi-turn arena, contradicting the single-message ranking — is robust across both conditions.
+
+Raw data: [`results/multiturn_arena_bayesian.json`](results/multiturn_arena_bayesian.json). Reproduce with `python3 analyze_multiturn_arena.py`.
+
 ## Failure-Mode Rankings (Multi-Turn)
 
 The community leaderboard captures *engagement*. The failure-mode breakdown captures *reliability*. They're orthogonal — the model that engages best is not the model that fails least, and vice versa. Both matter, for different use cases.

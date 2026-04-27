@@ -403,6 +403,7 @@ def export_analysis_artifacts():
     files = [
         "community_arena_2000.json",
         "community_arena_bayesian.json",
+        "multiturn_arena_bayesian.json",
         "model_profiles.json",
         "behavioral_metrics.json",
         "method_correlations.json",

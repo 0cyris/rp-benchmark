@@ -1,0 +1,209 @@
+{
+  "method": "Bayesian Bradley-Terry MCMC (Metropolis-Hastings)",
+  "prior_sigma": 300.0,
+  "scale": 173.71779276130073,
+  "n_chains": 4,
+  "n_samples_per_chain": 12000,
+  "n_votes": 434,
+  "n_voters": 116,
+  "n_pairs": 167,
+  "winner_distribution": {
+    "A": 165,
+    "B": 187,
+    "tie": 82
+  },
+  "correlations": {
+    "vs_community_arena_singlemsg": {
+      "rho": -0.1272727272727273,
+      "p": 0.7092146257733047,
+      "n": 11
+    },
+    "vs_llm_judge_multiturn": {
+      "rho": 0.4945430325848148,
+      "p": 0.026647199810846997,
+      "n": 20
+    }
+  },
+  "leaderboard": [
+    {
+      "rank": 1,
+      "model": "claude_opus_4_7",
+      "elo_mean": 1626.5,
+      "elo_std": 108.8,
+      "ci_low_95": 1415.6,
+      "ci_high_95": 1846.7,
+      "n_votes": 26
+    },
+    {
+      "rank": 2,
+      "model": "claude_opus_4_6",
+      "elo_mean": 1567.8,
+      "elo_std": 99.5,
+      "ci_low_95": 1368.9,
+      "ci_high_95": 1756.0,
+      "n_votes": 40
+    },
+    {
+      "rank": 3,
+      "model": "deepseek_v4_pro",
+      "elo_mean": 1564.1,
+      "elo_std": 100.5,
+      "ci_low_95": 1355.1,
+      "ci_high_95": 1732.6,
+      "n_votes": 31
+    },
+    {
+      "rank": 4,
+      "model": "gemini_3_1_flash_lite",
+      "elo_mean": 1560.4,
+      "elo_std": 104.1,
+      "ci_low_95": 1334.3,
+      "ci_high_95": 1749.5,
+      "n_votes": 28
+    },
+    {
+      "rank": 5,
+      "model": "gpt_4_1",
+      "elo_mean": 1552.0,
+      "elo_std": 99.5,
+      "ci_low_95": 1362.4,
+      "ci_high_95": 1731.1,
+      "n_votes": 52
+    },
+    {
+      "rank": 6,
+      "model": "claude_sonnet_4_5",
+      "elo_mean": 1550.1,
+      "elo_std": 92.1,
+      "ci_low_95": 1375.6,
+      "ci_high_95": 1712.5,
+      "n_votes": 48
+    },
+    {
+      "rank": 7,
+      "model": "mistral_small_creative",
+      "elo_mean": 1535.8,
+      "elo_std": 91.7,
+      "ci_low_95": 1361.1,
+      "ci_high_95": 1698.3,
+      "n_votes": 61
+    },
+    {
+      "rank": 8,
+      "model": "kimi_k2_6",
+      "elo_mean": 1535.2,
+      "elo_std": 101.4,
+      "ci_low_95": 1329.4,
+      "ci_high_95": 1713.1,
+      "n_votes": 35
+    },
+    {
+      "rank": 9,
+      "model": "gemma_4_26b",
+      "elo_mean": 1518.6,
+      "elo_std": 97.3,
+      "ci_low_95": 1318.2,
+      "ci_high_95": 1697.9,
+      "n_votes": 42
+    },
+    {
+      "rank": 10,
+      "model": "glm_4_7",
+      "elo_mean": 1508.2,
+      "elo_std": 92.9,
+      "ci_low_95": 1319.8,
+      "ci_high_95": 1655.5,
+      "n_votes": 50
+    },
+    {
+      "rank": 11,
+      "model": "kimi_k2_5",
+      "elo_mean": 1496.3,
+      "elo_std": 103.0,
+      "ci_low_95": 1293.7,
+      "ci_high_95": 1688.0,
+      "n_votes": 37
+    },
+    {
+      "rank": 12,
+      "model": "deepseek_v3_2",
+      "elo_mean": 1490.7,
+      "elo_std": 95.3,
+      "ci_low_95": 1301.9,
+      "ci_high_95": 1666.1,
+      "n_votes": 50
+    },
+    {
+      "rank": 13,
+      "model": "grok_4_1",
+      "elo_mean": 1487.3,
+      "elo_std": 94.2,
+      "ci_low_95": 1304.4,
+      "ci_high_95": 1655.1,
+      "n_votes": 51
+    },
+    {
+      "rank": 14,
+      "model": "gemini_3_1_pro",
+      "elo_mean": 1487.0,
+      "elo_std": 97.3,
+      "ci_low_95": 1290.6,
+      "ci_high_95": 1657.8,
+      "n_votes": 41
+    },
+    {
+      "rank": 15,
+      "model": "llama_4_maverick",
+      "elo_mean": 1483.3,
+      "elo_std": 93.1,
+      "ci_low_95": 1300.6,
+      "ci_high_95": 1637.6,
+      "n_votes": 65
+    },
+    {
+      "rank": 16,
+      "model": "deepseek_v4_flash",
+      "elo_mean": 1468.7,
+      "elo_std": 104.4,
+      "ci_low_95": 1259.0,
+      "ci_high_95": 1646.8,
+      "n_votes": 26
+    },
+    {
+      "rank": 17,
+      "model": "minimax_m2_7",
+      "elo_mean": 1437.2,
+      "elo_std": 92.7,
+      "ci_low_95": 1261.6,
+      "ci_high_95": 1601.4,
+      "n_votes": 43
+    },
+    {
+      "rank": 18,
+      "model": "qwen3_5_flash",
+      "elo_mean": 1410.6,
+      "elo_std": 98.2,
+      "ci_low_95": 1226.9,
+      "ci_high_95": 1583.8,
+      "n_votes": 59
+    },
+    {
+      "rank": 19,
+      "model": "glm_5_1",
+      "elo_mean": 1386.5,
+      "elo_std": 99.0,
+      "ci_low_95": 1181.6,
+      "ci_high_95": 1566.4,
+      "n_votes": 30
+    },
+    {
+      "rank": 20,
+      "model": "gemini_2_5_flash",
+      "elo_mean": 1372.4,
+      "elo_std": 94.2,
+      "ci_low_95": 1194.5,
+      "ci_high_95": 1545.9,
+      "n_votes": 53
+    }
+  ]
+}
