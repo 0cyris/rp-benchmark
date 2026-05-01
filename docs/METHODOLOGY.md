@@ -68,12 +68,47 @@ Pure prose statistics on the response text — no judge involved:
 | Metric | Formula | What it measures |
 |---|---|---|
 | Word count | `len(tokenize(text))` | Length |
-| Unique-word ratio | `unique_tokens / total_tokens` | Vocabulary diversity (Heaps' law length-biased) |
+| Unique-word ratio (TTR) | `unique_tokens / total_tokens` | Vocabulary diversity (Heaps' law length-biased) |
 | Bigram repetition | `1 − (unique_bigrams / total_bigrams)` | Phrase recycling |
 | Sentence-length variance | `var([len(tokenize(s)) for s in sentences])` | Prose rhythm |
-| AI cliché density | Curated list of ~120 phrases ("ministrations", "breath hitched", "clicked into place") + regex match per 1k tokens | Slop detection |
+| Rhythm score | `stdev(sentence_lengths) / mean(sentence_lengths)` | Coefficient of variation in sentence length |
+| AI cliché density | Curated list of ~120 phrases + regex match per 1k tokens | Slop detection |
 
-**Length-bias caveat:** Unique-word ratio drops with longer responses by Heaps' law (`unique ∝ N^β`, β≈0.5–0.7 for English prose). Compare models within similar length tiers, not across them.
+**Composite objective_score** (0–100, length-normalized; deductions density-scaled per 1k chars so longer responses aren't unfairly penalized):
+
+```
+norm = 1000 / max(text_len, 100)        # density factor (long text → norm < 1)
+
+cliche_deduction      = min(30, cliche_total_weight × norm × 10)
+low_diversity_ded     = 20 if TTR < 0.30 ; 10 if TTR < 0.40 ; else 0
+monotonous_rhythm_ded = 10 if 0 < rhythm_score < 0.20 ; else 0
+repetition_deduction  = min(20, 2 × bigram_density + 5 × trigram_density)
+                        where bigram_density  = repeated_bigrams  × norm
+                              trigram_density = repeated_trigrams × norm
+
+objective_score = 100 − cliche_deduction − low_diversity_ded
+                       − monotonous_rhythm_ded − repetition_deduction
+```
+
+**slop_score** (0–100): start at 100, deduct per slop pattern hit (throat-clearing, negation-assertion, filter words, fragmentary choppiness, micro-corrections, voice statements, blush/animation, self-negation loop, rhetorical questions, snappy triads). Each detector returns matches with a weight; total deductions capped:
+
+```
+slop_score = 100 − min(40, total_weight × 3)
+```
+
+**Length-bias caveat:** Unique-word ratio drops with longer responses by Heaps' law (`unique ∝ N^β`, β≈0.5–0.7 for English prose). Compare models within similar length tiers, not across them. The composite `objective_score` corrects this via density normalization; raw TTR/repetition counts do not.
+
+### 2.5 Combined Score
+
+A single 0-100 ranking that fuses the subjective judge with the rule-based metrics:
+
+```
+combined_score = 0.50 × flaw_hunter           # subjective quality (judge with evidence)
+               + 0.25 × objective_score        # cliches, diversity, rhythm, repetition
+               + 0.25 × slop_score             # rule-based pattern detectors
+```
+
+Per-model `combined` is the mean across all that model's scored responses. The 0.5/0.25/0.25 weighting reflects empirical priors: judge-with-evidence is more informative per response than rule-based detectors, but the rule-based half guards against judge generosity bias dominating.
 
 ---
 
@@ -153,9 +188,22 @@ Same rubric as §2.2, but the system prompt is augmented with a primer specific 
 
 Eleven such primers (one per failure target). 270 of 336 sessions scored cleanly; 66 hit unrecoverable JSON parse errors (the judge occasionally emits invalid JSON like `"quote" (note),` despite explicit "strict JSON" instructions). Recovery patterns documented in `judge_session_flaw_hunter.py`.
 
+### 3.7 Per-target session aggregation
+
+For the flaw hunter session summary (`results/flaw_hunter_session_summary.json`):
+
+```
+mean_per_session(model)   = mean(session_score)              # over all sessions for the model
+median_per_session(model) = median(session_score)
+fatal_per_session(model)  = sum(n_fatal_flaws) / n_sessions  # rate of -15 deductions
+major_per_session(model)  = sum(n_major_flaws) / n_sessions  # rate of -8 deductions
+```
+
+`session_score` is the §2.2 flaw hunter total, per session.
+
 ---
 
-## 4. Community Arena
+## 4. Community Arena (single-message)
 
 ### 4.1 Architecture
 
@@ -238,26 +286,105 @@ CI_95(ELO_m) = [percentile(1500 + θ_m samples, 2.5),
 
 ### 4.5 SFW vs NSFW split
 
-Scenarios are tagged. Per-model NSFW win rate = wins_on_nsfw / matches_on_nsfw. Surfaces models that handle ERP differently than SFW (e.g. DeepSeek 51% SFW vs 30% NSFW; Mistral 51% vs 67%).
+Scenarios are tagged. Per-model NSFW win rate computed on the NSFW-tagged subset only:
+
+```
+nsfw_winrate(model) = wins_on_nsfw_pairs / decided_nsfw_matches
+                     where decided = wins + losses (ties excluded)
+sfw_winrate(model)  = wins_on_sfw_pairs  / decided_sfw_matches
+nsfw_skew(model)    = nsfw_winrate − sfw_winrate
+```
+
+Surfaces models that handle ERP differently than SFW (e.g. DeepSeek 51% SFW vs 30% NSFW → −21pt skew; Mistral 51% vs 67% → +16pt skew).
+
+### 4.6 Win rate, exposure, position bias
+
+Per-model summary fields used in `community_arena_*.json`:
+
+```
+overall_winrate(m) = wins(m) / (wins(m) + losses(m))           # ties excluded
+n_votes(m)         = count(votes where m ∈ {model_a, model_b}) # exposure (each vote counts for both)
+overall_n(m)       = wins(m) + losses(m) + ties(m)             # decided + tied total
+
+# Position-bias diagnostic over the full vote stream:
+position_bias = (b_wins / (a_wins + b_wins)) − 0.5
+              = 0 when no bias; > 0 when B is systematically favored.
+```
+
+The arena randomizes A/B side per voter, so a non-zero `position_bias` is the residual after randomization (53.1% B-share in the multi-turn arena = +3.1pt residual; well within noise for n=434).
 
 ---
 
-## 5. Cross-Method Correlation Matrix
+## 5. Multi-Turn Arena (humans, full dialogues)
 
-For every pair of methods, compute Spearman rank correlation across the 11–20 model pool:
+### 5.1 Architecture
+
+Same blind A/B vote infrastructure as §4, but the rendered scenario is the entire 12-turn (24-message) dialogue between two models on the same adversarial seed. Voters scroll through both conversations before deciding A / B / tie. Same anti-bias features (§4.1), same catch-pair voter quality filter (§4.2), same rate limits.
+
+Storage: votes are tagged `mode: "multiturn_arena"` in `data/votes.jsonl`; pulled to `data/multiturn_arena_votes.jsonl` by `fetch_arena_votes.py`.
+
+### 5.2 Bayesian ELO
+
+Identical Bradley-Terry MCMC as §4.4 — same prior σ=300, same scale=400/log(10), same 4 chains × (3000 burn + 12000 samples), same tie-as-half-credit treatment. The only difference is the input vote stream (full-dialogue votes instead of single-message votes).
 
 ```
-r(method_a, method_b) = 1 − 6 × Σ(rank_diff²) / (n × (n² − 1))
-                       where rank_diff = rank_in_a(model) − rank_in_b(model)
+θ_m ∼ N(0, 300²)
+P(i beats j) = sigmoid((θ_i − θ_j) / (400 / log 10))
+ELO_m = 1500 + mean(θ_m posterior)
+CI_95(ELO_m) = [percentile_2.5, percentile_97.5]
 ```
 
-Empirical headline: **Bayesian community ELO is uncorrelated with every LLM-judge method** (rho between −0.31 and −0.07). LLM-judge methods all agree +0.6 to +0.9 with each other (they measure the same judge taste). Behavioral metrics (unique-wr, repetition) cluster together (+0.98) but only weakly correlate with anything else.
+### 5.3 Cross-method correlations
 
-This is the single most important methodological finding: **judge-based and human-based rankings are different things**, not different views of the same thing.
+For every pair of methods, Spearman ρ over the common-model subset (§5 in the original numbering, now §7):
+
+```
+ρ(multiturn_arena, llm_judge_likert) = +0.495  (p = 0.027, n = 20)   significant +
+ρ(multiturn_arena, single_msg_arena) = −0.13   (p = 0.71,  n = 11)   n.s.
+ρ(single_msg_arena, llm_judge_likert) = −0.15  (p = 0.67,  n = 11)   n.s.
+```
+
+The +0.495 rank correlation **validates the LLM-judge multi-turn methodology against independent human judgment** when both judges see the same evidence (the full dialogue). The single-message arena measures snap-judgment engagement — a different latent dimension.
 
 ---
 
-## 6. Failure-Target Validation
+## 6. LLM-Judged Pairwise / Adversarial ELO
+
+### 6.1 Source
+
+LLM judge (Sonnet 4 by default) compares two responses to the same scenario, blind A/B, returns A / B / tie. Used for `adversarial_elo.json` and `adversarial_pairwise_elo.json`. **Bidirectional** — each pair judged in both A→B and B→A orders, only counted as decided if the same model wins both passes (see §11 for the empirical 64% single-pass flip rate).
+
+### 6.2 ELO computation
+
+Identical to §4.3 (frequentist 100-shuffle ELO), with K=32:
+
+```
+E_A = 1 / (1 + 10^((R_B − R_A) / 400))
+R_A' = R_A + 32 × (outcome − E_A)
+ELO(model)     = mean(R_model across 100 random matchup-order shuffles)
+stability(model) = std(R_model across 100 shuffles)
+```
+
+Output in `adversarial_elo.json`: `elo`, `stability`, `mean_overall` (mean Likert across all the model's adversarial sessions), `head_to_head` (per-pair win/loss/tie matrix).
+
+---
+
+## 7. Cross-Method Correlation Matrix
+
+For every pair of methods, compute Spearman rank correlation (no-ties form; with-ties form in §13.3) across the 11–20 model pool:
+
+```
+ρ(method_a, method_b) = 1 − 6 × Σ(d_i²) / (n × (n² − 1))
+                       where d_i = rank_in_a(model_i) − rank_in_b(model_i)
+```
+
+Empirical headline: **Bayesian single-message community ELO is uncorrelated with every LLM-judge method** (ρ between −0.31 and −0.07). LLM-judge methods all agree +0.6 to +0.9 with each other (they measure the same judge taste). Behavioral metrics (unique-wr, repetition) cluster together (+0.98) but only weakly correlate with anything else.
+
+The crucial nuance from §5.3: when humans judge **full dialogues** instead of single messages, ρ = +0.495 (p=0.027) with the LLM-judge multi-turn Likert. So the disagreement isn't humans-vs-judges in general — it's humans-judging-snippets vs anyone-judging-arcs.
+
+---
+
+## 8. Failure-Target Validation
 
 Cross-tabulate seed `failure_target` against flaw hunter output to test whether seeds are doing what they claim:
 
@@ -269,25 +396,93 @@ Empirical: 4/11 (36%) of seed targets see the expected fatal/major flaw type in 
 
 ---
 
-## 7. Cost Efficiency
+## 9. Comparative Validation (judge ↔ human agreement)
 
-Quality per dollar at OpenRouter prices (60/40 input/output blended):
+For a labeled subset of human-judged pairwise scenarios (`results/comparative_validation.json`), measure how often the LLM judge agrees with the human label:
 
 ```
-blended_cost($/1M tokens) = 0.6 × input_price + 0.4 × output_price
-likert_per_dollar = likert_mean / blended_cost
-fh_per_dollar = flaw_hunter_mean / blended_cost
+agreement_pct = agreed_pairs / n_pairs × 100
 ```
 
-Empirical: DeepSeek V4 Flash ($0.18/1M, FH 50.6) is **281× more cost-efficient** than Opus 4.7 ($39/1M, FH 42.8) on the flaw hunter metric. Frontier-tier marginal quality is dwarfed by the 200× price premium.
-
-Caveat: Pricing as of 2026-04 from OpenRouter. Proprietary models on first-party APIs may price differently.
+Where `agreed` is the count of pairs where the bidirectional LLM judge picked the same winner the human picked (ties count as agreement when both said tie). Empirical floor: 38.7% on a 75-pair human swipe set — judge-vs-user agreement is barely above chance (50% with ties), confirming the §1 claim that single-judge LLM scoring measures judge taste, not user preference.
 
 ---
 
-## 8. Statistical Conventions
+## 10. Cost Efficiency
 
-### 8.1 Standard error of the mean
+### 10.1 Estimated cost (input/output blend)
+
+Pre-rollout estimate from list prices, used for cost projections before runs:
+
+```
+blended_cost_per_1M = 0.6 × input_price_per_1M + 0.4 × output_price_per_1M
+likert_per_dollar    = likert_mean    / blended_cost_per_1M
+fh_per_dollar        = flaw_hunter    / blended_cost_per_1M
+```
+
+The 60/40 blend approximates RP-Bench's actual prompt:completion ratio (multi-turn sessions are prompt-heavy due to growing chat history).
+
+### 10.2 Actual cost (post-hoc, per call)
+
+OpenRouter's activity export reports the exact billed cost per call in `cost_total`, which includes hidden reasoning tokens that the estimate above misses. Post-hoc per-model summary (`results/latency_leaderboard.json`):
+
+```
+median_actual_cost(model) = median(cost_total for paid calls)        # excludes BYOK (cost=0)
+total_spend(model)        = sum(cost_total)
+likert_per_dollar_actual(model) = likert_mean(model) / median_actual_cost(model)
+```
+
+Empirical correction: estimated cost undercounted Opus 4.7 by ~3× ($0.012/call estimate vs $0.0379/call actual) because our blend ignored reasoning tokens. Both DeepSeek V4 variants show $0 because the calls were BYOK.
+
+---
+
+## 11. Latency Leaderboard
+
+Per-call timing data is mined from OpenRouter's activity-log export. Filtered to `app_name == "RP-Bench"` and `cancelled != true`, grouped by model. Per-model summary (`results/latency_leaderboard.json`):
+
+| Field | Formula |
+|---|---|
+| `calls` | `count(rows for model)` |
+| `median_ttft_ms` | `median(time_to_first_token_ms)` |
+| `median_gen_ms` | `median(generation_time_ms)` |
+| `p95_gen_ms` | `percentile(generation_time_ms, 95)` |
+| `median_completion_tokens` | `median(tokens_completion)` |
+| `median_reasoning_tokens` | `median(tokens_reasoning where tokens_reasoning > 0)` |
+| `uses_reasoning_pct` | `count(tokens_reasoning > 0) / count(*) × 100` |
+| `tokens_per_second` | `median( tokens_completion / (generation_time_ms / 1000) )` over rows where `tokens_completion > 50 ∧ generation_time_ms > 100` |
+| `truncation_pct` | `count(finish_reason_normalized == "length") / count(*) × 100` |
+| `median_actual_cost_usd` | `median(cost_total where cost_total > 0)` |
+
+Filtering the per-call rate computation to `tokens_completion > 50 ∧ generation_time_ms > 100` excludes spurious near-zero divisions (very short responses where rate is dominated by network jitter).
+
+`p95_gen_ms` captures tail latency. High `p95 / median` ratios indicate unstable inference (e.g. Kimi K2.6: median 59s, p95 173s — 2.9× ratio).
+
+---
+
+## 12. Quality / Speed Leaderboard
+
+Combines per-model quality metrics with §11 latency to surface speed-adjusted quality (`results/quality_speed_leaderboard.json`):
+
+```
+median_gen_seconds(m) = median_gen_ms(m) / 1000
+
+likert_per_sec(m)      = likert_overall(m)       / median_gen_seconds(m)
+flaw_hunter_per_sec(m) = flaw_hunter_mean(m)     / median_gen_seconds(m)
+elo_per_sec(m)         = bayes_elo(m)            / median_gen_seconds(m)
+
+likert_per_dollar(m)   = likert_overall(m)       / median_actual_cost_usd(m)
+                          (skipped when actual cost = 0, e.g. BYOK)
+```
+
+`likert_per_sec` is the primary metric — it asks "for each second of waiting, how much Likert quality do you get?" Higher is better. Empirical leader: Gemini 3.1 Flash Lite (4.30 / 2.3s ≈ 1.875), trailer: Kimi K2.6 (4.18 / 59s ≈ 0.070, ~27× difference).
+
+Excludes the user simulator (`gemini_2_5_flash`) and the judge (`claude_sonnet_4`) from rankings because their roles aren't comparable to test models.
+
+---
+
+## 13. Statistical Conventions
+
+### 13.1 Standard error of the mean
 
 For a per-model metric computed from `n` independent observations:
 
@@ -302,7 +497,7 @@ Reported alongside any `mean ± value` notation.
 - Stochastic LLM generation variance (we run each session once)
 - Judge variance (we use a single judge, Sonnet 4)
 
-### 8.2 Wilson score interval (binomial proportions)
+### 13.2 Wilson score interval (binomial proportions)
 
 For binary failure rates:
 ```
@@ -312,27 +507,51 @@ W_low,high = (p̂ + z²/(2n) ± z × √(p̂(1−p̂)/n + z²/(4n²))) / (1 + z�
 
 Used wherever we report `4.2% [±2.1%]` for failure rates.
 
-### 8.3 Spearman rank correlation
+### 13.3 Spearman rank correlation
 
-For non-parametric rank agreement:
+For non-parametric rank agreement (no ties — exact form):
 ```
 ρ = 1 − 6 × Σ(d_i²) / (n × (n² − 1))
    where d_i = rank_X(i) − rank_Y(i)
 ```
 
-Tied ranks averaged. Used in §5 (cross-method correlation) and §6 (failure-target validation).
+With tied ranks (the general form, used in practice via `scipy.stats.spearmanr`):
+```
+ρ = cov(R_X, R_Y) / (σ(R_X) × σ(R_Y))
+   where R_X, R_Y are average-rank arrays (ties get the mean of the spanned ranks)
+```
 
-### 8.4 What we don't have
+P-values use the t-approximation `t = ρ × √((n − 2) / (1 − ρ²))` with `df = n − 2`.
+
+Used in §7 (cross-method correlation), §5.3 (multi-turn arena vs other methods), and §8 (failure-target validation).
+
+### 13.4 Pearson correlation (rare — used for continuous metrics)
+
+```
+r(X, Y) = Σ((x_i − x̄)(y_i − ȳ)) / √( Σ(x_i − x̄)² × Σ(y_i − ȳ)² )
+```
+
+Used in `analyze_factor_and_clusters.py` for the per-dimension correlation matrix.
+
+### 13.5 Bonferroni correction
+
+When testing m hypotheses simultaneously (e.g. all pairwise model differences in arena), report adjusted p-values:
+```
+p_adjusted = min(1, m × p_raw)
+```
+
+Used sparingly — most reported correlations are pre-registered single comparisons, not multiple-testing screens.
+
+### 13.6 What we don't have
 
 For full transparency:
-- **Multi-judge ensembles** — single judge (Sonnet 4) for everything except community arena. Inter-rater agreement (Cohen's kappa) untested.
+- **Multi-judge ensembles** — single judge (Sonnet 4) for everything except community arena and multi-turn arena. Inter-rater agreement (Cohen's kappa) untested.
 - **Stochastic variance** — each (model, seed) cell is generated once. `temperature=0.8` means re-runs would differ; we don't capture that variance.
-- **Latency** — not currently measured per model (data exists in OpenRouter logs but isn't aggregated).
 - **Composite uncertainty propagation** — when we compute "avg failure rank", we treat per-mode means as point estimates and don't propagate per-mode uncertainty into the aggregate.
 
 ---
 
-## 9. Bias Corrections Applied
+## 14. Bias Corrections Applied
 
 | Bias | Where it shows up | Correction |
 |---|---|---|
@@ -347,7 +566,7 @@ For full transparency:
 
 ---
 
-## 10. Test-Set Privacy
+## 15. Test-Set Privacy
 
 **Currently:** All 20 adversarial seeds + 8 standard seeds are public (HuggingFace `lazyweasel/roleplay-bench` dataset). This means future model versions can train on them — a known problem already documented in vals.ai's methodology.
 
@@ -361,7 +580,7 @@ Models trained on the public seeds (post-publication retrain) would show systema
 
 ---
 
-## 11. Reproducibility
+## 16. Reproducibility
 
 Every analysis in this benchmark is reproducible from the published artifacts. Each script is idempotent and incremental (re-running skips already-completed work).
 
@@ -395,19 +614,20 @@ Output files in `results/` are version-controlled snapshots; re-running with new
 
 ---
 
-## 12. Versioning
+## 17. Versioning
 
 | Snapshot | Date | Marker |
 |---|---|---|
 | Single-turn arena lock | 2026-04-23 | 2,013 votes / 338 voters / median 7 votes per pair |
 | Multi-turn snapshot v1 | 2026-04-25 | 336 sessions / 20 models / 20 seeds (Phase A+B complete) |
-| Multi-turn arena live | 2026-04-26 | 223 votes / 63 voters / median ~1 (early data) |
+| Multi-turn arena snapshot v1 | 2026-04-27 | 434 votes / 116 voters / 167 unique pairs / 20 seeds |
+| Latency + quality/speed v1 | 2026-04-26 | 7,698 RP-Bench calls from OpenRouter activity export |
 
 Major version bumps when the model pool changes (Phase B added 8 next-gen models on 12 v2/v3 seeds). Minor version bumps when methodology changes (e.g. switch from frequentist to Bayesian ELO).
 
 ---
 
-## 13. Honest Limitations
+## 18. Honest Limitations
 
 1. **Small N per cell.** `n=1` per (model, seed) on most multi-turn cells. CIs on per-mode means are wide.
 2. **Single judge for everything except community arena.** Sonnet 4's aesthetic preferences shape every Likert-derived ranking.
@@ -415,11 +635,11 @@ Major version bumps when the model pool changes (Phase B added 8 next-gen models
 4. **English-dominant.** The benchmark has Russian seeds but the multi-turn run was English-only; Russian community arena hasn't been launched.
 5. **No preset testing.** All models tested raw — no SillyTavern presets, no custom system prompts, no sampler tuning. A model that's mediocre raw may be excellent with tuning; the benchmark doesn't capture this floor-vs-ceiling spread.
 6. **No long-context test.** Sessions max out at 12 turns; real RP runs 100+ turns and triggers compression. Compression-induced failures are out of scope.
-7. **No latency measurement.** Speed isn't currently a benchmark axis.
+7. **Latency only post-hoc.** Per-call timing is mined from OpenRouter's activity export (§11) — not captured by our harness directly. Models with low OpenRouter traffic have undersampled latency stats.
 8. **Test-set leakage risk.** All seeds public; future model retrains may absorb them.
 
 These are documented in `EXPERIMENT_DESIGN.md` and the README's empirical-validation section — readers should weight rankings accordingly.
 
 ---
 
-*Document version 1.0 — 2026-04-26.*
+*Document version 1.1 — 2026-05-01. v1.1 adds: §2.5 combined score, §3.7 per-target session aggregation, §4.5 expanded SFW/NSFW formulas, §4.6 win rate / exposure / position bias, §5 multi-turn arena, §6 LLM-judged adversarial ELO, §9 comparative validation, §10.2 actual cost, §11 latency leaderboard, §12 quality/speed leaderboard, §13.3 ties-form Spearman, §13.4 Pearson, §13.5 Bonferroni.*
