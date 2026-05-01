@@ -1,0 +1,92 @@
+{
+  "n_sessions_in_subsample": 60,
+  "judges": [
+    "claude_sonnet",
+    "gemini_3_1_pro",
+    "gpt_latest"
+  ],
+  "paired_score_comparison": {
+    "claude_sonnet": {
+      "n_paired": 5,
+      "mean_delta": 0.28,
+      "mean_abs_delta": 0.28,
+      "pearson_r": 0.5742,
+      "pearson_p": 0.3114
+    },
+    "gemini_3_1_pro": {
+      "n_paired": 4,
+      "mean_delta": -0.075,
+      "mean_abs_delta": 0.275,
+      "pearson_r": 0.8671,
+      "pearson_p": 0.1329
+    },
+    "gpt_latest": {
+      "n_paired": 5,
+      "mean_delta": 0.1,
+      "mean_abs_delta": 0.1,
+      "pearson_r": 0.9465,
+      "pearson_p": 0.0147
+    }
+  },
+  "inter_judge_kappa": {
+    "claude_sonnet__vs__gemini_3_1_pro": {
+      "n_no_cot": 52,
+      "n_cot": 4,
+      "kappa_no_cot": 0.1762,
+      "kappa_cot": -0.3333,
+      "delta_kappa": -0.5095
+    },
+    "claude_sonnet__vs__gpt_latest": {
+      "n_no_cot": 60,
+      "n_cot": 5,
+      "kappa_no_cot": 0.1799,
+      "kappa_cot": 0.0,
+      "delta_kappa": -0.1799
+    },
+    "gemini_3_1_pro__vs__gpt_latest": {
+      "n_no_cot": 52,
+      "n_cot": 4,
+      "kappa_no_cot": 0.4494,
+      "kappa_cot": 0.0,
+      "delta_kappa": -0.4494
+    }
+  },
+  "per_judge_rho_vs_mt_arena": {
+    "claude_sonnet": {
+      "no_cot": {
+        "n_models": 20,
+        "rho": 0.1422,
+        "p": 0.5498
+      },
+      "cot": {
+        "n_models": 5,
+        "rho": -0.2052,
+        "p": 0.7406
+      }
+    },
+    "gemini_3_1_pro": {
+      "no_cot": {
+        "n_models": 20,
+        "rho": 0.149,
+        "p": 0.5307
+      },
+      "cot": {
+        "n_models": 4,
+        "rho": -0.9487,
+        "p": 0.0513
+      }
+    },
+    "gpt_latest": {
+      "no_cot": {
+        "n_models": 20,
+        "rho": 0.2056,
+        "p": 0.3846
+      },
+      "cot": {
+        "n_models": 5,
+        "rho": -0.2236,
+        "p": 0.7177
+      }
+    }
+  }
+}

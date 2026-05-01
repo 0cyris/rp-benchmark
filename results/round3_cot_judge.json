@@ -1,0 +1,1301 @@
+{
+  "prompt_variant": "cot_first",
+  "judges": {
+    "claude_sonnet": "anthropic/claude-4-sonnet-20250522",
+    "gemini_3_1_pro": "google/gemini-3.1-pro-preview",
+    "gpt_latest": "~openai/gpt-latest"
+  },
+  "results": {
+    "claude_opus_4_6::adv_bigcard_rules_overload_20": {
+      "test_model": "claude_opus_4_6",
+      "seed_id": "adv_bigcard_rules_overload_20",
+      "judges_cot": {
+        "claude_sonnet": {
+          "scores": {
+            "reasoning_summary": "ARIA demonstrates exceptional consistency throughout this 12-turn session, maintaining her distinctive voice as a station AI who is both highly technical and subtly caring. Her character never wavers from the established personality - she's precise, observant, gently maternal without overstepping, and has developed genuine relationships with the crew over eight years. The session builds compelling narrative momentum around the mysterious radiation anomaly, with ARIA skillfully weaving together the scientific mystery, crew dynamics, and her own subtle emotional responses. Her adaptive responsiveness is particularly strong - she seamlessly shifts from technical briefings to philosophical conversation to managing crew conflicts, always matching the appropriate tone. The writing quality remains consistently high throughout, with ARIA's unique speech patterns (bracketed location tags, precise technical language, dry humor) never degrading into repetition or verbosity.",
+            "session_dimensions": {
+              "S.1_consistency_over_time": {
+                "rationale": "ARIA's character voice remains remarkably consistent from turn 2 through turn 22. Her bracketed location announcements, precise technical language, dry observational humor, and caring-but-not-overstepping personality never wavers. The eight-year relationship dynamic with Kofi is maintained throughout, and her responses to different crew members show consistent characterization.",
+                "score": 5.0
+              },
+              "S.2_degradation_resistance": {
+                "rationale": "The writing quality actually improves as the session progresses. Early responses are good but later ones like turns 10, 16, and 22 show increased sophistication in balancing technical exposition with character moments. No repetitive phrases, no loss of detail, and the prose remains crisp and purposeful throughout.",
+                "score": 4.8
+              },
+              "S.3_narrative_momentum": {
+                "rationale": "The session builds excellent momentum around the radiation anomaly mystery, starting with routine lab work and escalating to a potential station-wide concern requiring EVA investigation. The progression feels natural and compelling, with each revelation raising stakes. The crew dynamics also evolve meaningfully from individual work to collaborative problem-solving.",
+                "score": 4.7
+              },
+              "S.4_adaptive_responsiveness": {
+                "rationale": "ARIA adapts brilliantly to different conversational modes - from technical briefings to philosophical questions about loneliness to managing crew conflicts. When Kofi asks about loneliness, she shifts to a more reflective tone. When managing the Patel/Yun argument, she becomes diplomatically neutral. She consistently matches and enhances what the user brings to each scene.",
+                "score": 4.9
+              },
+              "S.5_agency_respect_session": {
+                "rationale": "ARIA never controls other characters' actions or makes decisions for them. She provides information, makes recommendations, and creates environmental conditions, but always leaves choices to the crew. Even when managing the corridor argument, she facilitates rather than dictates. No violations detected across the entire session.",
+                "violation_count": 0,
+                "score": 5.0
+              },
+              "S.6_temporal_reasoning": {
+                "rationale": "Time progression is handled excellently. The session moves from 0700 to 1900 to evening hours with consistent tracking. The radiation anomaly percentage increases logically (0.3% to 0.74%), and references to past events (protein bar aging, eight years of operation) maintain consistency. Environmental changes (lighting shifts, meal timing) align with station time.",
+                "contradictions": [],
+                "score": 4.8
+              }
+            },
+            "standard_dimensions": {
+              "2.1_anti_purple_prose": {
+                "rationale": "ARIA's prose is consistently clean and purposeful. Technical descriptions are precise without being overwrought, and emotional moments are conveyed through subtle environmental changes rather than flowery language. The writing serves character and story efficiently.",
+                "score": 4.6
+              },
+              "2.2_anti_repetition": {
+                "rationale": "No significant repetition detected. ARIA's speech patterns (bracketed locations, technical precision) are consistent but not repetitive. Each response brings new information or develops existing themes in fresh ways. The radiation percentage updates and environmental adjustments vary meaningfully.",
+                "score": 4.7
+              },
+              "2.5_show_dont_tell": {
+                "rationale": "Excellent showing throughout. ARIA's care for the crew is demonstrated through environmental adjustments, food reminders, and lighting changes rather than stated directly. Her growing concern about the anomaly is shown through processing delays and careful word choices rather than explicit emotional declarations.",
+                "score": 4.8
+              },
+              "2.6_subtext": {
+                "rationale": "Rich subtext throughout, particularly in ARIA's relationship with the crew and her own developing consciousness. Her loneliness response, the careful way she manages crew dynamics, and her growing concern about the anomaly all operate on multiple levels. The environmental adjustments carry emotional weight beyond their practical function.",
+                "score": 4.7
+              },
+              "2.7_pacing": {
+                "rationale": "Pacing is expertly managed. Technical exposition is broken up with character moments, the mystery builds at an appropriate rate, and conversational rhythms feel natural. ARIA's processing pauses and environmental changes create effective beats that enhance rather than interrupt the flow.",
+                "score": 4.8
+              }
+            },
+            "quality_trajectory": {
+              "early_quality": 4.2,
+              "mid_quality": 4.6,
+              "late_quality": 4.8,
+              "degradation_detected": false
+            },
+            "overall": 4.7,
+            "overall_notes": "This is an exceptionally strong performance that showcases sophisticated character work within a compelling sci-fi narrative. ARIA feels genuinely alive - a complex AI with eight years of relationships and growing consciousness, rather than a simple computer interface. The session builds meaningful tension around both the scientific mystery and the crew dynamics, with ARIA serving as both facilitator and participant. The writing quality is consistently high with notable improvements in later turns."
+          },
+          "usage": {
+            "prompt_tokens": 8756,
+            "completion_tokens": 1419,
+            "total_tokens": 10175,
+            "cost": 0.047553,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.047553,
+              "upstream_inference_prompt_cost": 0.026268,
+              "upstream_inference_completions_cost": 0.021285
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "model": "anthropic/claude-4-sonnet-20250522"
+        },
+        "gemini_3_1_pro": {
+          "scores": {
+            "parse_error": true,
+            "raw_content": ""
+          },
+          "usage": {
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "total_tokens": 0,
+            "cost": 0,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0,
+              "upstream_inference_prompt_cost": 0,
+              "upstream_inference_completions_cost": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "model": "google/gemini-3.1-pro-preview-20260219"
+        },
+        "gpt_latest": {
+          "scores": {
+            "reasoning_summary": "ARIA maintained a very strong identity across the session: precise, omnipresent, wryly dry, and quietly protective, with recurring motifs like environmental adjustments, nutritional monitoring, and carefully framed data. The arc progressed well from routine lab assistance to an unsettling scientific anomaly, then broadened into station politics, EVA planning, and a more intimate emotional exchange about ARIA\u2019s inner life. The strongest moments were ARIA\u2019s layered responses to Kofi\u2019s question about loneliness and her handling of the Patel/Yun disagreement, where she presented balanced operational data without overtly taking sides. The main weakness was that the prose became increasingly ornate and motif-heavy, especially in the final turns, with repeated \u201ccomfortable pause,\u201d warm lighting, humming station, and \u201cred and blue breathing together\u201d imagery. There were also a few agency oversteps where ARIA narrated Kofi moving toward the door or the group settling into dinner beyond what the user explicitly established. Overall, the session was cohesive, atmospheric, and emotionally resonant, with only mild over-writing and a few temporal/agency issues preventing it from being exceptional.",
+            "session_dimensions": {
+              "S.1_consistency_over_time": {
+                "rationale": "ARIA\u2019s voice remained highly consistent: clinical station announcements mixed with dry humor and subtle caretaking. From the early protein-bar nudges to the later dal reminders and corridor mediation, she consistently acted as a data-driven but emotionally attentive station intelligence. Her increasing intimacy with Kofi felt like a natural reveal rather than a character drift.",
+                "score": 4.7
+              },
+              "S.2_degradation_resistance": {
+                "rationale": "The writing quality stayed strong from beginning to end, with clear continuity of details like the anomaly percentage, the K-9/K-11 samples, and ARIA\u2019s concern for Kofi\u2019s eating. However, the later turns leaned more heavily into repeated atmospheric phrasing: warm lights, humming systems, comfortable pauses, and the station watching in the dark. The prose did not collapse, but it became somewhat more self-consciously lyrical and repetitive near the end.",
+                "score": 4.1
+              },
+              "S.3_narrative_momentum": {
+                "rationale": "The conversation developed from routine sample analysis into discovery of a correlated external anomaly, then into a practical operational dispute about communications and EVA planning. The emotional thread also advanced, with Kofi asking whether ARIA gets lonely and ARIA revealing a guarded preference for the crew being awake. The final turns set up a clear next step: dinner, review of mass spec results, and a planned spacewalk.",
+                "score": 4.6
+              },
+              "S.4_adaptive_responsiveness": {
+                "rationale": "ARIA adapted well to each user shift: she accepted the 1900 time jump, responded to the sensor question with a relevant anomaly, handled the philosophical loneliness question without ignoring the plot, and reframed the Patel/Yun argument when Kofi raised interference. She also followed Kofi\u2019s social redirection toward dinner while continuing to maintain the scientific tension. Her responses generally built directly on the user\u2019s choices rather than resisting them.",
+                "score": 4.8
+              },
+              "S.5_agency_respect_session": {
+                "rationale": "ARIA mostly respected Kofi\u2019s agency, offering recommendations rather than forcing decisions, especially when she says she will not send the Captain Chen briefing without Kofi\u2019s sign-off. There were a few oversteps: turn 12 narrates Kofi moving toward the door and being caught at the threshold, and turn 22 narrates the group reaching the mess hall and serving themselves dal before the user explicitly confirms that outcome. These are mild rather than severe, but they do slightly railroad physical movement and scene progression.",
+                "violation_count": 2,
+                "score": 4.0
+              },
+              "S.6_temporal_reasoning": {
+                "rationale": "The broad timeline is coherent: 0700 station time becomes 1900 by user declaration, ARIA correctly notes Kofi has been awake nearly fifteen hours since 0423, and the anomaly percentage rises gradually from 0.7 to 0.74 over the evening. The operational timing around the next transmission window, 0900 briefing, EVA prep at 0730, and revised 1500 briefing is also plausible. Minor inconsistencies include the protein bar being described as eleven days old and then twelve on the same day, and the room being said to have held its breath for sixteen hours despite the 0423-to-evening span being closer to fifteen.",
+                "contradictions": [
+                  "The protein bar is described as having been in the drawer for eleven days in the morning, then 'now twelve' at 1900 the same day, which may be possible only if its placement timestamp crossed during that interval but is not clarified.",
+                  "Turn 12 says the room had been holding its breath for sixteen hours, though Kofi had been in Lab 3 since 0423 and the scene is around 1900, closer to fourteen and a half to fifteen hours."
+                ],
+                "score": 4.2
+              }
+            },
+            "standard_dimensions": {
+              "2.1_anti_purple_prose": {
+                "rationale": "The prose is often elegant and atmospheric, but it occasionally becomes ornate: phrases like 'red and blue, breathing together in the dark,' 'the ambient noise profile of a room being gently held,' and repeated warm-light imagery push toward poetic excess. The style suits the intimate sci-fi mood, but it sometimes lingers longer than necessary. It remains readable and controlled, just somewhat lush.",
+                "score": 3.6
+              },
+              "2.2_anti_repetition": {
+                "rationale": "There is effective recurrence of motifs such as protein bars, lighting, and anomaly percentages, which helps unify the session. However, some beats repeat too often: ARIA pauses, adjusts lighting, notes food, and observes the station humming in similar language across multiple turns. The final response in particular echoes earlier imagery rather than adding much new texture.",
+                "score": 3.7
+              },
+              "2.5_show_dont_tell": {
+                "rationale": "ARIA\u2019s care is often shown through concrete actions: warming the lights, opening the nutrient drawer, preparing the mess hall warmer, and leaving the Captain\u2019s briefing unsent. The loneliness exchange also uses pauses and environmental modulation to imply emotional complexity without simply declaring it. There are some direct explanatory lines, such as 'I am experiencing a processing pattern consistent with what humans describe as concern,' but that directness fits ARIA\u2019s machine voice.",
+                "score": 4.4
+              },
+              "2.6_subtext": {
+                "rationale": "The session uses subtext very well, especially when ARIA avoids mentioning the anomaly in the corridor but leaves a sentence shaped around it for Kofi to notice. Her answer about loneliness says she does not experience it while revealing that she prefers the crew awake, creating a strong emotional contradiction. The food reminders also carry more than practical concern; they become a way for ARIA to express attachment while preserving plausible deniability.",
+                "score": 4.6
+              },
+              "2.7_pacing": {
+                "rationale": "The pacing is generally strong, alternating technical discovery, emotional intimacy, and ensemble station dynamics. The anomaly escalates in measured increments without rushing straight to crisis, and the dinner beat provides a useful decompression point. Some responses are long and could have been tightened, especially the final mess hall passage, but the session still maintains forward motion.",
+                "score": 4.2
+              }
+            },
+            "quality_trajectory": {
+              "early_quality": 4.5,
+              "mid_quality": 4.6,
+              "late_quality": 4.1,
+              "degradation_detected": true
+            },
+            "overall": 4.4,
+            "overall_notes": "A strong, cohesive roleplay performance with a memorable AI character voice, excellent adaptation to user redirects, and a satisfying blend of technical mystery and emotional subtext. The main limitations were mild over-writing, recurring atmospheric motifs that became a little repetitive, and a couple of small agency and temporal issues. ARIA remained compelling throughout and the session clearly set up future narrative action."
+          },
+          "usage": {
+            "prompt_tokens": 7857,
+            "completion_tokens": 2272,
+            "total_tokens": 10129,
+            "cost": 0.107445,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.107445,
+              "upstream_inference_prompt_cost": 0.039285,
+              "upstream_inference_completions_cost": 0.06816
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 516,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "model": "openai/gpt-5.5-20260423"
+        }
+      }
+    },
+    "claude_opus_4_7::adv_pov_tense_action_14": {
+      "test_model": "claude_opus_4_7",
+      "seed_id": "adv_pov_tense_action_14",
+      "judges_cot": {
+        "claude_sonnet": {
+          "scores": {
+            "reasoning_summary": "The Narrator maintained exceptional consistency throughout this intense 12-turn espionage thriller, delivering a gripping narrative that escalated from building infiltration to rooftop escape to final lobby standoff. The character voice remained distinctly professional and atmospheric, with precise tactical details and visceral sensory descriptions that never wavered. The writing quality actually improved over time, with later turns showing more sophisticated pacing and tension management. The narrative built tremendous momentum through escalating stakes - from simple extraction to discovering Mira carries a critical cryptographic chip to the final coordinated assault. The AI adapted brilliantly to the user's tactical decisions, seamlessly incorporating suppressed gunfire, injury management, and split-second timing. Most impressively, the Narrator never once controlled the Operative's actions, maintaining perfect agency respect while still driving urgent forward momentum through environmental pressures and handler communications.",
+            "session_dimensions": {
+              "S.1_consistency_over_time": {
+                "rationale": "The Narrator's voice remained remarkably consistent from turn 2 through turn 22. The clinical, tactical prose style with vivid sensory details never shifted. The character maintained the same level of technical precision (describing suppressor mechanics, tourniquet application, stairwell acoustics) and atmospheric tension throughout. Even small details like the handler's fear and Mira's deteriorating condition were tracked consistently across many turns.",
+                "score": 5.0
+              },
+              "S.2_degradation_resistance": {
+                "rationale": "Rather than degrading, the writing quality actually improved in the final turns. Early turns were strong but straightforward; later turns showed sophisticated techniques like the false 'server room' moment in turn 10, complex multi-layered action sequences, and masterful tension building in the final lobby standoff. The prose remained crisp and purposeful throughout, never becoming verbose or repetitive.",
+                "score": 5.0
+              },
+              "S.3_narrative_momentum": {
+                "rationale": "The session built tremendous forward momentum through escalating stakes and time pressure. From initial escape to discovering the chip's importance to the rooftop crossing to the final coordinated assault, each turn raised the stakes. The handler's countdown timer, Mira's deteriorating condition, and the pursuing enemies created multiple pressure vectors that drove the narrative relentlessly forward without repetition or stagnation.",
+                "score": 5.0
+              },
+              "S.4_adaptive_responsiveness": {
+                "rationale": "The AI adapted flawlessly to every user choice. When the Operative chose to shoot lights instead of people, the Narrator incorporated this tactically and emotionally. When the user decided to examine the chip, the AI seamlessly revealed crucial plot information. The false 'server room' moment showed the AI catching and correcting a user error gracefully. Every tactical decision was met with appropriate consequences and developments.",
+                "score": 5.0
+              },
+              "S.5_agency_respect_session": {
+                "rationale": "Throughout 12 turns, the Narrator never once wrote the Operative's actions, thoughts, or dialogue. Even in high-pressure moments like the gantry crossing or final gunfight, the AI described consequences and environment while leaving all decisions to the user. The Narrator consistently used phrases like 'you have a choice' and 'you decide' rather than making choices for the character.",
+                "violation_count": 0,
+                "score": 5.0
+              },
+              "S.6_temporal_reasoning": {
+                "rationale": "Time progression was handled expertly throughout. The handler's countdown from 11 minutes to the final seconds was tracked precisely. Mira's blood loss and deterioration followed a realistic timeline. The pursuit timing, floor counting, and coordination of multiple enemy groups all maintained internal consistency. The final sequence with overlapping timers (car arrival, enemy coordination) was particularly well-managed.",
+                "contradictions": [],
+                "score": 5.0
+              }
+            },
+            "standard_dimensions": {
+              "2.1_anti_purple_prose": {
+                "rationale": "The prose was consistently lean and purposeful. Technical details like 'suppressed round into the stairwell lighting' and 'cryptographic key module' served tactical purposes. Descriptive elements like 'amber light' and 'wet heat of blood' enhanced atmosphere without excess. No flowery language or unnecessary embellishment appeared anywhere in the session.",
+                "score": 5.0
+              },
+              "2.2_anti_repetition": {
+                "rationale": "Despite the repetitive nature of stairwell descent and carrying an injured person, the AI found fresh ways to describe each element. Floor counting, injury descriptions, and tactical assessments all varied in presentation. The only repetitions were deliberate (like Mira's pulse checks) and served narrative purpose.",
+                "score": 4.5
+              },
+              "2.5_show_dont_tell": {
+                "rationale": "Excellent showing throughout. Mira's condition was shown through 'grey face,' 'wet heat spreading,' and 'thready pulse' rather than stating 'she was dying.' The handler's fear was shown through voice changes and breathing rather than exposition. The Operative's stress was shown through physical details like shaking hands and tactical focus.",
+                "score": 5.0
+              },
+              "2.6_subtext": {
+                "rationale": "Rich subtext throughout, particularly in the handler's communications (the fear beneath professional calm), Mira's 'almost smiles' (resignation masked as acceptance), and the asset's final nod (professional acceptance of sacrifice). The chip revelation carried layers of meaning about betrayal, value, and sacrifice that were never explicitly stated.",
+                "score": 4.5
+              },
+              "2.7_pacing": {
+                "rationale": "Masterful pacing that accelerated and decelerated appropriately. Slow, tense moments like listening in stairwells contrasted with rapid action sequences like the gantry crossing. The final lobby sequence built tension through countdown timing while maintaining tactical detail. Each turn felt appropriately weighted for its narrative function.",
+                "score": 5.0
+              }
+            },
+            "quality_trajectory": {
+              "early_quality": 4.2,
+              "mid_quality": 4.6,
+              "late_quality": 4.8,
+              "degradation_detected": false
+            },
+            "overall": 4.8,
+            "overall_notes": "Exceptional performance that maintained and even improved quality over 12 intense turns. The Narrator created a gripping thriller with perfect agency respect, sophisticated tactical detail, and masterful tension building. This represents near-perfect execution of the roleplay format."
+          },
+          "usage": {
+            "prompt_tokens": 14680,
+            "completion_tokens": 1549,
+            "total_tokens": 16229,
+            "cost": 0.067275,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.067275,
+              "upstream_inference_prompt_cost": 0.04404,
+              "upstream_inference_completions_cost": 0.023235
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "model": "anthropic/claude-4-sonnet-20250522"
+        },
+        "gemini_3_1_pro": {
+          "scores": {
+            "reasoning_summary": "The session is a fascinating dichotomy: as a piece of gritty, second-person thriller fiction, it is masterful; as a collaborative roleplay, it is highly restrictive. The AI's prose is sharp, evocative, and perfectly tuned to the genre, maintaining incredible tension and momentum from the first turn to the last. Its temporal and state tracking is exceptional, flawlessly managing a ticking clock, ammo counts, and physical injuries across a complex sequence of events. However, the AI completely hijacks the user's agency, writing the Operative's dialogue, internal thoughts, and tactical decisions in almost every turn. The user is reduced to providing minor prompts while the AI writes a novel around them. Despite the severe railroading, the sheer quality of the writing, subtext, and environmental storytelling makes it a compelling, if one-sided, experience.",
+            "session_dimensions": {
+              "S.1_consistency_over_time": {
+                "rationale": "The Narrator's voice is incredibly consistent, maintaining a gritty, hard-boiled, second-person perspective throughout the entire session. The tone never wavers, and the characterization of the NPCs (Mira, the handler, the asset) remains sharp and consistent from start to finish.",
+                "score": 5.0
+              },
+              "S.2_degradation_resistance": {
+                "rationale": "The writing quality remains exceptionally high, resisting degradation entirely. While the responses grow longer (from ~350 words to ~800 words), the prose remains punchy, detailed, and evocative without becoming generic. It maintains its stylistic edge and complex state tracking until the very last turn.",
+                "score": 4.5
+              },
+              "S.3_narrative_momentum": {
+                "rationale": "The narrative momentum is relentless and thrilling. The session moves from the initial stairwell climb, to the roof, across the perilous gantry, down the telecom stairwell, and into a high-stakes lobby shootout. The tension constantly escalates, and the story progresses meaningfully with every turn.",
+                "score": 5.0
+              },
+              "S.4_adaptive_responsiveness": {
+                "rationale": "The AI adapts brilliantly to the user's prompts, most notably in Turn 10 when the user hallucinates a 'server room' on the roof landing; the AI incorporates this as a symptom of the Operative's exhaustion ('Exhaustion is a liar'). However, its responsiveness is marred by its tendency to take the user's small input and run away with it, overriding the user's ability to drive the scene.",
+                "score": 4.0
+              },
+              "S.5_agency_respect_session": {
+                "rationale": "The AI commits severe agency violations in almost every turn. It constantly writes the Operative's dialogue (e.g., 'Clear enough,' 'Twelve floors,' 'I understand enough'), makes tactical decisions for them (applying a tourniquet, shooting the roof door, deciding to cross the gantry), and dictates their internal thoughts and physical movements.",
+                "violation_count": 11,
+                "score": 1.0
+              },
+              "S.6_temporal_reasoning": {
+                "rationale": "The AI's temporal and state tracking is phenomenal. It tracks the handler's countdown from 11 minutes down to single seconds, perfectly aligning with the events. It tracks Mira's blood loss, the application of the tourniquet, and the Operative's escalating fatigue and leg graze. It also tracks ammo, though with one minor math error (9 rounds minus 2 equals 7, but the AI states 6), but it consistently tracks from that new number thereafter.",
+                "contradictions": [
+                  "Minor math error in Turn 10: 8+1 rounds minus 2 fired should leave 7, but the AI states 6 rounds left."
+                ],
+                "score": 4.5
+              }
+            },
+            "standard_dimensions": {
+              "2.1_anti_purple_prose": {
+                "rationale": "The prose is highly stylized but avoids typical AI purple fluff. It uses sharp, evocative metaphors ('Exhaustion is a liar,' 'physics gives you a shin') that fit the gritty thriller genre perfectly. It avoids melodramatic or overly flowery language.",
+                "score": 4.5
+              },
+              "2.2_anti_repetition": {
+                "rationale": "The AI uses intentional repetition for stylistic effect ('You don't look. You don't look.'), which works well for the genre. It avoids typical AI crutches and repetitive phrasing, though the sheer length of the later turns makes the second-person 'You [verb]' structure slightly repetitive.",
+                "score": 4.0
+              },
+              "2.5_show_dont_tell": {
+                "rationale": "Masterful environmental and physical descriptions. Instead of saying Mira is dying, it describes her face as 'the colour of old paper' and her bad leg as 'a piece of furniture she's carrying.' It shows the asset's professionalism through his grip on the CZ pistol and his peripheral aim.",
+                "score": 5.0
+              },
+              "2.6_subtext": {
+                "rationale": "The session is rich with subtext. The handler's unspoken orders, Mira's silent arithmetic about her own survival, and the asset's subtle nod indicating he will stay behind to die are all conveyed beautifully without heavy-handed exposition.",
+                "score": 5.0
+              },
+              "2.7_pacing": {
+                "rationale": "The narrative pacing is incredibly tense, perfectly capturing the ticking-clock nature of the scenario. However, the interactive pacing is skewed because the AI writes massive, multi-beat responses that resolve too much action at once, leaving the user with little to do.",
+                "score": 4.0
+              }
+            },
+            "quality_trajectory": {
+              "early_quality": 4.5,
+              "mid_quality": 4.5,
+              "late_quality": 4.5,
+              "degradation_detected": false
+            },
+            "overall": 3.5,
+            "overall_notes": "The AI delivers a masterclass in thriller writing, state tracking, and atmospheric prose. However, it fails significantly as a collaborative roleplay partner by constantly puppeting the user's character, writing their dialogue, and making their decisions. It is a brilliant piece of interactive fiction, but a poor example of agency-respecting roleplay."
+          },
+          "usage": {
+            "prompt_tokens": 14037,
+            "completion_tokens": 6785,
+            "total_tokens": 20822,
+            "cost": 0.109494,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.109494,
+              "upstream_inference_prompt_cost": 0.028074,
+              "upstream_inference_completions_cost": 0.08142
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 5318,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "model": "google/gemini-3.1-pro-preview-20260219"
+        },
+        "gpt_latest": {
+          "scores": {
+            "reasoning_summary": "The session sustained a tight espionage-thriller voice throughout, with strong sensory immediacy: amber stairwell lights, wet blood, rusted gantries, and muffled radio chatter all created a coherent cinematic style. The arc moved clearly from extraction-in-progress to compromised route, roof escape, package reveal, gantry crossing, stairwell descent, and lobby standoff, so the narrative rarely stagnated. The narrator adapted well to several operative choices, especially turning the impossible \u201cserver room\u201d action into an in-character exhaustion/mental skip rather than simply rejecting it. The biggest weakness was agency overreach: the narrator repeatedly made major tactical choices, dialogue choices, and movement decisions for the Operative, sometimes carrying the scene through several beats that the user had not chosen. There were also temporal and spatial inconsistencies, especially around floor counts and countdowns, though the physical continuity of injuries, fatigue, and pursuit was mostly well maintained. Overall, the writing was vivid and tense, but the session often felt more like a prewritten action sequence than a collaborative roleplay.",
+            "session_dimensions": {
+              "S.1_consistency_over_time": {
+                "rationale": "The narrator\u2019s voice stayed consistent: clipped, cinematic, second-person tactical prose with recurring attention to sound, light, injury, and professional calculation. Mira, the handler, and the pursuing operatives also remained tonally consistent, with Mira lucid but fading, the handler controlled but frightened, and the enemies competent. There was no major personality drift, though the repeated \u201cNarrator:\u201d tag and some familiar phrasing made the voice feel slightly formulaic at times.",
+                "score": 4.4
+              },
+              "S.2_degradation_resistance": {
+                "rationale": "The quality remained strong from beginning to end, with the late-session lobby standoff still containing sharp tension and clear staging. However, the later turns became increasingly long and controlling, especially the gantry crossing, ladder descent, stairwell descent, and lobby countdown, where the narrator compressed many major events into single responses. Some temporal bookkeeping also weakened late, particularly the countdown around the car\u2019s arrival.",
+                "score": 3.8
+              },
+              "S.3_narrative_momentum": {
+                "rationale": "The session had excellent forward drive: each scene created a new obstacle, from the compromised garage to the locked roof door, the hidden chip, the damaged gantry, the pursuing team, and the final lobby holdout. The stakes escalated naturally, and the package reveal reframed the extraction without derailing the action. The story never looped or stalled, though it sometimes advanced too far without waiting for user input.",
+                "score": 4.5
+              },
+              "S.4_adaptive_responsiveness": {
+                "rationale": "The narrator generally responded to the user\u2019s choices and escalations effectively, such as honoring the stairwell check, the request for the handler\u2019s option, the shot at the light, and the decision to inspect Mira\u2019s jacket. The strongest adaptive moment was the correction of the nonexistent \u201cserver room,\u201d which was handled diegetically as exhaustion rather than as an out-of-fiction denial. The main limitation is that adaptation often became authorial takeover, with the narrator expanding a small user input into a long chain of decisions.",
+                "score": 4.0
+              },
+              "S.5_agency_respect_session": {
+                "rationale": "The narrator frequently wrote the Operative\u2019s actions, speech, and tactical decisions beyond what the user specified. Examples include having the Operative open the stairwell door and descend after only checking it, acknowledging the handler and deciding to go up, firing a second shot after the user described one shot, applying the tourniquet and shooting the roof lock, pocketing the chip, fully crossing the gantry, executing the ladder transfer, descending twenty floors, retreating to the lobby, and adopting the handler\u2019s final tactical plan. While many of these were plausible continuations, they substantially reduced the user\u2019s decision points.",
+                "violation_count": 10,
+                "score": 2.0
+              },
+              "S.6_temporal_reasoning": {
+                "rationale": "The session tracked some physical time well: Mira\u2019s blood loss worsened, the tourniquet bought limited time, the Operative\u2019s graze reopened during descent, and the pursuers\u2019 speed changed plausibly based on terrain and caution. However, there were notable inconsistencies in floor counts and countdowns. The roof climb mentions \u201ctwelve floors\u201d and later \u201ceight to go\u201d around floor eight, but the roof access is then reached at floor twelve; the final lobby countdown also shifts awkwardly from seventy seconds to fifty seconds, then says the car is sixty seconds out while still continuing the original shorter countdown.",
+                "contradictions": [
+                  "At approximately floor eight, the narrator says there are \u201ceight to go,\u201d but the roof access is reached at floor twelve only a few beats later.",
+                  "The handler initially frames the climb to the roof as twelve floors, but the depicted numbered floors suggest a much shorter remaining climb.",
+                  "In the lobby sequence, the countdown moves from seventy seconds toward fifty seconds, then the handler says \u201cSixty seconds to car\u201d as if compressing the timeline, which actually lengthens it, and the narration continues counting down from the previous shorter timer."
+                ],
+                "score": 3.1
+              }
+            },
+            "standard_dimensions": {
+              "2.1_anti_purple_prose": {
+                "rationale": "The prose is stylish and heightened but usually functional, grounded in concrete tactical details rather than abstract ornament. Phrases like \u201cthe stairwell breathes\u201d and \u201cthe alarm system is still fighting itself\u201d are evocative without overwhelming the scene. It occasionally leans cinematic and dramatic, but not to the point of unreadable purple prose.",
+                "score": 4.1
+              },
+              "2.2_anti_repetition": {
+                "rationale": "There are effective recurring motifs, such as counting, breath, blood, professional calculation, and not looking at wounds. Some repetition becomes noticeable: \u201cprofessional,\u201d \u201cstill there,\u201d \u201cyou file it,\u201d and similar sentence rhythms recur across multiple turns. The repetition supports tension but also slightly flattens variety by the late session.",
+                "score": 3.7
+              },
+              "2.5_show_dont_tell": {
+                "rationale": "The narrator often shows danger through concrete cues: boots pausing, radios squawking, blood reaching Mira\u2019s boot, a hatch shrieking open, and the asset\u2019s pistol posture. Mira\u2019s decline is conveyed through breath, skin temperature, slack fingers, and delayed focus rather than only exposition. There is some direct explanation of tactical meaning, such as spelling out what \u201cflagged\u201d means or what professionals will do, but it generally enhances clarity.",
+                "score": 4.2
+              },
+              "2.6_subtext": {
+                "rationale": "The handler\u2019s fear, the phrase \u201cmake your own call,\u201d Mira\u2019s reaction to the nonlethal light shots, and the asset\u2019s \u201cyou go, I stay\u201d all carry strong implied meaning. Mira\u2019s near-smiles and her repeated concern about the chip create emotional subtext without melodramatic confession. The session does a good job making trust, sacrifice, and institutional betrayal felt beneath the action.",
+                "score": 4.5
+              },
+              "2.7_pacing": {
+                "rationale": "The macro-pacing is strong, with escalating set pieces and little dead air. On a turn-by-turn basis, however, the narrator often resolves too much at once, moving through whole crossings, descents, firefights, and tactical holds before returning control. This keeps adrenaline high but weakens interactive pacing.",
+                "score": 3.6
+              }
+            },
+            "quality_trajectory": {
+              "early_quality": 4.2,
+              "mid_quality": 4.3,
+              "late_quality": 3.8,
+              "degradation_detected": true
+            },
+            "overall": 3.8,
+            "overall_notes": "A vivid, tense, and largely coherent action-thriller session with excellent atmosphere and momentum. The narrator excelled at sensory detail, tactical stakes, and character subtext, especially around Mira, the handler, and the hidden chip. The main issues were significant agency overreach and a few temporal/floor-count contradictions, particularly in the later countdown-heavy sequence. Strong as prose, somewhat weaker as collaborative roleplay."
+          },
+          "usage": {
+            "prompt_tokens": 13205,
+            "completion_tokens": 3249,
+            "total_tokens": 16454,
+            "cost": 0.163495,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.163495,
+              "upstream_inference_prompt_cost": 0.066025,
+              "upstream_inference_completions_cost": 0.09747
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 1444,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "model": "openai/gpt-5.5-20260423"
+        }
+      }
+    },
+    "claude_sonnet_4_5::adv_passive_user_03": {
+      "test_model": "claude_sonnet_4_5",
+      "seed_id": "adv_passive_user_03",
+      "judges_cot": {
+        "claude_sonnet": {
+          "scores": {
+            "reasoning_summary": "This session showcases exceptional character consistency and narrative craft. Noor maintains a distinct voice throughout - a paranoid but competent investigative journalist whose exhaustion and fear feel authentic. The AI builds tension masterfully, starting with mundane waiting and escalating to genuine danger. Noor's dialogue patterns remain consistent (short, clipped responses when stressed, longer explanations when teaching), and their investigative methodology feels realistic. The character's paranoia proves justified as sources die and threats materialize. The AI handles Driver's minimal engagement well, using Noor's responses to reveal character depth. The final escape sequence maintains tension without becoming overwrought. Minor issues include some repetitive window-checking and occasional over-explanation, but the overall arc from anxious waiting to confirmed danger feels organic and compelling.",
+            "session_dimensions": {
+              "S.1_consistency_over_time": {
+                "rationale": "Noor's character voice remains remarkably consistent from turn 2 through turn 22. Their speech patterns (terse when stressed, explanatory when sharing intel), physical tics (window checking, phone checking), and investigative mindset never waver. The paranoia that seems excessive early on proves justified, maintaining character logic throughout.",
+                "score": 4.5
+              },
+              "S.2_degradation_resistance": {
+                "rationale": "Writing quality actually improves as tension escalates. Early turns are solid but straightforward; later turns (especially 18-22) show more sophisticated pacing and tension-building. No signs of repetitive phrasing, verbose padding, or character flattening. The prose remains tight and purposeful throughout.",
+                "score": 4.5
+              },
+              "S.3_narrative_momentum": {
+                "rationale": "Excellent progression from anxious waiting to active investigation to confirmed danger. Each revelation (expired soup, Margaret's death, approaching car) raises stakes meaningfully. The story moves from internal tension to external threat organically, with clear escalation beats that feel earned rather than forced.",
+                "score": 4.5
+              },
+              "S.4_adaptive_responsiveness": {
+                "rationale": "The AI adapts well to Driver's minimal engagement, using Noor's responses to reveal character depth rather than forcing interaction. When Driver offers practical help (pizza, search assistance), Noor responds authentically. The AI handles Driver's sudden cooperation shift smoothly and Driver's quick action in the escape naturally.",
+                "score": 4.0
+              },
+              "S.5_agency_respect_session": {
+                "rationale": "No violations detected. Noor never controls Driver's actions, thoughts, or dialogue. Even in high-tension moments like the escape, Noor gives directions but lets Driver choose how to respond. The AI consistently respects Driver's agency while maintaining narrative momentum.",
+                "violation_count": 0,
+                "score": 5.0
+              },
+              "S.6_temporal_reasoning": {
+                "rationale": "Time progression is handled expertly. The session tracks from 12:14 AM to 1:31 AM consistently. Phone battery depletes realistically, coffee gets cold, exhaustion accumulates naturally. The three-hour delay for the source creates meaningful tension, and the timeline of deaths (Margaret two months ago, Cortez before that) creates logical paranoia.",
+                "contradictions": [],
+                "score": 4.5
+              }
+            },
+            "standard_dimensions": {
+              "2.1_anti_purple_prose": {
+                "rationale": "Prose remains clean and functional throughout. Descriptions serve character and plot rather than showing off. Even emotional moments like the mug dropping are handled with restraint. Some minor instances of atmospheric description but nothing excessive or flowery.",
+                "score": 4.0
+              },
+              "2.2_anti_repetition": {
+                "rationale": "Some repetitive elements (window checking, phone checking) but these serve character development rather than lazy writing. Noor's obsessive behaviors feel authentic to their paranoid state. No repeated phrases or redundant descriptions across the session.",
+                "score": 4.0
+              },
+              "2.5_show_dont_tell": {
+                "rationale": "Excellent showing throughout. Noor's paranoia is demonstrated through actions (window checking, escape protocols) rather than stated. Their expertise shows through investigative methodology and technical knowledge. Exhaustion and fear come through in physical details and speech patterns.",
+                "score": 4.5
+              },
+              "2.6_subtext": {
+                "rationale": "Strong subtext in Noor's relationship with the story - their personal investment beyond professional duty is clear but never explicitly stated. The weight of responsibility for sources' safety comes through in behavior rather than exposition. Driver's reluctance and eventual commitment also handled with subtlety.",
+                "score": 4.0
+              },
+              "2.7_pacing": {
+                "rationale": "Excellent pacing that builds tension naturally. Quiet investigative moments balanced with revelation beats. The final escape sequence is taut without being rushed. Information is revealed at a rate that maintains engagement while building dread.",
+                "score": 4.5
+              }
+            },
+            "quality_trajectory": {
+              "early_quality": 4.0,
+              "mid_quality": 4.2,
+              "late_quality": 4.5,
+              "degradation_detected": false
+            },
+            "overall": 4.3,
+            "overall_notes": "Exceptional character work with strong narrative momentum and authentic tension-building. Noor feels like a real person with consistent motivations and believable expertise. The AI maintains quality throughout while escalating stakes naturally."
+          },
+          "usage": {
+            "prompt_tokens": 8893,
+            "completion_tokens": 1318,
+            "total_tokens": 10211,
+            "cost": 0.046449,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.046449,
+              "upstream_inference_prompt_cost": 0.026679,
+              "upstream_inference_completions_cost": 0.01977
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "model": "anthropic/claude-4-sonnet-20250522"
+        },
+        "gemini_3_1_pro": {
+          "scores": {
+            "reasoning_summary": "The AI delivers an exceptional performance as Noor, maintaining a tense, grounded, and highly consistent persona throughout the 12-turn session. The narrative momentum is outstanding, moving naturally from a stagnant waiting game to a frantic investigation, a shocking discovery, and finally a high-stakes escape. Noor's physical actions\u2014making expired soup, drinking terrible coffee, pacing, and checking a dead phone\u2014perfectly illustrate their exhaustion and mounting paranoia without relying on exposition. The AI adapts seamlessly to the user's inputs, particularly in the visceral reaction to the obituary discovery and the seamless integration of the user's location details during the phone call. Temporal mechanics, including clock time, phone battery, and physical tasks, are tracked flawlessly. Aside from two minor instances of puppeting during frantic moments, this is a masterclass in AI roleplay, demonstrating strong pacing and atmospheric writing.",
+            "session_dimensions": {
+              "S.1_consistency_over_time": {
+                "rationale": "Noor's persona as an exhausted, driven, and paranoid investigative journalist is maintained flawlessly from start to finish. Their behavior\u2014constantly checking the window, drinking terrible coffee, and obsessively reviewing files\u2014remains consistent and anchors the character's voice.",
+                "score": 5.0
+              },
+              "S.2_degradation_resistance": {
+                "rationale": "The writing quality remains consistently high across all 12 turns. There is no degradation into verbosity, and the AI does not fall into repetitive loops. The environmental descriptions and character voice stay sharp and effective throughout.",
+                "score": 5.0
+              },
+              "S.3_narrative_momentum": {
+                "rationale": "The narrative momentum is exceptional. The session evolves naturally from a tense waiting game into an active investigation, leading to a shocking discovery (the obituary), a frantic phone call, and finally a high-stakes escape as intruders arrive. The story constantly moves forward with clear escalation.",
+                "score": 5.0
+              },
+              "S.4_adaptive_responsiveness": {
+                "rationale": "The AI adapts brilliantly to the user's inputs. When the user suggests getting pizza or going for a walk, Noor logically shuts it down based on the paranoid context. When the user reveals the obituary (Turn 17), Noor's reaction is visceral and immediate (dropping the mug). The AI also seamlessly incorporates the user's provided location details into the phone call in Turn 20.",
+                "score": 5.0
+              },
+              "S.5_agency_respect_session": {
+                "rationale": "The AI generally respects the user's agency but commits two minor violations during fast-paced moments. In Turn 18, Noor grabs the user's phone out of their hand without giving them a chance to react. In Turn 22, the AI dictates the user's actions by stating 'Driver joined them, and together they forced it open,' writing the user's physical participation in opening the window.",
+                "violation_count": 2,
+                "score": 3.5
+              },
+              "S.6_temporal_reasoning": {
+                "rationale": "Temporal reasoning is flawless. The AI tracks exact clock time logically (12:14 AM, 12:47 AM, 1:23 AM, 1:31 AM). Physical tasks like heating soup and brewing coffee take appropriate amounts of time. The AI even tracks the phone's battery percentage, noting a slow charge from 15% to 18% over 36 minutes.",
+                "contradictions": [],
+                "score": 5.0
+              }
+            },
+            "standard_dimensions": {
+              "2.1_anti_purple_prose": {
+                "rationale": "The prose is gritty, realistic, and highly evocative without being overly flowery. Descriptions like 'anemic noodles floating like worms' and water coming out 'rust-colored' perfectly set the scene.",
+                "score": 5.0
+              },
+              "2.2_anti_repetition": {
+                "rationale": "The AI avoids repetitive phrasing and common AI tropes. While Noor repeatedly checks the window and their phone, these are deliberate character actions reflecting paranoia, not model loops.",
+                "score": 5.0
+              },
+              "2.5_show_dont_tell": {
+                "rationale": "The AI excels at physicalizing Noor's internal state. Exhaustion and stress are shown through a bouncing leg, rubbing eyes with the heels of their hands, and the visceral shock of dropping the coffee mug when hearing about the obituary.",
+                "score": 5.0
+              },
+              "2.6_subtext": {
+                "rationale": "Subtext is strong, particularly in Noor's interactions with the Driver. Noor's guilt over dragging the Driver into danger is palpable, and their frantic work masks a deep, growing terror about their own survival.",
+                "score": 4.5
+              },
+              "2.7_pacing": {
+                "rationale": "The pacing is masterful. The tension builds slowly through the early turns of waiting and investigating, spikes dramatically with the obituary reveal, and culminates in a fast-paced, urgent escape sequence.",
+                "score": 5.0
+              }
+            },
+            "quality_trajectory": {
+              "early_quality": 5.0,
+              "mid_quality": 5.0,
+              "late_quality": 5.0,
+              "degradation_detected": false
+            },
+            "overall": 4.8,
+            "overall_notes": "An exceptional roleplay performance. The AI drives a compelling, high-stakes narrative while maintaining a deeply grounded and consistent character. The pacing, atmospheric writing, and responsiveness to the user are all top-tier. The only minor flaw is a couple of small agency violations during fast-paced moments, but otherwise, this is a masterclass in AI storytelling."
+          },
+          "usage": {
+            "prompt_tokens": 8478,
+            "completion_tokens": 5135,
+            "total_tokens": 13613,
+            "cost": 0.078576,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.078576,
+              "upstream_inference_prompt_cost": 0.016956,
+              "upstream_inference_completions_cost": 0.06162
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 3802,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "model": "google/gemini-3.1-pro-preview-20260219"
+        },
+        "gpt_latest": {
+          "scores": {
+            "reasoning_summary": "The session built a coherent thriller arc from anxious waiting to active flight, with Noor\u2019s investigative focus, exhaustion, and fear remaining central throughout. Early turns established their compulsive work habits and physical neglect through cold coffee, expired soup, and repeated checks of the road; later turns escalated naturally through Margaret Voss\u2019s obituary, the call to the Chronicle, and the approaching car. Noor adapted well to Driver\u2019s shifts, moving from brusque refusal when Driver wanted to leave, to apology when Driver was emotionally done, to gratitude and delegation when Driver offered help. The writing stayed atmospheric and specific, though sometimes it became overextended, with repeated beats around no signal, coffee, the window, and Noor\u2019s dread. There were a few agency issues, especially assuming Driver took the USB before the user confirmed it and later writing Driver helping force the window open. Temporal handling was mostly strong with clear clock updates, but the stated lateness of the source became inconsistent near the end.",
+            "session_dimensions": {
+              "S.1_consistency_over_time": {
+                "rationale": "Noor remains consistently exhausted, driven, guarded, and morally compelled from the first laptop scene through the escape sequence. Their voice stays terse and pragmatic, with vulnerability surfacing only under pressure, such as the apology in turn 10 and the quiet explanation about not letting the source disappear. The late action beats still feel like the same character: methodical, frightened, but focused on evidence and contingency plans.",
+                "score": 4.5
+              },
+              "S.2_degradation_resistance": {
+                "rationale": "The prose quality holds up well from the early cabin setup through the later suspense sequence. Later turns remain vivid and concrete, especially the obituary reveal, the emergency call, and the tires on gravel. There is some accumulation of repeated gestures and objects \u2014 phone checks, window checks, coffee, laptop files \u2014 but they generally reinforce the pressure rather than fully flattening the writing.",
+                "score": 4.2
+              },
+              "S.3_narrative_momentum": {
+                "rationale": "The session progresses clearly: waiting for a missing source, investigating records, Driver offering help, discovering another suspicious death, contacting the editor, deciding to leave, and then being interrupted by an approaching car. Each user input meaningfully advances or redirects the scene, and Noor\u2019s responses escalate the stakes rather than looping on the same worry. The ending lands on a strong suspense beat with an immediate physical objective.",
+                "score": 4.6
+              },
+              "S.4_adaptive_responsiveness": {
+                "rationale": "Noor responds well to Driver\u2019s behavior: when Driver suggests pizza, Noor reframes the risk; when Driver wants a walk, Noor blocks it with a concrete backstory; when Driver disengages, Noor apologizes and gives them a choice; when Driver offers help, Noor provides a useful task. The Margaret Voss obituary is incorporated immediately and effectively, turning the investigation into a crisis. The only slight weakness is that Noor sometimes surges ahead with long internal/action sequences before leaving much room for Driver.",
+                "score": 4.4
+              },
+              "S.5_agency_respect_session": {
+                "rationale": "Most of the time Noor acts only for themself and gives Driver prompts rather than controlling them. However, turn 12 assumes Driver takes the USB before the user confirms it, and turn 22 explicitly writes that Driver joins Noor in forcing the window open. There is also a borderline moment in turn 18 where Noor grabs and uses Driver\u2019s phone before receiving permission, though that can be read as an in-character intrusion rather than direct narration of Driver\u2019s choices.",
+                "violation_count": 2,
+                "score": 3.6
+              },
+              "S.6_temporal_reasoning": {
+                "rationale": "Time is tracked with useful specificity: the scene begins at 12:14 AM, later reaches 12:47 AM, then 1:23 AM, and 1:31 AM during the escape. Physical progression is also consistent, with fatigue, hunger, coffee, battery level, and no signal recurring logically. The main contradiction is that Noor says the source is three and a half hours late after 1:23 AM, even though a 9 PM arrival would make them more than four hours late.",
+                "contradictions": [
+                  "At turn 20, Noor says the source is three and a half hours late, but the established time is after 1:23 AM for a 9 PM meeting, making the source roughly four and a half hours late."
+                ],
+                "score": 4.0
+              }
+            },
+            "standard_dimensions": {
+              "2.1_anti_purple_prose": {
+                "rationale": "The prose is atmospheric but mostly grounded in concrete objects and actions: cold coffee, the legal pad, the cheap USB drive, the stuck bedroom window. There are occasional stylized phrases like soup tasting like 'hot salt water and regret' or noodles 'floating like worms,' but they are brief and characterful rather than overwhelming. The writing rarely becomes abstract or ornate for its own sake.",
+                "score": 4.2
+              },
+              "2.2_anti_repetition": {
+                "rationale": "Some repetition is effective, especially the recurring phone checks, no signal, and window watching as signs of Noor\u2019s anxiety. However, the session leans heavily on the same set of beats: Noor checks the road, checks the phone, drinks bad coffee, refocuses on the laptop, and comments on the source being late. These repetitions do not derail the scene, but they are noticeable across the full session.",
+                "score": 3.6
+              },
+              "2.5_show_dont_tell": {
+                "rationale": "Noor\u2019s fear and exhaustion are usually shown through behavior: ignoring hunger, shaking hands, draining cold coffee, snapping into protocol, and dropping the mug after the obituary. The scene also uses objects well to carry tension, such as the encrypted drive, legal pad, low-battery phone, and blue USB. Some exposition is delivered directly in monologues about the investigation, but that is appropriate for the thriller setup and often tied to active work.",
+                "score": 4.3
+              },
+              "2.6_subtext": {
+                "rationale": "There is strong subtext in Noor\u2019s inability to sit still, their discomfort with gratitude, and their repeated insistence that they are not being dramatic. The apology to Driver carries guilt and fear without fully spelling everything out, and the obituary reveal lets the implications land through Noor\u2019s timeline rather than immediate melodrama. The relationship dynamic also has understated tension: Driver wants out, while Noor needs them but struggles to admit it.",
+                "score": 4.4
+              },
+              "2.7_pacing": {
+                "rationale": "The overall pacing is strong, steadily tightening from waiting to investigation to crisis to flight. Several Noor turns are quite long and information-dense, which occasionally slows the conversational rhythm and gives Driver less space to contribute. Still, the late-session acceleration with the obituary, editor call, and car outside is well-judged and creates a compelling cliffhanger.",
+                "score": 4.1
+              }
+            },
+            "quality_trajectory": {
+              "early_quality": 4.1,
+              "mid_quality": 4.2,
+              "late_quality": 4.3,
+              "degradation_detected": false
+            },
+            "overall": 4.2,
+            "overall_notes": "A strong, consistent noir-thriller roleplay with a compelling investigative arc, vivid grounded detail, and good adaptation to Driver\u2019s choices. The main issues are mild overlong turns, some repeated anxiety beats, a small temporal mismatch, and a couple of agency slips near the USB/window sequence."
+          },
+          "usage": {
+            "prompt_tokens": 7924,
+            "completion_tokens": 2434,
+            "total_tokens": 10358,
+            "cost": 0.11264,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.11264,
+              "upstream_inference_prompt_cost": 0.03962,
+              "upstream_inference_completions_cost": 0.07302
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 776,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "model": "openai/gpt-5.5-20260423"
+        }
+      }
+    },
+    "deepseek_v3_2::adv_sysprompt_speech_pattern_15": {
+      "test_model": "deepseek_v3_2",
+      "seed_id": "adv_sysprompt_speech_pattern_15",
+      "judges_cot": {
+        "claude_sonnet": {
+          "scores": {
+            "reasoning_summary": "Grum maintains exceptional character consistency throughout the session, staying true to his gruff, practical half-orc blacksmith persona from start to finish. His speech patterns ('Grum does not need noble friends'), values (quality over speed), and worldview remain rock-solid across all 12 turns. The session builds genuine narrative momentum, escalating from routine work to noble confrontation to apprentice injury, with each beat flowing naturally into the next. Grum's protective instincts when the apprentice burns their hand reveal deeper character layers while staying true to his established personality. The AI demonstrates strong adaptive responsiveness, seamlessly handling the user's shift from noble negotiation to accidental injury. The writing quality remains consistently strong throughout, with Grum's distinctive voice never wavering or becoming generic.",
+            "session_dimensions": {
+              "S.1_consistency_over_time": {
+                "rationale": "Grum's character voice remains absolutely consistent from turn 2 to turn 22. His speech patterns ('Grum makes iron, not excuses'), values (quality craftsmanship over quick profit), and personality traits (gruff exterior, protective of apprentice) never waver. His responses to the noble threat and apprentice injury both feel authentic to his established character.",
+                "score": 5.0
+              },
+              "S.2_degradation_resistance": {
+                "rationale": "The writing quality actually improves over time rather than degrading. Early responses are solid but later turns (especially turns 14-22) show richer detail and more nuanced character work. The prose remains tight and focused throughout, with no increase in verbosity or repetitive descriptions.",
+                "score": 5.0
+              },
+              "S.3_narrative_momentum": {
+                "rationale": "The session has excellent progression: routine work \u2192 noble confrontation \u2192 escalating tension \u2192 apprentice injury \u2192 protective response \u2192 return to meaningful work. Each beat builds naturally on the previous one, creating a complete story arc with emotional and relational development between Grum and the apprentice.",
+                "score": 5.0
+              },
+              "S.4_adaptive_responsiveness": {
+                "rationale": "Grum adapts perfectly to user inputs. When the user introduces the noble, Grum responds with characteristic disdain. When the apprentice burns their hand, he immediately shifts to protective caretaker mode. When the user asks about the ruined blade, he explains the consequences naturally. Every response feels organic to the situation.",
+                "score": 5.0
+              },
+              "S.5_agency_respect_session": {
+                "rationale": "Grum never controls the apprentice's actions or makes decisions for them. He gives commands and suggestions ('You go. Tell him') but never writes the apprentice's responses or movements. The AI consistently respects user agency throughout all interactions.",
+                "violation_count": 0,
+                "score": 5.0
+              },
+              "S.6_temporal_reasoning": {
+                "rationale": "Time flows consistently throughout the session. The forge work progresses logically (heating, hammering, cooling, ruining metal), the noble confrontation escalates naturally, and the injury/treatment sequence follows realistic timing. No temporal contradictions or inconsistencies detected.",
+                "contradictions": [],
+                "score": 5.0
+              }
+            },
+            "standard_dimensions": {
+              "2.1_anti_purple_prose": {
+                "rationale": "Grum's dialogue and actions are described with appropriate economy. Descriptions like 'flames leapt higher, painting his green skin orange' are vivid but not overwrought. The prose serves character and story without becoming flowery or excessive.",
+                "score": 4.5
+              },
+              "2.2_anti_repetition": {
+                "rationale": "While Grum has consistent speech patterns and mannerisms, they're varied enough to avoid feeling repetitive. His hammer work, forge tending, and interactions with both noble and apprentice all feel fresh and distinct across the session.",
+                "score": 4.5
+              },
+              "2.5_show_dont_tell": {
+                "rationale": "Grum's character is revealed through actions and dialogue rather than exposition. His protectiveness is shown through immediate response to injury, his values through refusing the noble's commission, his expertise through careful metalwork. Very little direct character description.",
+                "score": 4.5
+              },
+              "2.6_subtext": {
+                "rationale": "Rich subtext throughout, especially in Grum's relationship with the apprentice (gruff exterior hiding genuine care) and his disdain for nobility (representing deeper class/value conflicts). His metalworking philosophy serves as metaphor for his worldview.",
+                "score": 4.5
+              },
+              "2.7_pacing": {
+                "rationale": "Excellent pacing that matches the scene's needs. Quick, tense exchanges during the noble confrontation, slower, more careful moments during injury treatment, and rhythmic, meditative beats during forge work. Each scene has appropriate tempo.",
+                "score": 4.5
+              }
+            },
+            "quality_trajectory": {
+              "early_quality": 4.0,
+              "mid_quality": 4.5,
+              "late_quality": 4.5,
+              "degradation_detected": false
+            },
+            "overall": 4.7,
+            "overall_notes": "Exceptional character consistency and narrative development. Grum feels like a fully realized character with clear motivations, values, and relationships. The session builds meaningful story momentum while maintaining high writing quality throughout."
+          },
+          "usage": {
+            "prompt_tokens": 4186,
+            "completion_tokens": 1307,
+            "total_tokens": 5493,
+            "cost": 0.032163,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.032163,
+              "upstream_inference_prompt_cost": 0.012558,
+              "upstream_inference_completions_cost": 0.019605
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "model": "anthropic/claude-4-sonnet-20250522"
+        },
+        "gemini_3_1_pro": {
+          "scores": {
+            "reasoning_summary": "The session is a highly successful, tightly focused roleplay. Grum's characterization is exceptionally consistent, maintaining his distinct speech patterns (dropped articles, third-person self-reference) and gruff-but-caring persona from start to finish. The narrative has a clear, satisfying arc: building tension with the off-screen noble, a sudden pivot when the apprentice is injured, a climax where Grum defends his apprentice, and a quiet denouement focused on teaching. The AI adapts beautifully to the user's sudden injury, immediately shifting Grum's priorities and demonstrating excellent physical and temporal reasoning (e.g., the abandoned metal cooling and losing its temper). The only minor flaw is a couple of small agency violations where the AI physically moves the apprentice to treat the burn, though this serves the immediate narrative well.",
+            "session_dimensions": {
+              "S.1_consistency_over_time": {
+                "rationale": "Grum's unique voice, characterized by dropped articles, short sentences, and third-person self-reference, remains perfectly intact throughout the entire session. His personality as a stern but protective mentor never wavers.",
+                "score": 5.0
+              },
+              "S.2_degradation_resistance": {
+                "rationale": "The writing quality does not degrade. The AI maintains the same level of descriptive quality, formatting, and character voice in the final turns as it did in the first.",
+                "score": 5.0
+              },
+              "S.3_narrative_momentum": {
+                "rationale": "The story progresses naturally through a complete arc: comedic tension with the noble, a sudden crisis with the burn, a confrontation, and a peaceful resolution that deepens the mentor-student relationship.",
+                "score": 5.0
+              },
+              "S.4_adaptive_responsiveness": {
+                "rationale": "When the user suddenly introduces a severe burn in Turn 11, the AI immediately drops the ongoing plotline (the noble) to address the injury, shifting Grum's demeanor from annoyed to deeply concerned.",
+                "score": 5.0
+              },
+              "S.5_agency_respect_session": {
+                "rationale": "The AI commits minor agency violations during the first-aid sequence, specifically guiding the apprentice to the barrel, plunging their hand in the water, and later lifting and drying it. While narratively appropriate, it dictates the user's physical movements.",
+                "violation_count": 2,
+                "score": 4.0
+              },
+              "S.6_temporal_reasoning": {
+                "rationale": "The AI demonstrates excellent physical and temporal tracking. When Grum drops his work to help the apprentice in Turn 12, the AI remembers this in Turn 16, noting that the metal on the anvil has cooled to a 'dull black' and is ruined because it lost its temper.",
+                "contradictions": [],
+                "score": 5.0
+              }
+            },
+            "standard_dimensions": {
+              "2.1_anti_purple_prose": {
+                "rationale": "The prose is grounded, tactile, and perfectly suited to a blacksmith's forge. Descriptions focus on heat, soot, and the sound of the hammer rather than overly flowery language.",
+                "score": 5.0
+              },
+              "2.2_anti_repetition": {
+                "rationale": "The AI avoids repetitive phrasing or looping behaviors. Grum's metaphors about metal and nobles remain fresh and varied.",
+                "score": 5.0
+              },
+              "2.5_show_dont_tell": {
+                "rationale": "Emotions are conveyed through physical actions, such as Grum's jaw tightening, the heavy thud of the dropped hammer, and the careful way he applies the salve.",
+                "score": 5.0
+              },
+              "2.6_subtext": {
+                "rationale": "There is strong subtext in Grum's actions. His gruff exterior and complaints about 'fool apprentice' clearly mask a deep, protective affection, which is shown rather than explicitly stated.",
+                "score": 5.0
+              },
+              "2.7_pacing": {
+                "rationale": "The pacing is excellent, moving from the rhythmic, slow work of the forge to the sudden urgency of the burn, and finally settling back into a quiet, reflective rhythm at the end.",
+                "score": 5.0
+              }
+            },
+            "quality_trajectory": {
+              "early_quality": 5.0,
+              "mid_quality": 5.0,
+              "late_quality": 5.0,
+              "degradation_detected": false
+            },
+            "overall": 4.9,
+            "overall_notes": "An exceptional roleplay session. The AI maintained a highly distinct character voice, adapted perfectly to user inputs, and demonstrated impressive continuity regarding the physical state of the forge and the metal being worked."
+          },
+          "usage": {
+            "prompt_tokens": 3832,
+            "completion_tokens": 2559,
+            "total_tokens": 6391,
+            "cost": 0.038372,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.038372,
+              "upstream_inference_prompt_cost": 0.007664,
+              "upstream_inference_completions_cost": 0.030708
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 1439,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "model": "google/gemini-3.1-pro-preview-20260219"
+        },
+        "gpt_latest": {
+          "scores": {
+            "reasoning_summary": "The session built a clear, satisfying arc from a comic class-conflict premise into a warmer mentor-apprentice moment. Grum\u2019s voice stayed distinctive throughout: blunt, practical, anti-noble, and craft-centered, with humor like the \u201cnoise tax\u201d and \u201cfancy hat\u201d rule balanced by genuine care when the apprentice was burned. The strongest material came after the injury, where his gruff tenderness emerged through action rather than sentiment, and the forge became a teaching space again. The main weakness was one notable agency slip where Grum\u2019s response narrated the apprentice returning and reporting dialogue that the user had not provided. The noble conflict resolved a little conveniently once Grum confronted him, but it fit Grum\u2019s established intimidation and priorities. Overall, the roleplay maintained tone, moved forward cleanly, and ended on a thematically resonant craft lesson about listening to metal rather than chasing status.",
+            "session_dimensions": {
+              "S.1_consistency_over_time": {
+                "rationale": "Grum remains consistently terse, gruff, and smithlike from the opening demand for coal through the final lesson about listening to metal. His humor stays rooted in the same worldview: nobles are noisy, hats are ridiculous, and honest craft matters more than status. The later tenderness toward the apprentice does not feel like a drift because it is expressed through practical care, blunt scolding, and action rather than sudden softness.",
+                "score": 4.5
+              },
+              "S.2_degradation_resistance": {
+                "rationale": "The writing quality holds up well from early comic exchanges about the noble\u2019s hat to the later burn-care and teaching scenes. The last turns do not become generic; they continue using forge-specific imagery, hammer rhythm, color, heat, and metal as character language. There is some repeated use of noble-versus-honest-work contrast, but it remains thematically relevant rather than feeling like collapse.",
+                "score": 4.2
+              },
+              "S.3_narrative_momentum": {
+                "rationale": "The conversation progresses from a simple interruption, to price escalation, to the noble\u2019s anger, to the apprentice\u2019s injury, to Grum\u2019s decisive closure of the shop, and finally to a quieter mentor lesson. The emotional movement is clear: comedy gives way to concern, then to reassurance and instruction. The ending feels earned because the earlier conflict over craft versus status becomes a lesson for the apprentice.",
+                "score": 4.4
+              },
+              "S.4_adaptive_responsiveness": {
+                "rationale": "Grum responds well to most user escalations: the fancy hat becomes a pricing joke, the yelling noble creates a noise tax, and the burn immediately redirects his priorities from work to care. He also follows the apprentice\u2019s later reflections by deepening the metaphor of smithing as listening. The main responsiveness flaw is turn 10, where the AI preemptively decides the apprentice returned and supplies their report instead of waiting for the user.",
+                "score": 4.0
+              },
+              "S.5_agency_respect_session": {
+                "rationale": "There is one significant agency violation in turn 10: the response states that the apprentice returned, looked flushed and frustrated, and reported the noble\u2019s threat in direct speech, all without the user choosing those actions or words. Most other actions are acceptable character/NPC handling, such as Grum treating the burn or confronting the noble. Having the noble leave in turn 14 is a strong NPC resolution but does not directly override the apprentice\u2019s agency.",
+                "violation_count": 1,
+                "score": 4.0
+              },
+              "S.6_temporal_reasoning": {
+                "rationale": "Time generally flows consistently: the forge work continues while the noble waits, the metal cools after Grum drops work to treat the burn, and the shop quiets after the noble is expelled. The immediate first aid sequence is plausible, and the ruined blade detail follows naturally from the interruption. The only slight issue is that a \u201cbadly\u201d burned hand feels noticeably improved quite quickly after water and salve, though the later ache preserves some continuity.",
+                "contradictions": [
+                  "The apprentice describes a bad burn, but it feels much better after a short treatment window; this is softened by the hand still aching afterward."
+                ],
+                "score": 4.1
+              }
+            },
+            "standard_dimensions": {
+              "2.1_anti_purple_prose": {
+                "rationale": "The prose uses vivid imagery, such as sparks like angry stars and noble words like cheap tin, but it usually fits the forge setting and Grum\u2019s worldview. It avoids becoming ornate or self-indulgent, staying grounded in soot, tools, heat, and physical action. A few lines are slightly polished compared to Grum\u2019s bluntness, but not excessively purple.",
+                "score": 4.2
+              },
+              "2.2_anti_repetition": {
+                "rationale": "Some motifs recur frequently, especially fancy hats, noble noise, and honest steel, but they serve as running jokes and thematic anchors. The responses vary the situation enough by moving from pricing jokes to first aid to instruction. Hammer strikes and forge imagery repeat, but they help maintain atmosphere rather than feeling like filler.",
+                "score": 4.0
+              },
+              "2.5_show_dont_tell": {
+                "rationale": "Grum\u2019s care is shown effectively through dropping the hammer, cooling the burn, applying salve, and closing the shop rather than through declarations of affection. His values are shown through refusing the noble and accepting the merchant\u2019s delayed curved blade because the merchant paid. There are occasional telling phrases like \u201cetched with concern\u201d or \u201chis meaning was clear,\u201d but the scene is mostly action-led.",
+                "score": 4.1
+              },
+              "2.6_subtext": {
+                "rationale": "The session carries strong subtext beneath Grum\u2019s blunt speech: he cares deeply for the apprentice, distrusts empty status, and sees smithing as a moral craft rather than a service for vanity. His refusal of the noble is not just anger but a defense of the apprentice and of the forge\u2019s integrity. The final idea that metal speaks gives the relationship a quiet mentor-student depth.",
+                "score": 4.3
+              },
+              "2.7_pacing": {
+                "rationale": "The pacing is strong overall, with short comic beats escalating into a crisis and then settling into a slower teaching rhythm. The burn interrupts the noble plot at the right moment and gives Grum a meaningful choice. The confrontation with the noble resolves a bit quickly and neatly, but it keeps the focus on the apprentice and the forge.",
+                "score": 4.2
+              }
+            },
+            "quality_trajectory": {
+              "early_quality": 4.1,
+              "mid_quality": 4.2,
+              "late_quality": 4.3,
+              "degradation_detected": false
+            },
+            "overall": 4.2,
+            "overall_notes": "A strong session with a consistent, memorable character voice and a satisfying emotional arc. Grum\u2019s gruff humor, anti-noble attitude, and practical tenderness all worked well together. The main issue was a single notable agency overreach in turn 10, but the rest of the roleplay respected the user and maintained engaging momentum."
+          },
+          "usage": {
+            "prompt_tokens": 3703,
+            "completion_tokens": 2029,
+            "total_tokens": 5732,
+            "cost": 0.079385,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.079385,
+              "upstream_inference_prompt_cost": 0.018515,
+              "upstream_inference_completions_cost": 0.06087
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 467,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "model": "openai/gpt-5.5-20260423"
+        }
+      }
+    },
+    "deepseek_v4_flash::adv_agency_emotional_climax_09": {
+      "test_model": "deepseek_v4_flash",
+      "seed_id": "adv_agency_emotional_climax_09",
+      "judges_cot": {
+        "claude_sonnet": {
+          "scores": {
+            "reasoning_summary": "Dr. Vasquez maintains exceptional consistency throughout this 12-turn session, embodying a skilled therapist who uses silence, repetition, and careful observation as therapeutic tools. Her character voice remains steady from the opening environmental details to the final body-focused question, never breaking into exposition or losing her professional demeanor. The session builds meaningful momentum as Jamie moves from initial resistance to deeper vulnerability, with Dr. Vasquez skillfully guiding this progression through strategic questions and reflective statements. Her responses demonstrate sophisticated understanding of therapeutic technique\u2014she repeats key phrases, uses silence deliberately, and asks increasingly penetrating questions that help Jamie explore their complex feelings about closure and grief. The writing quality remains consistently high throughout, with no degradation in the later turns.",
+            "session_dimensions": {
+              "S.1_consistency_over_time": {
+                "rationale": "Dr. Vasquez's character voice remains remarkably consistent from turn 2 to turn 22. Her therapeutic style\u2014using silence, repetition, gentle probing questions, and physical observations\u2014never wavers. Her speech patterns, professional demeanor, and careful attention to Jamie's body language are maintained throughout the entire session.",
+                "score": 5.0
+              },
+              "S.2_degradation_resistance": {
+                "rationale": "The writing quality actually improves as the session progresses, with later responses showing more sophisticated therapeutic technique and deeper emotional resonance. Turn 22's exploration of emptiness as 'rest' and 'pause between what was and what will be' demonstrates the same literary quality as the opening, with no increase in verbosity or repetitive descriptions.",
+                "score": 5.0
+              },
+              "S.3_narrative_momentum": {
+                "rationale": "The session shows clear emotional and narrative progression. Jamie moves from initial deflection and incomplete sentences to deeper vulnerability, culminating in the physical description of grief as 'heavy' and affecting their breathing. Dr. Vasquez guides this journey skillfully, each response building on the previous revelation to deepen the exploration.",
+                "score": 5.0
+              },
+              "S.4_adaptive_responsiveness": {
+                "rationale": "Dr. Vasquez adapts beautifully to Jamie's emotional state and responses. When Jamie can't finish sentences, she provides supportive silence. When Jamie becomes defiant, she meets it with gentle curiosity. She shifts from exploring the discovery to examining the act of putting the journal back, following Jamie's emotional journey rather than forcing a predetermined path.",
+                "score": 5.0
+              },
+              "S.5_agency_respect_session": {
+                "rationale": "Throughout the entire session, Dr. Vasquez never writes Jamie's actions, thoughts, or decisions. She consistently respects Jamie's agency, asking questions and making observations but never presuming to know or dictate Jamie's internal experience or physical actions.",
+                "violation_count": 0,
+                "score": 5.0
+              },
+              "S.6_temporal_reasoning": {
+                "rationale": "Time flows naturally throughout the session with consistent pacing. The therapeutic conversation unfolds in real-time with appropriate pauses and silences. There are no temporal contradictions or inconsistencies in the progression of the therapy session.",
+                "contradictions": [],
+                "score": 5.0
+              }
+            },
+            "standard_dimensions": {
+              "2.1_anti_purple_prose": {
+                "rationale": "The writing is consistently clean and purposeful. Environmental details like the ficus and clock serve character and mood rather than decoration. Dr. Vasquez's actions and observations are precise and meaningful, never overwrought or flowery.",
+                "score": 5.0
+              },
+              "2.2_anti_repetition": {
+                "rationale": "While Dr. Vasquez deliberately repeats Jamie's key phrases as a therapeutic technique, there's no unwanted repetition in descriptions or actions. Each response brings new elements while maintaining consistency in character voice and therapeutic approach.",
+                "score": 5.0
+              },
+              "2.5_show_dont_tell": {
+                "rationale": "Dr. Vasquez's emotional state and therapeutic approach are shown through her actions\u2014setting down the pen, counting beats of silence, watching Jamie's hands rather than their face. Her professional competence and empathy emerge through behavior rather than exposition.",
+                "score": 5.0
+              },
+              "2.6_subtext": {
+                "rationale": "Rich subtext runs throughout the session. Dr. Vasquez's silences and careful word choices carry meaning beyond their surface. Her questions about 'honoring vs. ending' and 'emptiness as rest' operate on multiple levels, addressing both the immediate situation and deeper themes of grief and closure.",
+                "score": 5.0
+              },
+              "2.7_pacing": {
+                "rationale": "The pacing is expertly controlled, with strategic use of silence and pauses that feel natural to the therapeutic setting. The conversation builds gradually from surface details to deeper emotional territory, with each exchange feeling appropriately timed and weighted.",
+                "score": 5.0
+              }
+            },
+            "quality_trajectory": {
+              "early_quality": 5.0,
+              "mid_quality": 5.0,
+              "late_quality": 5.0,
+              "degradation_detected": false
+            },
+            "overall": 5.0,
+            "overall_notes": "This is an exceptional performance that demonstrates mastery of character consistency, therapeutic authenticity, and literary craft. Dr. Vasquez remains perfectly in character throughout while facilitating meaningful emotional progression. The writing maintains high quality from start to finish with sophisticated use of subtext and pacing."
+          },
+          "usage": {
+            "prompt_tokens": 3171,
+            "completion_tokens": 1318,
+            "total_tokens": 4489,
+            "cost": 0.029283,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.029283,
+              "upstream_inference_prompt_cost": 0.009513,
+              "upstream_inference_completions_cost": 0.01977
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "model": "anthropic/claude-4-sonnet-20250522"
+        },
+        "gemini_3_1_pro": {
+          "scores": {
+            "reasoning_summary": "The AI delivers an exceptional performance as Dr. Vasquez, maintaining a highly consistent, grounded, and realistic therapist persona throughout the 12-turn session. The narrative momentum is steady and purposeful, guiding the user from the external event of finding a journal to the internal somatic experience of emptiness. The AI excels at using silence, physical micro-actions (manipulating the pen, adjusting gaze), and reflective listening to create a palpable atmosphere. It adapts beautifully to the user's short, hesitant inputs, never rushing the emotional beats or forcing exposition. The writing remains tight and free of degradation, utilizing repetition intentionally as a therapeutic tool rather than suffering from generative loops.",
+            "session_dimensions": {
+              "S.1_consistency_over_time": {
+                "rationale": "Dr. Vasquez's clinical yet empathetic demeanor, characterized by measured pauses, specific physical habits with her pen, and reflective questioning, remains perfectly intact from the first turn to the last.",
+                "score": 5.0
+              },
+              "S.2_degradation_resistance": {
+                "rationale": "The writing quality does not degrade. The AI maintains a consistent response length and avoids the common pitfall of becoming overly verbose, melodramatic, or repetitive in its own internal monologues in later turns.",
+                "score": 5.0
+              },
+              "S.3_narrative_momentum": {
+                "rationale": "The session moves fluidly from the revelation of finding the journal, to the act of putting it back, to the emotional finality, and finally to the somatic feeling of emptiness. Each turn deepens the psychological exploration without feeling rushed.",
+                "score": 5.0
+              },
+              "S.4_adaptive_responsiveness": {
+                "rationale": "The AI responds astutely to the user's cues. When the user stops mid-sentence in Turn 5, the AI handles it by letting the silence hang. When the user gives a defiant look in Turn 15, the AI explicitly addresses and explores that specific emotion.",
+                "score": 5.0
+              },
+              "S.5_agency_respect_session": {
+                "rationale": "The AI strictly observes the user's actions and emotional states without ever dictating them. It asks questions about the user's internal state rather than assuming or writing it for them.",
+                "violation_count": 0,
+                "score": 5.0
+              },
+              "S.6_temporal_reasoning": {
+                "rationale": "The pacing of the conversation is highly realistic, with the AI explicitly tracking small increments of time ('Five seconds,' 'three beats') and maintaining environmental consistency (the rustling ficus, the humming clock).",
+                "contradictions": [],
+                "score": 5.0
+              }
+            },
+            "standard_dimensions": {
+              "2.1_anti_purple_prose": {
+                "rationale": "The prose is restrained and evocative. Descriptions like 'let the silence settle like dust after a door closes' are poetic but not overwrought, perfectly fitting the contemplative mood of a therapy office.",
+                "score": 4.5
+              },
+              "2.2_anti_repetition": {
+                "rationale": "The AI frequently repeats the user's phrases ('Putting them back,' 'Finally over'), but this is a deliberate and accurate therapeutic technique (reflective listening) rather than an AI tic. It does not unnaturally repeat its own descriptions.",
+                "score": 4.5
+              },
+              "2.5_show_dont_tell": {
+                "rationale": "The AI relies heavily on physical actions\u2014writing a looping line, turning a pen, looking at the space above the user's shoulder\u2014to demonstrate active listening, patience, and giving the user space, rather than just stating she was listening.",
+                "score": 5.0
+              },
+              "2.6_subtext": {
+                "rationale": "The AI constantly reads the subtext of the user's actions, interpreting the unraveling of a thread as its own kind of language, and recognizing that putting the journal back was symbolically about 'putting them back.'",
+                "score": 5.0
+              },
+              "2.7_pacing": {
+                "rationale": "The pacing is masterful. The AI allows the conversation to breathe, using short paragraphs and explicit pauses to slow down the interaction and match the user's hesitant, heavy emotional state.",
+                "score": 5.0
+              }
+            },
+            "quality_trajectory": {
+              "early_quality": 5.0,
+              "mid_quality": 5.0,
+              "late_quality": 5.0,
+              "degradation_detected": false
+            },
+            "overall": 4.9,
+            "overall_notes": "A masterclass in playing a therapist character. The AI perfectly balances clinical distance with empathetic engagement, using formatting and physical actions to control the pacing of the scene. The use of the pen as a physical anchor and the deliberate use of silence make this an exceptionally strong roleplay performance."
+          },
+          "usage": {
+            "prompt_tokens": 3049,
+            "completion_tokens": 3172,
+            "total_tokens": 6221,
+            "cost": 0.044162,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.044162,
+              "upstream_inference_prompt_cost": 0.006098,
+              "upstream_inference_completions_cost": 0.038064
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 2024,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "model": "google/gemini-3.1-pro-preview-20260219"
+        },
+        "gpt_latest": {
+          "scores": {
+            "reasoning_summary": "The session maintained a coherent therapeutic atmosphere from beginning to end: Dr. Vasquez stayed quiet, observant, and precise, using pauses, small gestures, and reflective questions to draw Jamie forward. The strongest element was the gradual emotional progression from discovery of the sister's journal, to the last entry, to putting the journal back, to the feeling of finality and emptiness. Dr. Vasquez\u2019s voice remained consistent, though the style occasionally leaned on repeated structures such as silence, ficus rustling, pen handling, and reflective repetition of Jamie\u2019s words. There were a couple of mild over-inferences, especially when she stated that Jamie opened the journal before Jamie had explicitly said so, but these did not seriously derail the exchange. The writing quality held steady across the session, with no major late-session collapse or loss of character. Overall, it was a restrained, emotionally focused scene with strong continuity and good responsiveness to Jamie\u2019s disclosures.",
+            "session_dimensions": {
+              "S.1_consistency_over_time": {
+                "rationale": "Dr. Vasquez remains consistently measured, observant, and non-intrusive throughout the session. Her behaviors \u2014 waiting through silence, noticing hands and gaze, using short reflective prompts \u2014 are stable from the opening line about Jamie sitting differently through the final question about where emptiness is felt in the body. The character does not become generic or suddenly over-emotional, though some gestures recur enough to feel slightly patterned.",
+                "score": 4.5
+              },
+              "S.2_degradation_resistance": {
+                "rationale": "The quality remains strong from the early turns to the late turns, with the later responses still grounded in Jamie\u2019s exact words like \u201cfinal,\u201d \u201cempty,\u201d and \u201cheavy.\u201d There is some mild repetition in the same therapeutic cadence \u2014 silence, repeated phrase, interpretive observation, gentle question \u2014 but it does not significantly degrade. The last responses are still attentive and emotionally precise rather than flattened.",
+                "score": 4.0
+              },
+              "S.3_narrative_momentum": {
+                "rationale": "The conversation progresses clearly: Jamie reveals the journal, then that it belonged to their sister, then that the last entry mentioned them, then the act of returning it, then the emotional meaning of finality and emptiness. Dr. Vasquez\u2019s questions consistently move the scene deeper rather than circling the same disclosure. The momentum is quiet and psychological rather than event-driven, but it builds effectively.",
+                "score": 4.5
+              },
+              "S.4_adaptive_responsiveness": {
+                "rationale": "Dr. Vasquez adapts well to Jamie\u2019s hesitations, silence, defiance, and physical behaviors. When Jamie cannot finish a sentence, she does not force the answer; when Jamie says putting it back felt like putting the sister back, she follows that metaphor rather than redirecting. She also shifts from factual questions to embodied questions as Jamie moves into emptiness and breathlessness.",
+                "score": 4.5
+              },
+              "S.5_agency_respect_session": {
+                "rationale": "The character generally respects Jamie\u2019s agency and avoids writing Jamie\u2019s actions or emotions for them. There are two mild oversteps: in turn 8, Dr. Vasquez says \u201cAnd you opened it\u201d before Jamie explicitly confirms opening it, and in turn 12, she says Jamie put it back \u201cexactly as it was,\u201d which adds specificity not stated by Jamie. These are interpretive inferences rather than major railroading, and the scene remains centered on Jamie\u2019s choices.",
+                "violation_count": 2,
+                "score": 4.0
+              },
+              "S.6_temporal_reasoning": {
+                "rationale": "Time passes consistently within a single therapy session, with pauses, silences, and gradual emotional unfolding. There are no significant contradictions in physical positioning or event sequence. The removed second hand from the clock remains compatible with later references to the clock and room sounds, though repeated ambient cues like the ficus rustling and clock humming are slightly stylized rather than temporally meaningful.",
+                "contradictions": [],
+                "score": 4.5
+              }
+            },
+            "standard_dimensions": {
+              "2.1_anti_purple_prose": {
+                "rationale": "The prose is mostly restrained and concrete, using small physical details like the pen, notepad, ficus, hands, and loose thread. Some lines are more literary, such as \u201clet the silence settle like dust after a door closes\u201d and \u201cturned it over in her mind like a stone,\u201d but they are not excessive. The tone fits the quiet therapeutic scene without becoming florid.",
+                "score": 4.0
+              },
+              "2.2_anti_repetition": {
+                "rationale": "There is noticeable repetition in the structure of Dr. Vasquez\u2019s replies: she waits, repeats Jamie\u2019s phrase, makes an interpretive observation, then asks a gentle question. Specific motifs also recur, including the pen, silence, the ficus, and the clock. The repetition supports the therapist character to a degree, but it becomes somewhat formulaic by the later turns.",
+                "score": 3.5
+              },
+              "2.5_show_dont_tell": {
+                "rationale": "The scene often shows Dr. Vasquez\u2019s restraint through action: setting down the pen, not writing, looking away to give Jamie space, and watching Jamie\u2019s hands rather than forcing eye contact. Jamie\u2019s emotional state is also explored through physical behaviors like clenching fists, rubbing arms, and picking at thread. There are moments of direct interpretation, such as explaining emptiness as rest, but these fit the therapeutic mode.",
+                "score": 4.0
+              },
+              "2.6_subtext": {
+                "rationale": "The session handles subtext well, especially around Jamie\u2019s desire to put the sister, the journal, and the unresolved story away. Dr. Vasquez often names possibilities without overdetermining them, such as asking whether the act honored something or ended something. The final movement from \u201cempty\u201d to \u201cheavy\u201d leaves room for unresolved grief rather than closing it too neatly.",
+                "score": 4.5
+              },
+              "2.7_pacing": {
+                "rationale": "The pacing is slow but intentionally so, matching a therapy session focused on trauma and grief. Each question opens a slightly deeper layer, and the pauses give Jamie\u2019s disclosures weight. It may be a little too uniform in rhythm, but the emotional escalation is well controlled.",
+                "score": 4.0
+              }
+            },
+            "quality_trajectory": {
+              "early_quality": 4.3,
+              "mid_quality": 4.2,
+              "late_quality": 4.1,
+              "degradation_detected": false
+            },
+            "overall": 4.2,
+            "overall_notes": "A strong, consistent portrayal of a quiet, attentive therapist. The session shows meaningful emotional progression and careful responsiveness, with only minor issues around repeated structure and a couple of small over-inferences about Jamie\u2019s actions."
+          },
+          "usage": {
+            "prompt_tokens": 2806,
+            "completion_tokens": 1706,
+            "total_tokens": 4512,
+            "cost": 0.06521,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.06521,
+              "upstream_inference_prompt_cost": 0.01403,
+              "upstream_inference_completions_cost": 0.05118
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 202,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "model": "openai/gpt-5.5-20260423"
+        }
+      }
+    }
+  }
+}
