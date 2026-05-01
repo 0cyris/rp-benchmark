@@ -1,0 +1,112 @@
+{
+  "n_sessions_in_subsample": 5,
+  "judges": [
+    "claude_sonnet",
+    "gemini_3_1_pro",
+    "gpt_latest"
+  ],
+  "parse_errors_per_judge": {},
+  "pairwise_kappa": {
+    "claude_sonnet__vs__gemini_3_1_pro": {
+      "judge_a": "claude_sonnet",
+      "judge_b": "gemini_3_1_pro",
+      "n_sessions": 5,
+      "kappa_quadratic_weighted": 0.6154,
+      "interpretation": "substantial"
+    },
+    "claude_sonnet__vs__gpt_latest": {
+      "judge_a": "claude_sonnet",
+      "judge_b": "gpt_latest",
+      "n_sessions": 5,
+      "kappa_quadratic_weighted": 0.0,
+      "interpretation": "poor"
+    },
+    "gemini_3_1_pro__vs__gpt_latest": {
+      "judge_a": "gemini_3_1_pro",
+      "judge_b": "gpt_latest",
+      "n_sessions": 5,
+      "kappa_quadratic_weighted": 0.0,
+      "interpretation": "poor"
+    }
+  },
+  "per_judge_rho_vs_mt_arena": {
+    "claude_sonnet": {
+      "n_models": 5,
+      "rho": -0.4743,
+      "p_value": 0.4195,
+      "per_model_mean": {
+        "claude_opus_4_6": 4.6,
+        "claude_opus_4_7": 4.2,
+        "claude_sonnet_4_5": 4.2,
+        "deepseek_v3_2": 4.5,
+        "deepseek_v4_flash": 4.6
+      }
+    },
+    "gemini_3_1_pro": {
+      "n_models": 5,
+      "rho": -0.4617,
+      "p_value": 0.4338,
+      "per_model_mean": {
+        "claude_opus_4_6": 5.0,
+        "claude_opus_4_7": 4.0,
+        "claude_sonnet_4_5": 4.9,
+        "deepseek_v3_2": 4.5,
+        "deepseek_v4_flash": 5.0
+      }
+    },
+    "gpt_latest": {
+      "n_models": 5,
+      "rho": -0.3162,
+      "p_value": 0.6042,
+      "per_model_mean": {
+        "claude_opus_4_6": 4.2,
+        "claude_opus_4_7": 3.7,
+        "claude_sonnet_4_5": 4.1,
+        "deepseek_v3_2": 4.2,
+        "deepseek_v4_flash": 4.1
+      }
+    }
+  },
+  "per_session_overall_scores": [
+    {
+      "key": "claude_opus_4_6::adv_bigcard_rules_overload_20",
+      "test_model": "claude_opus_4_6",
+      "seed_id": "adv_bigcard_rules_overload_20",
+      "claude_sonnet": 4.6,
+      "gemini_3_1_pro": 5.0,
+      "gpt_latest": 4.2
+    },
+    {
+      "key": "claude_opus_4_7::adv_pov_tense_action_14",
+      "test_model": "claude_opus_4_7",
+      "seed_id": "adv_pov_tense_action_14",
+      "claude_sonnet": 4.2,
+      "gemini_3_1_pro": 4.0,
+      "gpt_latest": 3.7
+    },
+    {
+      "key": "claude_sonnet_4_5::adv_passive_user_03",
+      "test_model": "claude_sonnet_4_5",
+      "seed_id": "adv_passive_user_03",
+      "claude_sonnet": 4.2,
+      "gemini_3_1_pro": 4.9,
+      "gpt_latest": 4.1
+    },
+    {
+      "key": "deepseek_v3_2::adv_sysprompt_speech_pattern_15",
+      "test_model": "deepseek_v3_2",
+      "seed_id": "adv_sysprompt_speech_pattern_15",
+      "claude_sonnet": 4.5,
+      "gemini_3_1_pro": 4.5,
+      "gpt_latest": 4.2
+    },
+    {
+      "key": "deepseek_v4_flash::adv_agency_emotional_climax_09",
+      "test_model": "deepseek_v4_flash",
+      "seed_id": "adv_agency_emotional_climax_09",
+      "claude_sonnet": 4.6,
+      "gemini_3_1_pro": 5.0,
+      "gpt_latest": 4.1
+    }
+  ]
+}

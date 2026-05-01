@@ -36,6 +36,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
+from harness import multiturn
 from harness.multiturn import judge_session
 
 
@@ -46,6 +47,14 @@ OUT_FILE = Path("results/round3_multi_judge.json")
 SECOND_JUDGES = {
     "gemini_3_1_pro": "google/gemini-3.1-pro-preview",
     "gpt_latest":     "~openai/gpt-latest",
+}
+
+# Per-judge max_tokens override. Reasoning models burn extra budget on
+# internal thinking before emitting the JSON; the default 4096 truncated
+# Gemini's structured output mid-rationale on long sessions.
+JUDGE_MAX_TOKENS = {
+    "gemini_3_1_pro": 16000,
+    "gpt_latest":     8000,
 }
 
 
@@ -142,13 +151,32 @@ def main():
                 "second_judges": {},
             }
         for judge_key, model_id in judges.items():
-            if judge_key in state["results"][key]["second_judges"]:
-                # Already done in a prior run
-                continue
+            existing = state["results"][key]["second_judges"].get(judge_key)
+            if existing:
+                # Skip only if previous run produced a usable score; retry
+                # on parse-errors and API errors.
+                ok = (
+                    not existing.get("error")
+                    and existing.get("scores")
+                    and not existing["scores"].get("parse_error")
+                    and existing["scores"].get("overall") is not None
+                )
+                if ok:
+                    continue
             try:
                 print(f"  [{n_done+1}] {key:<55} judge={judge_key:<20}", end=" ", flush=True)
                 t0 = time.time()
-                result = judge_session(s, model_id)
+                # Patch JUDGE_CONFIG.max_tokens for this call. judge_session
+                # reads multiturn.JUDGE_CONFIG by name lookup at call time, so
+                # mutating it here is sufficient.
+                original_max = multiturn.JUDGE_CONFIG.get("max_tokens")
+                multiturn.JUDGE_CONFIG["max_tokens"] = JUDGE_MAX_TOKENS.get(
+                    judge_key, original_max
+                )
+                try:
+                    result = judge_session(s, model_id)
+                finally:
+                    multiturn.JUDGE_CONFIG["max_tokens"] = original_max
                 dt = time.time() - t0
                 state["results"][key]["second_judges"][judge_key] = result
                 overall = result.get("scores", {}).get("overall")
