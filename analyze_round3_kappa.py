@@ -131,6 +131,43 @@ def main():
                 "interpretation": interp,
             }
 
+    # --- Inter-judge per-model rank correlation ---
+    # κ measures absolute Likert agreement (sensitive to calibration drift).
+    # Spearman ρ between judges' per-model-mean rankings is calibration-invariant
+    # and answers "do judges rank models the same way?"
+    per_judge_per_model_for_corr = {j: defaultdict(list) for j in judges}
+    for sc in per_session.values():
+        for j in judges:
+            v = sc.get(j)
+            if v is not None:
+                per_judge_per_model_for_corr[j][sc["test_model"]].append(v)
+    per_judge_means_corr = {
+        j: {m: float(np.mean(v)) for m, v in d.items() if v}
+        for j, d in per_judge_per_model_for_corr.items()
+    }
+
+    print()
+    print("=" * 78)
+    print("INTER-JUDGE rank correlation (Spearman rho on per-model mean Likert)")
+    print("=" * 78)
+    inter_judge_rho = {}
+    for i, ja in enumerate(judges):
+        for jb in judges[i+1:]:
+            common = sorted(m for m in per_judge_means_corr[ja]
+                            if m in per_judge_means_corr[jb])
+            if len(common) < 3:
+                continue
+            xs = [per_judge_means_corr[ja][m] for m in common]
+            ys = [per_judge_means_corr[jb][m] for m in common]
+            rho, p = spearmanr(xs, ys)
+            print(f'  {ja:<24} ↔ {jb:<24}  n={len(common):<3} '
+                  f'ρ = {rho:+.3f}  (p = {p:.3f})')
+            inter_judge_rho[f"{ja}__vs__{jb}"] = {
+                "n_models": len(common),
+                "rho": round(float(rho), 4),
+                "p_value": round(float(p), 4),
+            }
+
     # --- Per-judge cross-method Spearman rho vs multi-turn arena ELO ---
     if MT_ARENA.exists():
         mt = json.loads(MT_ARENA.read_text())
@@ -177,6 +214,7 @@ def main():
         "judges": judges,
         "parse_errors_per_judge": dict(parse_errors),
         "pairwise_kappa": pair_results,
+        "inter_judge_rho_per_model": inter_judge_rho,
         "per_judge_rho_vs_mt_arena": rho_results,
         "per_session_overall_scores": [
             {

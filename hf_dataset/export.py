@@ -405,6 +405,8 @@ def export_analysis_artifacts():
         "community_arena_bayesian.json",
         "multiturn_arena_bayesian.json",
         "multiturn_arena_bootstrap.json",
+        "round3_multi_judge.json",
+        "round3_kappa.json",
         "model_profiles.json",
         "behavioral_metrics.json",
         "method_correlations.json",
