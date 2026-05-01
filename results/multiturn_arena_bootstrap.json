@@ -1,0 +1,241 @@
+{
+  "method": "voter-clustered bootstrap of Bradley-Terry MLE",
+  "n_iterations": 1000,
+  "seed": 42,
+  "prior_sigma": 300.0,
+  "n_voters": 116,
+  "n_votes": 434,
+  "median_bootstrap_ci_width_elo": 187.0,
+  "median_mcmc_ci_width_elo": 367.9,
+  "rho_vs_llm_judge_likert": {
+    "n_models": 20,
+    "point_estimate": 0.4833,
+    "p_value": 0.0309,
+    "bootstrap_mean": 0.346,
+    "bootstrap_ci_low_95": 0.0293,
+    "bootstrap_ci_high_95": 0.6173,
+    "fraction_bootstraps_above_zero": 0.985
+  },
+  "per_model": [
+    {
+      "model": "claude_opus_4_6",
+      "elo_mle": 1559.8,
+      "boot_ci_low_95": 1455.1,
+      "boot_ci_high_95": 1660.3,
+      "boot_ci_width_95": 205.1,
+      "elo_mcmc_mean": 1567.8,
+      "mcmc_ci_low_95": 1368.9,
+      "mcmc_ci_high_95": 1756.0,
+      "mcmc_ci_width_95": 387.1
+    },
+    {
+      "model": "claude_opus_4_7",
+      "elo_mle": 1617.0,
+      "boot_ci_low_95": 1510.5,
+      "boot_ci_high_95": 1744.3,
+      "boot_ci_width_95": 233.9,
+      "elo_mcmc_mean": 1626.5,
+      "mcmc_ci_low_95": 1415.6,
+      "mcmc_ci_high_95": 1846.7,
+      "mcmc_ci_width_95": 431.1
+    },
+    {
+      "model": "claude_sonnet_4_5",
+      "elo_mle": 1547.7,
+      "boot_ci_low_95": 1467.5,
+      "boot_ci_high_95": 1638.9,
+      "boot_ci_width_95": 171.5,
+      "elo_mcmc_mean": 1550.1,
+      "mcmc_ci_low_95": 1375.6,
+      "mcmc_ci_high_95": 1712.5,
+      "mcmc_ci_width_95": 336.9
+    },
+    {
+      "model": "deepseek_v3_2",
+      "elo_mle": 1488.9,
+      "boot_ci_low_95": 1374.1,
+      "boot_ci_high_95": 1586.2,
+      "boot_ci_width_95": 212.1,
+      "elo_mcmc_mean": 1490.7,
+      "mcmc_ci_low_95": 1301.9,
+      "mcmc_ci_high_95": 1666.1,
+      "mcmc_ci_width_95": 364.2
+    },
+    {
+      "model": "deepseek_v4_flash",
+      "elo_mle": 1471.2,
+      "boot_ci_low_95": 1364.3,
+      "boot_ci_high_95": 1576.9,
+      "boot_ci_width_95": 212.7,
+      "elo_mcmc_mean": 1468.7,
+      "mcmc_ci_low_95": 1259.0,
+      "mcmc_ci_high_95": 1646.8,
+      "mcmc_ci_width_95": 387.8
+    },
+    {
+      "model": "deepseek_v4_pro",
+      "elo_mle": 1549.8,
+      "boot_ci_low_95": 1443.1,
+      "boot_ci_high_95": 1681.1,
+      "boot_ci_width_95": 237.9,
+      "elo_mcmc_mean": 1564.1,
+      "mcmc_ci_low_95": 1355.1,
+      "mcmc_ci_high_95": 1732.6,
+      "mcmc_ci_width_95": 377.5
+    },
+    {
+      "model": "gemini_2_5_flash",
+      "elo_mle": 1375.1,
+      "boot_ci_low_95": 1274.7,
+      "boot_ci_high_95": 1448.5,
+      "boot_ci_width_95": 173.8,
+      "elo_mcmc_mean": 1372.4,
+      "mcmc_ci_low_95": 1194.5,
+      "mcmc_ci_high_95": 1545.9,
+      "mcmc_ci_width_95": 351.4
+    },
+    {
+      "model": "gemini_3_1_flash_lite",
+      "elo_mle": 1558.0,
+      "boot_ci_low_95": 1454.0,
+      "boot_ci_high_95": 1669.8,
+      "boot_ci_width_95": 215.8,
+      "elo_mcmc_mean": 1560.4,
+      "mcmc_ci_low_95": 1334.3,
+      "mcmc_ci_high_95": 1749.5,
+      "mcmc_ci_width_95": 415.2
+    },
+    {
+      "model": "gemini_3_1_pro",
+      "elo_mle": 1486.3,
+      "boot_ci_low_95": 1394.4,
+      "boot_ci_high_95": 1575.7,
+      "boot_ci_width_95": 181.3,
+      "elo_mcmc_mean": 1487.0,
+      "mcmc_ci_low_95": 1290.6,
+      "mcmc_ci_high_95": 1657.8,
+      "mcmc_ci_width_95": 367.2
+    },
+    {
+      "model": "gemma_4_26b",
+      "elo_mle": 1519.1,
+      "boot_ci_low_95": 1424.2,
+      "boot_ci_high_95": 1630.6,
+      "boot_ci_width_95": 206.4,
+      "elo_mcmc_mean": 1518.6,
+      "mcmc_ci_low_95": 1318.2,
+      "mcmc_ci_high_95": 1697.9,
+      "mcmc_ci_width_95": 379.7
+    },
+    {
+      "model": "glm_4_7",
+      "elo_mle": 1499.7,
+      "boot_ci_low_95": 1416.4,
+      "boot_ci_high_95": 1589.5,
+      "boot_ci_width_95": 173.1,
+      "elo_mcmc_mean": 1508.2,
+      "mcmc_ci_low_95": 1319.8,
+      "mcmc_ci_high_95": 1655.5,
+      "mcmc_ci_width_95": 335.7
+    },
+    {
+      "model": "glm_5_1",
+      "elo_mle": 1398.0,
+      "boot_ci_low_95": 1250.5,
+      "boot_ci_high_95": 1521.6,
+      "boot_ci_width_95": 271.1,
+      "elo_mcmc_mean": 1386.5,
+      "mcmc_ci_low_95": 1181.6,
+      "mcmc_ci_high_95": 1566.4,
+      "mcmc_ci_width_95": 384.8
+    },
+    {
+      "model": "gpt_4_1",
+      "elo_mle": 1548.9,
+      "boot_ci_low_95": 1478.0,
+      "boot_ci_high_95": 1641.6,
+      "boot_ci_width_95": 163.5,
+      "elo_mcmc_mean": 1552.0,
+      "mcmc_ci_low_95": 1362.4,
+      "mcmc_ci_high_95": 1731.1,
+      "mcmc_ci_width_95": 368.7
+    },
+    {
+      "model": "grok_4_1",
+      "elo_mle": 1484.9,
+      "boot_ci_low_95": 1392.5,
+      "boot_ci_high_95": 1568.8,
+      "boot_ci_width_95": 176.3,
+      "elo_mcmc_mean": 1487.3,
+      "mcmc_ci_low_95": 1304.4,
+      "mcmc_ci_high_95": 1655.1,
+      "mcmc_ci_width_95": 350.7
+    },
+    {
+      "model": "kimi_k2_5",
+      "elo_mle": 1493.8,
+      "boot_ci_low_95": 1405.4,
+      "boot_ci_high_95": 1578.4,
+      "boot_ci_width_95": 173.0,
+      "elo_mcmc_mean": 1496.3,
+      "mcmc_ci_low_95": 1293.7,
+      "mcmc_ci_high_95": 1688.0,
+      "mcmc_ci_width_95": 394.3
+    },
+    {
+      "model": "kimi_k2_6",
+      "elo_mle": 1532.1,
+      "boot_ci_low_95": 1432.4,
+      "boot_ci_high_95": 1645.4,
+      "boot_ci_width_95": 213.0,
+      "elo_mcmc_mean": 1535.2,
+      "mcmc_ci_low_95": 1329.4,
+      "mcmc_ci_high_95": 1713.1,
+      "mcmc_ci_width_95": 383.7
+    },
+    {
+      "model": "llama_4_maverick",
+      "elo_mle": 1481.9,
+      "boot_ci_low_95": 1390.9,
+      "boot_ci_high_95": 1565.6,
+      "boot_ci_width_95": 174.7,
+      "elo_mcmc_mean": 1483.3,
+      "mcmc_ci_low_95": 1300.6,
+      "mcmc_ci_high_95": 1637.6,
+      "mcmc_ci_width_95": 337.0
+    },
+    {
+      "model": "minimax_m2_7",
+      "elo_mle": 1439.9,
+      "boot_ci_low_95": 1345.6,
+      "boot_ci_high_95": 1534.4,
+      "boot_ci_width_95": 188.9,
+      "elo_mcmc_mean": 1437.2,
+      "mcmc_ci_low_95": 1261.6,
+      "mcmc_ci_high_95": 1601.4,
+      "mcmc_ci_width_95": 339.8
+    },
+    {
+      "model": "mistral_small_creative",
+      "elo_mle": 1531.1,
+      "boot_ci_low_95": 1457.1,
+      "boot_ci_high_95": 1642.3,
+      "boot_ci_width_95": 185.2,
+      "elo_mcmc_mean": 1535.8,
+      "mcmc_ci_low_95": 1361.1,
+      "mcmc_ci_high_95": 1698.3,
+      "mcmc_ci_width_95": 337.2
+    },
+    {
+      "model": "qwen3_5_flash",
+      "elo_mle": 1417.0,
+      "boot_ci_low_95": 1329.8,
+      "boot_ci_high_95": 1490.7,
+      "boot_ci_width_95": 161.0,
+      "elo_mcmc_mean": 1410.6,
+      "mcmc_ci_low_95": 1226.9,
+      "mcmc_ci_high_95": 1583.8,
+      "mcmc_ci_width_95": 356.9
+    }
+  ]
+}
