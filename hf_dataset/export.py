@@ -407,6 +407,8 @@ def export_analysis_artifacts():
         "multiturn_arena_bootstrap.json",
         "round3_multi_judge.json",
         "round3_kappa.json",
+        "round3_cot_judge.json",
+        "round3_cot_compare.json",
         "model_profiles.json",
         "behavioral_metrics.json",
         "method_correlations.json",
