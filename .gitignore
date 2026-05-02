@@ -25,6 +25,9 @@ results/run_*.json
 results/leaderboard_*.json
 results/charts/
 
+# Paper draft (private — not for repo)
+paper/
+
 # Python / IDE
 __pycache__/
 *.pyc
