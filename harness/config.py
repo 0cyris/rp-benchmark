@@ -40,6 +40,7 @@ TEST_MODELS = {
     "gemini_3_1_flash_lite": "google/gemini-3.1-flash-lite-preview",
     "kimi_k2_5": "moonshotai/kimi-k2.5",
     "kimi_k2_6": "moonshotai/kimi-k2.6",
+    "deepseek_r1_0528": "deepseek/deepseek-r1-0528",
 }
 
 # Generation settings for test models
