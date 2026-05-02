@@ -904,7 +904,7 @@ python3 run.py list-models
 
 ## Adding Models
 
-Edit `harness/config.py`:
+Step 1 — register the model in `harness/config.py`:
 
 ```python
 TEST_MODELS = {
@@ -913,6 +913,24 @@ TEST_MODELS = {
 ```
 
 Find model IDs at [openrouter.ai/models](https://openrouter.ai/models).
+
+Step 2 — run all auto-runnable evaluations and refresh the composite:
+
+```sh
+python3 add_model.py your_model
+```
+
+This wrapper script chains together: multi-turn adversarial sessions + LLM-judge Likert, single-turn 27-dim rubric, flaw-hunter on the new sessions, and re-aggregates `model_profiles.json` / `flaw_hunter_session_summary.json` / `behavioral_metrics.json` / `composite_leaderboard.json`. Cost ≈ $1–3 for chat-tier models, $5–10 for Opus-class. Wall time ≈ 30–60 min sequential. Skip-flags (`--skip-multiturn`, `--skip-rubric`, etc.) let you resume after failures.
+
+Step 3 — populate operational axes (Speed, Cost) by downloading a fresh OpenRouter activity CSV:
+
+```sh
+python3 analyze_latency.py ~/Downloads/openrouter_activity_*.csv
+python3 analyze_quality_speed.py
+python3 analyze_composite_score.py
+```
+
+The new model is ranked on the composite immediately, flagged with `*` until it accumulates multi-turn arena human votes (which need to be solicited via the live arena).
 
 ## Scenario Types
 
