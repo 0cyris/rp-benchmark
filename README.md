@@ -64,29 +64,31 @@ A single sortable headline score per model, plus three independent dimensions (E
 
 | Rank | Model | Composite | Engagement | Speed | Cost | Notes |
 |---|---|---|---|---|---|---|
-| 1 | Claude Opus 4.7 | **97.6** | — | 55 | 2 | Top quality, slow + expensive |
+| 1 | Claude Opus 4.7 | **97.6** | 79 \* | 55 | 2 | Top quality, slow + expensive |
 | 2 | Claude Sonnet 4.5 | 92.9 | 50 | 50 | 17 | Balanced |
-| 3 | Claude Opus 4.6 | 88.1 | — | 40 | 7 | Top quality, slow |
+| 3 | Claude Opus 4.6 | 88.1 | 88 \* | 40 | 7 | Top quality, slow |
 | 4 | DeepSeek V3.2 | 83.3 | 32 | 64 | 74 | Strong open-weight |
 | 5 | GPT-4.1 | 78.6 | 4 | 79 | 26 | Quality + speed |
 | 6 | GLM 4.7 | 73.8 | 23 | 12 | 40 | Heavy reasoning |
-| 7 | Gemma 4 26B | 69.0 | **96** | 60 | 83 | **Quality + engagement crossover** |
-| 8 | DeepSeek V4 Pro | 64.3 | — | 45 | **98** | BYOK frontier-open |
-| 9 | Kimi K2.5 | 59.5 | — | 7 | 31 | Slow reasoning |
-| 10 | Kimi K2.6 | 54.8 | — | 2 | 21 | Slowest, 17% truncation |
+| 7 | DeepSeek V4 Pro | 69.0 | 31 \* | 45 | **98** | BYOK frontier-open |
+| 8 | Gemma 4 26B | 64.3 | **96** | 60 | 83 | **Quality + engagement crossover** |
+| 9 | Kimi K2.5 | 59.5 | 50 \* | 7 | 31 | Slow reasoning |
+| 10 | Kimi K2.6 | 54.8 | 36 \* | 2 | 21 | Slowest, 17% truncation |
 | 11 | Mistral SC | 50.0 | 86 | 88 | 88 | Engagement + cheap + fast |
-| 12 | DeepSeek V4 Flash | 45.2 | — | 74 | 93 | BYOK fast |
-| 13 | Gemini 3.1 Flash Lite | 40.5 | — | 93 | 50 | Speed leader |
+| 12 | DeepSeek V4 Flash | 45.2 | 7 \* | 74 | 93 | BYOK fast |
+| 13 | Gemini 3.1 Flash Lite | 40.5 | 55 \* | 93 | 50 | Speed leader |
 | 14 | MiniMax M2.7 | 35.7 | 59 | 36 | 60 | Mid-tier all-around |
-| 15 | DeepSeek R1 0528 | 31.0 \* | — | 17 | 45 | 2025-vintage reasoning anchor |
+| 15 | DeepSeek R1 0528 | 31.0 † | **93 \*** | 17 | 45 | 2025-vintage; regressor predicts strong engagement |
 | 16 | Grok 4.1 | 26.2 | 68 | 69 | 69 | Balanced operationally |
-| 17 | Gemini 3.1 Pro | 21.4 | — | 26 | 12 | Heavy reasoning, expensive |
-| 18 | GLM 5.1 | 16.7 | — | 31 | 36 | Reasoning model |
+| 17 | Gemini 3.1 Pro | 21.4 | 83 \* | 26 | 12 | Heavy reasoning, expensive |
+| 18 | GLM 5.1 | 16.7 | 12 \* | 31 | 36 | Reasoning model |
 | 19 | Gemini 2.5 Flash | 11.9 | 77 | 98 | 64 | Snap-judgment darling, weak multi-turn |
 | 20 | Qwen 3.5 Flash | 7.1 | 41 | 21 | 55 | Heavy reasoning, weak quality |
 | 21 | Llama 4 Maverick | 2.4 | 14 | 83 | 79 | Bottom on quality and engagement |
 
-\* DeepSeek R1 0528 has all four quality components scored (rubric, LLM judge, flaw hunter, behavioral) but lacks multi-turn arena human votes (added too recently); its `mt_arena_elo` component imputes to z=0 and the row is flagged.
+\* Engagement value is a **proxy from the feature regressor** (Spearman ρ = +0.555 with the human single-message arena ELO on the 11 Phase A overlap models, p = 0.077). The regressor is trained on 1,717 clean arena pairwise votes using 12 rule-based response features (length, dialogue ratio, TTR, punctuation density). Numbers are percentile-mapped across all 21 models. Use these values as a **moderate-confidence proxy**, not as direct human votes. The 11 Phase A models without `*` use percentiles from the actual Bayesian community arena ELO. Round 5 plans to re-open the single-message arena to humans for these 10 models so all engagement values are ground-truthed.
+
+† DeepSeek R1 0528's `mt_arena_elo` component is imputed (no multi-turn human votes yet); this is the same `*` flag the composite leaderboard prints. All other quality components (rubric, LLM judge, flaw hunter, behavioral) and operational axes (speed, cost) are scored.
 
 **Composite weights (z-score average across pool, percentile-mapped to 0-100):**
 - 0.35 multi-turn arena ELO (humans, full dialogues)
@@ -100,9 +102,9 @@ A single sortable headline score per model, plus three independent dimensions (E
 - **Speed** = 1 / median generation seconds, percentile.
 - **Cost** = 1 / median per-call $, percentile (BYOK / free routes top-percentile).
 
-**The rank inversion the paper documents** is visible at a glance: Gemma 4 26B places \#1 by Engagement and \#7 by Composite (closest cross-axis crossover in the pool). Gemini 2.5 Flash is rank \#3 by Engagement and \#18 by Composite. The single-message arena and the multi-turn-quality composite measure different latents.
+**The rank inversion the paper documents** is visible at a glance among the 11 models with human-voted engagement: Gemma 4 26B places \#1 by Engagement (96) and \#8 by Composite. Gemini 2.5 Flash is rank \#3 by Engagement (77) and \#19 by Composite. The single-message arena and the multi-turn-quality composite measure different latents.
 
-All 20 models have full coverage on the four quality components (multi-turn arena, LLM judge, 27-dim rubric, flaw hunter) as of the May 2026 snapshot.
+All 21 models have full coverage on the four quality components (multi-turn arena, LLM judge, 27-dim rubric, flaw hunter) as of the May 2026 snapshot. Engagement column mixes human single-message arena ELO percentiles (11 Phase A models, no asterisk) with regressor-predicted percentiles for the 10 Phase B + R1 0528 models that lack arena coverage (asterisks). The two are not directly comparable in confidence but are placed on the same percentile scale for sortability.
 
 Raw data: [`results/composite_leaderboard.json`](results/composite_leaderboard.json). Reproduce with `python3 analyze_composite_score.py`.
 
