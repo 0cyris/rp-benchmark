@@ -1,0 +1,150 @@
+{
+  "method": "logistic regression on pairwise feature differences",
+  "training_set_size": 1717,
+  "feature_names": [
+    "word_count",
+    "char_count",
+    "ttr",
+    "sentence_count",
+    "avg_sentence_len",
+    "dialogue_ratio",
+    "action_ratio",
+    "exclamation_per_1k",
+    "ellipsis_per_1k",
+    "comma_per_1k",
+    "avg_word_len",
+    "bigram_repetition"
+  ],
+  "cv_accuracy": {
+    "mean": 0.5387,
+    "std": 0.0201
+  },
+  "feature_coefficients": {
+    "word_count": 0.038616634397416805,
+    "char_count": 0.03864279473772371,
+    "ttr": -0.01914308086445501,
+    "sentence_count": 0.028155957104233048,
+    "avg_sentence_len": -0.0036095904495603687,
+    "dialogue_ratio": 0.0437777895165803,
+    "action_ratio": -0.006029425140718956,
+    "exclamation_per_1k": 0.006058409728573959,
+    "ellipsis_per_1k": -0.01170504339618912,
+    "comma_per_1k": -0.0025946344729306414,
+    "avg_word_len": 0.004955500028980793,
+    "bigram_repetition": 0.017184690623146537
+  },
+  "intercept": -0.06435372402856071,
+  "validation_against_human_arena": {
+    "n_models_overlap": 11,
+    "rho_vs_human_arena_elo": 0.5545,
+    "p_value": 0.0767,
+    "interpretation": "moderate proxy"
+  },
+  "per_model": {
+    "mistral_small_creative": {
+      "engagement_skill_mean": 0.0064,
+      "engagement_skill_std": 0.0943,
+      "n_scored": 27
+    },
+    "deepseek_r1_0528": {
+      "engagement_skill_mean": -0.0108,
+      "engagement_skill_std": 0.1449,
+      "n_scored": 27
+    },
+    "claude_opus_4_6": {
+      "engagement_skill_mean": -0.0265,
+      "engagement_skill_std": 0.1829,
+      "n_scored": 27
+    },
+    "gemini_3_1_pro": {
+      "engagement_skill_mean": -0.0289,
+      "engagement_skill_std": 0.1024,
+      "n_scored": 25
+    },
+    "claude_opus_4_7": {
+      "engagement_skill_mean": -0.0296,
+      "engagement_skill_std": 0.1154,
+      "n_scored": 27
+    },
+    "gemma_4_26b": {
+      "engagement_skill_mean": -0.031,
+      "engagement_skill_std": 0.1359,
+      "n_scored": 27
+    },
+    "qwen3_5_flash": {
+      "engagement_skill_mean": -0.0343,
+      "engagement_skill_std": 0.0904,
+      "n_scored": 25
+    },
+    "glm_4_7": {
+      "engagement_skill_mean": -0.0544,
+      "engagement_skill_std": 0.0937,
+      "n_scored": 27
+    },
+    "claude_sonnet_4_5": {
+      "engagement_skill_mean": -0.0623,
+      "engagement_skill_std": 0.1219,
+      "n_scored": 27
+    },
+    "gemini_3_1_flash_lite": {
+      "engagement_skill_mean": -0.0647,
+      "engagement_skill_std": 0.0652,
+      "n_scored": 27
+    },
+    "kimi_k2_5": {
+      "engagement_skill_mean": -0.0757,
+      "engagement_skill_std": 0.0769,
+      "n_scored": 27
+    },
+    "deepseek_v3_2": {
+      "engagement_skill_mean": -0.0804,
+      "engagement_skill_std": 0.1485,
+      "n_scored": 27
+    },
+    "gemini_2_5_flash": {
+      "engagement_skill_mean": -0.0812,
+      "engagement_skill_std": 0.0873,
+      "n_scored": 27
+    },
+    "kimi_k2_6": {
+      "engagement_skill_mean": -0.0872,
+      "engagement_skill_std": 0.0898,
+      "n_scored": 23
+    },
+    "deepseek_v4_pro": {
+      "engagement_skill_mean": -0.0949,
+      "engagement_skill_std": 0.106,
+      "n_scored": 27
+    },
+    "minimax_m2_7": {
+      "engagement_skill_mean": -0.0994,
+      "engagement_skill_std": 0.1583,
+      "n_scored": 27
+    },
+    "grok_4_1": {
+      "engagement_skill_mean": -0.1055,
+      "engagement_skill_std": 0.1303,
+      "n_scored": 27
+    },
+    "llama_4_maverick": {
+      "engagement_skill_mean": -0.1059,
+      "engagement_skill_std": 0.0723,
+      "n_scored": 27
+    },
+    "glm_5_1": {
+      "engagement_skill_mean": -0.1159,
+      "engagement_skill_std": 0.1023,
+      "n_scored": 26
+    },
+    "deepseek_v4_flash": {
+      "engagement_skill_mean": -0.1186,
+      "engagement_skill_std": 0.0867,
+      "n_scored": 27
+    },
+    "gpt_4_1": {
+      "engagement_skill_mean": -0.1388,
+      "engagement_skill_std": 0.0625,
+      "n_scored": 27
+    }
+  }
+}

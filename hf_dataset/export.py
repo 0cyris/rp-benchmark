@@ -411,6 +411,7 @@ def export_analysis_artifacts():
         "round3_cot_compare.json",
         "composite_leaderboard.json",
         "engagement_proxy.json",
+        "engagement_regressor.json",
         "model_profiles.json",
         "behavioral_metrics.json",
         "method_correlations.json",
