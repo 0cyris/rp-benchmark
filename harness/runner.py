@@ -367,13 +367,13 @@ def run_benchmark(
     gen_calls = len(gen_scenarios) * len(test_models) * (1 + len(judge_models))
     prebuilt_calls = len(prebuilt_payloads) * len(judge_models)
 
-    print(f"RP-Bench Run")
-    print(f"  Generation scenarios: {len(gen_scenarios)} (need model responses)")
-    print(f"  Prebuilt scenarios: {len(prebuilt_payloads)} (judge-only)")
-    print(f"  Test models: {list(test_models.keys())}")
-    print(f"  Judge models: {list(judge_models.keys())}")
-    print(f"  Total API calls: ~{gen_calls + prebuilt_calls}")
-    print()
+    print(f"RP-Bench Run", flush=True)
+    print(f"  Generation scenarios: {len(gen_scenarios)} (need model responses)", flush=True)
+    print(f"  Prebuilt scenarios: {len(prebuilt_payloads)} (judge-only)", flush=True)
+    print(f"  Test models: {list(test_models.keys())}", flush=True)
+    print(f"  Judge models: {list(judge_models.keys())}", flush=True)
+    print(f"  Total API calls: ~{gen_calls + prebuilt_calls}", flush=True)
+    print(flush=True)
 
     run_id = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
     results = {
@@ -388,13 +388,25 @@ def run_benchmark(
         "results": [],
     }
 
+    RESULTS_DIR.mkdir(exist_ok=True)
+    output_path = RESULTS_DIR / f"run_{run_id}.json"
+    print(f"  Output (written incrementally): {output_path}", flush=True)
+    print(flush=True)
+
+    def checkpoint():
+        # Atomic-ish write: write to temp then rename.
+        tmp = output_path.with_suffix(".json.tmp")
+        with open(tmp, "w") as f:
+            json.dump(results, f, indent=2, ensure_ascii=False)
+        tmp.replace(output_path)
+
     step = 0
 
     # Run generation scenarios (generate + judge)
     for i, scenario in enumerate(gen_scenarios):
         scenario_id = scenario.get("id", f"scenario_{i}")
         step += 1
-        print(f"[{step}/{total_scenarios}] {scenario_id} (generate+judge)")
+        print(f"[{step}/{total_scenarios}] {scenario_id} (generate+judge)", flush=True)
 
         for model_key, model_id in test_models.items():
             try:
@@ -404,35 +416,31 @@ def run_benchmark(
                 )
                 results["results"].append(result)
             except Exception as e:
-                print(f"    ERROR: {e}")
+                print(f"    ERROR: {e}", flush=True)
                 results["results"].append({
                     "scenario_id": scenario_id,
                     "test_model": model_key,
                     "error": str(e),
                 })
+            checkpoint()
 
     # Run prebuilt scenarios (judge-only)
     for i, payload in enumerate(prebuilt_payloads):
         scenario_id = payload.get("scenario_id", f"prebuilt_{i}")
         step += 1
-        print(f"[{step}/{total_scenarios}] {scenario_id} (judge-only)")
+        print(f"[{step}/{total_scenarios}] {scenario_id} (judge-only)", flush=True)
 
         try:
             result = run_prebuilt_scenario(payload, judge_models)
             results["results"].append(result)
         except Exception as e:
-            print(f"    ERROR: {e}")
+            print(f"    ERROR: {e}", flush=True)
             results["results"].append({
                 "scenario_id": scenario_id,
                 "test_model": "prebuilt",
                 "error": str(e),
             })
+        checkpoint()
 
-    # Save results
-    RESULTS_DIR.mkdir(exist_ok=True)
-    output_path = RESULTS_DIR / f"run_{run_id}.json"
-    with open(output_path, "w") as f:
-        json.dump(results, f, indent=2, ensure_ascii=False)
-
-    print(f"\nResults saved to {output_path}")
+    print(f"\nResults saved to {output_path}", flush=True)
     return results
