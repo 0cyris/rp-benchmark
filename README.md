@@ -64,26 +64,29 @@ A single sortable headline score per model, plus three independent dimensions (E
 
 | Rank | Model | Composite | Engagement | Speed | Cost | Notes |
 |---|---|---|---|---|---|---|
-| 1 | Claude Opus 4.7 | **97.5** | — | 52 | 2 | Top quality, slow + expensive |
-| 2 | Claude Sonnet 4.5 | 92.5 | 50 | 48 | 18 | Balanced |
-| 3 | Claude Opus 4.6 | 87.5 | — | 28 | 8 | Top quality, slow |
-| 4 | DeepSeek V3.2 | 82.5 | 32 | 62 | 72 | Strong open-weight |
-| 5 | GPT-4.1 | 77.5 | 4 | 82 | 32 | Quality + speed |
-| 6 | GLM 4.7 | 72.5 | 23 | 12 | 42 | Heavy reasoning |
-| 7 | Gemma 4 26B | 67.5 | **96** | 58 | 82 | **Quality + engagement crossover** |
-| 8 | DeepSeek V4 Pro | 62.5 | — | 42 | **98** | BYOK frontier-open |
-| 9 | Kimi K2.5 | 57.5 | — | 8 | 28 | Slow reasoning |
-| 10 | Kimi K2.6 | 52.5 | — | 2 | 22 | Slowest, 17% truncation |
-| 11 | Mistral SC | 47.5 | 86 | 88 | 88 | Engagement + cheap + fast |
-| 12 | DeepSeek V4 Flash | 42.5 | — | 72 | 92 | BYOK fast |
-| 13 | Gemini 3.1 Flash Lite | 37.5 | — | 92 | 58 | Speed leader |
-| 14 | MiniMax M2.7 | 32.5 | 59 | 32 | 52 | Mid-tier all-around |
-| 15 | Grok 4.1 | 27.5 | 68 | 68 | 68 | Balanced operationally |
-| 16 | Gemini 3.1 Pro | 22.5 | — | 38 | 12 | Heavy reasoning, expensive |
-| 17 | GLM 5.1 | 17.5 | — | 22 | 38 | Reasoning model |
-| 18 | Gemini 2.5 Flash | 12.5 | 77 | 98 | 62 | Snap-judgment darling, weak multi-turn |
-| 19 | Qwen 3.5 Flash | 7.5 | 41 | 18 | 48 | Heavy reasoning, weak quality |
-| 20 | Llama 4 Maverick | 2.5 | 14 | 78 | 78 | Bottom on quality and engagement |
+| 1 | Claude Opus 4.7 | **97.6** | — | 55 | 2 | Top quality, slow + expensive |
+| 2 | Claude Sonnet 4.5 | 92.9 | 50 | 50 | 17 | Balanced |
+| 3 | Claude Opus 4.6 | 88.1 | — | 40 | 7 | Top quality, slow |
+| 4 | DeepSeek V3.2 | 83.3 | 32 | 64 | 74 | Strong open-weight |
+| 5 | GPT-4.1 | 78.6 | 4 | 79 | 26 | Quality + speed |
+| 6 | GLM 4.7 | 73.8 | 23 | 12 | 40 | Heavy reasoning |
+| 7 | Gemma 4 26B | 69.0 | **96** | 60 | 83 | **Quality + engagement crossover** |
+| 8 | DeepSeek V4 Pro | 64.3 | — | 45 | **98** | BYOK frontier-open |
+| 9 | Kimi K2.5 | 59.5 | — | 7 | 31 | Slow reasoning |
+| 10 | Kimi K2.6 | 54.8 | — | 2 | 21 | Slowest, 17% truncation |
+| 11 | Mistral SC | 50.0 | 86 | 88 | 88 | Engagement + cheap + fast |
+| 12 | DeepSeek V4 Flash | 45.2 | — | 74 | 93 | BYOK fast |
+| 13 | Gemini 3.1 Flash Lite | 40.5 | — | 93 | 50 | Speed leader |
+| 14 | MiniMax M2.7 | 35.7 | 59 | 36 | 60 | Mid-tier all-around |
+| 15 | DeepSeek R1 0528 | 31.0 \* | — | 17 | 45 | 2025-vintage reasoning anchor |
+| 16 | Grok 4.1 | 26.2 | 68 | 69 | 69 | Balanced operationally |
+| 17 | Gemini 3.1 Pro | 21.4 | — | 26 | 12 | Heavy reasoning, expensive |
+| 18 | GLM 5.1 | 16.7 | — | 31 | 36 | Reasoning model |
+| 19 | Gemini 2.5 Flash | 11.9 | 77 | 98 | 64 | Snap-judgment darling, weak multi-turn |
+| 20 | Qwen 3.5 Flash | 7.1 | 41 | 21 | 55 | Heavy reasoning, weak quality |
+| 21 | Llama 4 Maverick | 2.4 | 14 | 83 | 79 | Bottom on quality and engagement |
+
+\* DeepSeek R1 0528 has all four quality components scored (rubric, LLM judge, flaw hunter, behavioral) but lacks multi-turn arena human votes (added too recently); its `mt_arena_elo` component imputes to z=0 and the row is flagged.
 
 **Composite weights (z-score average across pool, percentile-mapped to 0-100):**
 - 0.35 multi-turn arena ELO (humans, full dialogues)

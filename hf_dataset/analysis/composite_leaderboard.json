@@ -13,8 +13,8 @@
       "composite_score": 97.6,
       "composite_z": 0.906,
       "engagement_score": null,
-      "speed_score": 52.5,
-      "cost_score": 2.5,
+      "speed_score": 54.8,
+      "cost_score": 2.4,
       "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1626.5,
@@ -23,8 +23,8 @@
         "flaw_hunter_mean": 42.8,
         "behavioral_composite_z": -1.347,
         "ca_arena_elo": null,
-        "median_gen_ms": 10174,
-        "median_actual_cost": 0.037925
+        "median_gen_ms": 10785,
+        "median_actual_cost": 0.041472
       },
       "rank": 1
     },
@@ -33,8 +33,8 @@
       "composite_score": 92.9,
       "composite_z": 0.834,
       "engagement_score": 50.0,
-      "speed_score": 47.5,
-      "cost_score": 17.5,
+      "speed_score": 50.0,
+      "cost_score": 16.7,
       "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1550.1,
@@ -53,8 +53,8 @@
       "composite_score": 88.1,
       "composite_z": 0.533,
       "engagement_score": null,
-      "speed_score": 27.5,
-      "cost_score": 7.5,
+      "speed_score": 40.5,
+      "cost_score": 7.1,
       "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1567.8,
@@ -63,8 +63,8 @@
         "flaw_hunter_mean": 40.9,
         "behavioral_composite_z": -1.64,
         "ca_arena_elo": null,
-        "median_gen_ms": 20044,
-        "median_actual_cost": 0.036125
+        "median_gen_ms": 18445,
+        "median_actual_cost": 0.036772
       },
       "rank": 3
     },
@@ -73,8 +73,8 @@
       "composite_score": 83.3,
       "composite_z": 0.508,
       "engagement_score": 31.8,
-      "speed_score": 62.5,
-      "cost_score": 72.5,
+      "speed_score": 64.3,
+      "cost_score": 73.8,
       "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1490.7,
@@ -93,8 +93,8 @@
       "composite_score": 78.6,
       "composite_z": 0.445,
       "engagement_score": 4.5,
-      "speed_score": 82.5,
-      "cost_score": 32.5,
+      "speed_score": 78.6,
+      "cost_score": 26.2,
       "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1552.0,
@@ -103,8 +103,8 @@
         "flaw_hunter_mean": 27.6,
         "behavioral_composite_z": 0.678,
         "ca_arena_elo": 1471.9,
-        "median_gen_ms": 4720,
-        "median_actual_cost": 0.004763
+        "median_gen_ms": 5645,
+        "median_actual_cost": 0.006728
       },
       "rank": 5
     },
@@ -113,8 +113,8 @@
       "composite_score": 73.8,
       "composite_z": 0.405,
       "engagement_score": 22.7,
-      "speed_score": 12.5,
-      "cost_score": 42.5,
+      "speed_score": 11.9,
+      "cost_score": 40.5,
       "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1508.2,
@@ -133,8 +133,8 @@
       "composite_score": 69.0,
       "composite_z": 0.129,
       "engagement_score": 95.5,
-      "speed_score": 57.5,
-      "cost_score": 82.5,
+      "speed_score": 59.5,
+      "cost_score": 83.3,
       "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1518.6,
@@ -153,8 +153,8 @@
       "composite_score": 64.3,
       "composite_z": 0.129,
       "engagement_score": null,
-      "speed_score": 42.5,
-      "cost_score": 97.5,
+      "speed_score": 45.2,
+      "cost_score": 97.6,
       "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1564.1,
@@ -163,7 +163,7 @@
         "flaw_hunter_mean": 19.4,
         "behavioral_composite_z": 0.246,
         "ca_arena_elo": null,
-        "median_gen_ms": 17110,
+        "median_gen_ms": 17961,
         "median_actual_cost": 0
       },
       "rank": 8
@@ -173,8 +173,8 @@
       "composite_score": 59.5,
       "composite_z": 0.084,
       "engagement_score": null,
-      "speed_score": 7.5,
-      "cost_score": 27.5,
+      "speed_score": 7.1,
+      "cost_score": 31.0,
       "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1496.3,
@@ -183,8 +183,8 @@
         "flaw_hunter_mean": 42,
         "behavioral_composite_z": 0.473,
         "ca_arena_elo": null,
-        "median_gen_ms": 44666,
-        "median_actual_cost": 0.005627
+        "median_gen_ms": 42891,
+        "median_actual_cost": 0.005743
       },
       "rank": 9
     },
@@ -193,8 +193,8 @@
       "composite_score": 54.8,
       "composite_z": 0.045,
       "engagement_score": null,
-      "speed_score": 2.5,
-      "cost_score": 22.5,
+      "speed_score": 2.4,
+      "cost_score": 21.4,
       "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1535.2,
@@ -203,8 +203,8 @@
         "flaw_hunter_mean": 49.5,
         "behavioral_composite_z": 0.423,
         "ca_arena_elo": null,
-        "median_gen_ms": 59435,
-        "median_actual_cost": 0.011016
+        "median_gen_ms": 63252,
+        "median_actual_cost": 0.011639
       },
       "rank": 10
     },
@@ -213,8 +213,8 @@
       "composite_score": 50.0,
       "composite_z": 0.012,
       "engagement_score": 86.4,
-      "speed_score": 87.5,
-      "cost_score": 87.5,
+      "speed_score": 88.1,
+      "cost_score": 88.1,
       "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1535.8,
@@ -233,8 +233,8 @@
       "composite_score": 45.2,
       "composite_z": -0.009,
       "engagement_score": null,
-      "speed_score": 72.5,
-      "cost_score": 92.5,
+      "speed_score": 73.8,
+      "cost_score": 92.9,
       "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1468.7,
@@ -243,7 +243,7 @@
         "flaw_hunter_mean": 50.6,
         "behavioral_composite_z": 0.887,
         "ca_arena_elo": null,
-        "median_gen_ms": 5288,
+        "median_gen_ms": 5779,
         "median_actual_cost": 0
       },
       "rank": 12
@@ -253,8 +253,8 @@
       "composite_score": 40.5,
       "composite_z": -0.045,
       "engagement_score": null,
-      "speed_score": 92.5,
-      "cost_score": 57.5,
+      "speed_score": 92.9,
+      "cost_score": 50.0,
       "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1560.4,
@@ -263,8 +263,8 @@
         "flaw_hunter_mean": 34.2,
         "behavioral_composite_z": -0.145,
         "ca_arena_elo": null,
-        "median_gen_ms": 2293,
-        "median_actual_cost": 0.00106
+        "median_gen_ms": 2413,
+        "median_actual_cost": 0.00114
       },
       "rank": 13
     },
@@ -273,8 +273,8 @@
       "composite_score": 35.7,
       "composite_z": -0.112,
       "engagement_score": 59.1,
-      "speed_score": 32.5,
-      "cost_score": 52.5,
+      "speed_score": 35.7,
+      "cost_score": 59.5,
       "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1437.2,
@@ -293,8 +293,8 @@
       "composite_score": 31.0,
       "composite_z": -0.197,
       "engagement_score": null,
-      "speed_score": null,
-      "cost_score": null,
+      "speed_score": 16.7,
+      "cost_score": 45.2,
       "missing_flag": "*",
       "raw": {
         "mt_arena_elo": null,
@@ -303,8 +303,8 @@
         "flaw_hunter_mean": 26.2,
         "behavioral_composite_z": 0.507,
         "ca_arena_elo": null,
-        "median_gen_ms": null,
-        "median_actual_cost": null
+        "median_gen_ms": 32975,
+        "median_actual_cost": 0.002518
       },
       "rank": 15
     },
@@ -313,8 +313,8 @@
       "composite_score": 26.2,
       "composite_z": -0.299,
       "engagement_score": 68.2,
-      "speed_score": 67.5,
-      "cost_score": 67.5,
+      "speed_score": 69.0,
+      "cost_score": 69.0,
       "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1487.3,
@@ -333,8 +333,8 @@
       "composite_score": 21.4,
       "composite_z": -0.379,
       "engagement_score": null,
-      "speed_score": 37.5,
-      "cost_score": 12.5,
+      "speed_score": 26.2,
+      "cost_score": 11.9,
       "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1487.0,
@@ -343,8 +343,8 @@
         "flaw_hunter_mean": 29.2,
         "behavioral_composite_z": 0.277,
         "ca_arena_elo": null,
-        "median_gen_ms": 19166,
-        "median_actual_cost": 0.025084
+        "median_gen_ms": 20317,
+        "median_actual_cost": 0.027508
       },
       "rank": 17
     },
@@ -353,8 +353,8 @@
       "composite_score": 16.7,
       "composite_z": -0.479,
       "engagement_score": null,
-      "speed_score": 22.5,
-      "cost_score": 37.5,
+      "speed_score": 31.0,
+      "cost_score": 35.7,
       "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1386.5,
@@ -363,8 +363,8 @@
         "flaw_hunter_mean": 45.8,
         "behavioral_composite_z": 0.135,
         "ca_arena_elo": null,
-        "median_gen_ms": 20238,
-        "median_actual_cost": 0.003708
+        "median_gen_ms": 20293,
+        "median_actual_cost": 0.004082
       },
       "rank": 18
     },
@@ -373,8 +373,8 @@
       "composite_score": 11.9,
       "composite_z": -0.702,
       "engagement_score": 77.3,
-      "speed_score": 97.5,
-      "cost_score": 62.5,
+      "speed_score": 97.6,
+      "cost_score": 64.3,
       "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1372.4,
@@ -383,8 +383,8 @@
         "flaw_hunter_mean": 43.6,
         "behavioral_composite_z": 1.058,
         "ca_arena_elo": 1529.1,
-        "median_gen_ms": 1088,
-        "median_actual_cost": 0.000829
+        "median_gen_ms": 1089,
+        "median_actual_cost": 0.000844
       },
       "rank": 19
     },
@@ -393,8 +393,8 @@
       "composite_score": 7.1,
       "composite_z": -0.856,
       "engagement_score": 40.9,
-      "speed_score": 17.5,
-      "cost_score": 47.5,
+      "speed_score": 21.4,
+      "cost_score": 54.8,
       "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1410.6,
@@ -413,8 +413,8 @@
       "composite_score": 2.4,
       "composite_z": -0.95,
       "engagement_score": 13.6,
-      "speed_score": 77.5,
-      "cost_score": 77.5,
+      "speed_score": 83.3,
+      "cost_score": 78.6,
       "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1483.3,

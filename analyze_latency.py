@@ -86,6 +86,7 @@ SLUG_TO_KEY = {
     "meta-llama/llama-4-maverick-17b-128e-instruct":     "llama_4_maverick",
     "moonshotai/kimi-k2.5":                              "kimi_k2_5",
     "moonshotai/kimi-k2.6":                              "kimi_k2_6",
+    "deepseek/deepseek-r1-0528":                         "deepseek_r1_0528",
 }
 
 
