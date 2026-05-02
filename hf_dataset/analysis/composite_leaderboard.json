@@ -1,0 +1,412 @@
+{
+  "weights": {
+    "mt_arena": 0.35,
+    "llm_judge": 0.25,
+    "rubric": 0.2,
+    "flaw": 0.15,
+    "behavioral": 0.05
+  },
+  "n_models": 20,
+  "leaderboard": [
+    {
+      "model": "claude_opus_4_7",
+      "composite_score": 97.5,
+      "composite_z": 1.082,
+      "engagement_score": null,
+      "speed_score": 52.5,
+      "cost_score": 2.5,
+      "missing_flag": "*",
+      "raw": {
+        "mt_arena_elo": 1626.5,
+        "llm_judge_likert": 4.54,
+        "rubric_overall": null,
+        "flaw_hunter_mean": 42.8,
+        "behavioral_composite_z": -1.296,
+        "ca_arena_elo": null,
+        "median_gen_ms": 10174,
+        "median_actual_cost": 0.037925
+      },
+      "rank": 1
+    },
+    {
+      "model": "claude_sonnet_4_5",
+      "composite_score": 92.5,
+      "composite_z": 0.732,
+      "engagement_score": 50.0,
+      "speed_score": 47.5,
+      "cost_score": 17.5,
+      "missing_flag": "",
+      "raw": {
+        "mt_arena_elo": 1550.1,
+        "llm_judge_likert": 4.42,
+        "rubric_overall": 4.37,
+        "flaw_hunter_mean": 45.3,
+        "behavioral_composite_z": -0.375,
+        "ca_arena_elo": 1513.0,
+        "median_gen_ms": 12053,
+        "median_actual_cost": 0.014467
+      },
+      "rank": 2
+    },
+    {
+      "model": "claude_opus_4_6",
+      "composite_score": 87.5,
+      "composite_z": 0.672,
+      "engagement_score": null,
+      "speed_score": 27.5,
+      "cost_score": 7.5,
+      "missing_flag": "*",
+      "raw": {
+        "mt_arena_elo": 1567.8,
+        "llm_judge_likert": 4.51,
+        "rubric_overall": null,
+        "flaw_hunter_mean": 40.9,
+        "behavioral_composite_z": -1.585,
+        "ca_arena_elo": null,
+        "median_gen_ms": 20044,
+        "median_actual_cost": 0.036125
+      },
+      "rank": 3
+    },
+    {
+      "model": "deepseek_v3_2",
+      "composite_score": 82.5,
+      "composite_z": 0.387,
+      "engagement_score": 31.8,
+      "speed_score": 62.5,
+      "cost_score": 72.5,
+      "missing_flag": "",
+      "raw": {
+        "mt_arena_elo": 1490.7,
+        "llm_judge_likert": 4.38,
+        "rubric_overall": 4.34,
+        "flaw_hunter_mean": 46.9,
+        "behavioral_composite_z": 0.963,
+        "ca_arena_elo": 1492.1,
+        "median_gen_ms": 8432,
+        "median_actual_cost": 0.000517
+      },
+      "rank": 4
+    },
+    {
+      "model": "gpt_4_1",
+      "composite_score": 77.5,
+      "composite_z": 0.306,
+      "engagement_score": 4.5,
+      "speed_score": 82.5,
+      "cost_score": 32.5,
+      "missing_flag": "",
+      "raw": {
+        "mt_arena_elo": 1552.0,
+        "llm_judge_likert": 4.34,
+        "rubric_overall": 4.31,
+        "flaw_hunter_mean": 27.6,
+        "behavioral_composite_z": 0.69,
+        "ca_arena_elo": 1471.9,
+        "median_gen_ms": 4720,
+        "median_actual_cost": 0.004763
+      },
+      "rank": 5
+    },
+    {
+      "model": "glm_4_7",
+      "composite_score": 72.5,
+      "composite_z": 0.285,
+      "engagement_score": 22.7,
+      "speed_score": 12.5,
+      "cost_score": 42.5,
+      "missing_flag": "",
+      "raw": {
+        "mt_arena_elo": 1508.2,
+        "llm_judge_likert": 4.37,
+        "rubric_overall": 4.34,
+        "flaw_hunter_mean": 36.8,
+        "behavioral_composite_z": 0.338,
+        "ca_arena_elo": 1490.0,
+        "median_gen_ms": 35918,
+        "median_actual_cost": 0.003334
+      },
+      "rank": 6
+    },
+    {
+      "model": "deepseek_v4_pro",
+      "composite_score": 67.5,
+      "composite_z": 0.279,
+      "engagement_score": null,
+      "speed_score": 42.5,
+      "cost_score": 97.5,
+      "missing_flag": "*",
+      "raw": {
+        "mt_arena_elo": 1564.1,
+        "llm_judge_likert": 4.42,
+        "rubric_overall": null,
+        "flaw_hunter_mean": 19.4,
+        "behavioral_composite_z": 0.266,
+        "ca_arena_elo": null,
+        "median_gen_ms": 17110,
+        "median_actual_cost": 0
+      },
+      "rank": 7
+    },
+    {
+      "model": "gemini_3_1_flash_lite",
+      "composite_score": 62.5,
+      "composite_z": 0.264,
+      "engagement_score": null,
+      "speed_score": 92.5,
+      "cost_score": 57.5,
+      "missing_flag": "*",
+      "raw": {
+        "mt_arena_elo": 1560.4,
+        "llm_judge_likert": 4.3,
+        "rubric_overall": null,
+        "flaw_hunter_mean": 34.2,
+        "behavioral_composite_z": -0.118,
+        "ca_arena_elo": null,
+        "median_gen_ms": 2293,
+        "median_actual_cost": 0.00106
+      },
+      "rank": 8
+    },
+    {
+      "model": "kimi_k2_5",
+      "composite_score": 57.5,
+      "composite_z": 0.226,
+      "engagement_score": null,
+      "speed_score": 7.5,
+      "cost_score": 27.5,
+      "missing_flag": "*",
+      "raw": {
+        "mt_arena_elo": 1496.3,
+        "llm_judge_likert": 4.4,
+        "rubric_overall": null,
+        "flaw_hunter_mean": 42,
+        "behavioral_composite_z": 0.489,
+        "ca_arena_elo": null,
+        "median_gen_ms": 44666,
+        "median_actual_cost": 0.005627
+      },
+      "rank": 9
+    },
+    {
+      "model": "deepseek_v4_flash",
+      "composite_score": 52.5,
+      "composite_z": 0.191,
+      "engagement_score": null,
+      "speed_score": 72.5,
+      "cost_score": 92.5,
+      "missing_flag": "*",
+      "raw": {
+        "mt_arena_elo": 1468.7,
+        "llm_judge_likert": 4.38,
+        "rubric_overall": null,
+        "flaw_hunter_mean": 50.6,
+        "behavioral_composite_z": 0.895,
+        "ca_arena_elo": null,
+        "median_gen_ms": 5288,
+        "median_actual_cost": 0
+      },
+      "rank": 10
+    },
+    {
+      "model": "kimi_k2_6",
+      "composite_score": 47.5,
+      "composite_z": 0.187,
+      "engagement_score": null,
+      "speed_score": 2.5,
+      "cost_score": 22.5,
+      "missing_flag": "*",
+      "raw": {
+        "mt_arena_elo": 1535.2,
+        "llm_judge_likert": 4.18,
+        "rubric_overall": null,
+        "flaw_hunter_mean": 49.5,
+        "behavioral_composite_z": 0.44,
+        "ca_arena_elo": null,
+        "median_gen_ms": 59435,
+        "median_actual_cost": 0.011016
+      },
+      "rank": 11
+    },
+    {
+      "model": "gemma_4_26b",
+      "composite_score": 42.5,
+      "composite_z": -0.032,
+      "engagement_score": 95.5,
+      "speed_score": 57.5,
+      "cost_score": 82.5,
+      "missing_flag": "",
+      "raw": {
+        "mt_arena_elo": 1518.6,
+        "llm_judge_likert": 4.29,
+        "rubric_overall": 4.27,
+        "flaw_hunter_mean": 32.6,
+        "behavioral_composite_z": -1.021,
+        "ca_arena_elo": 1533.7,
+        "median_gen_ms": 9753,
+        "median_actual_cost": 0.00037
+      },
+      "rank": 12
+    },
+    {
+      "model": "mistral_small_creative",
+      "composite_score": 37.5,
+      "composite_z": -0.12,
+      "engagement_score": 86.4,
+      "speed_score": 87.5,
+      "cost_score": 87.5,
+      "missing_flag": "",
+      "raw": {
+        "mt_arena_elo": 1535.8,
+        "llm_judge_likert": 4.22,
+        "rubric_overall": 4.31,
+        "flaw_hunter_mean": 27.1,
+        "behavioral_composite_z": -2.01,
+        "ca_arena_elo": 1533.5,
+        "median_gen_ms": 2843,
+        "median_actual_cost": 0.000296
+      },
+      "rank": 13
+    },
+    {
+      "model": "gemini_3_1_pro",
+      "composite_score": 32.5,
+      "composite_z": -0.139,
+      "engagement_score": null,
+      "speed_score": 37.5,
+      "cost_score": 12.5,
+      "missing_flag": "*",
+      "raw": {
+        "mt_arena_elo": 1487.0,
+        "llm_judge_likert": 4.33,
+        "rubric_overall": null,
+        "flaw_hunter_mean": 29.2,
+        "behavioral_composite_z": 0.297,
+        "ca_arena_elo": null,
+        "median_gen_ms": 19166,
+        "median_actual_cost": 0.025084
+      },
+      "rank": 14
+    },
+    {
+      "model": "minimax_m2_7",
+      "composite_score": 27.5,
+      "composite_z": -0.321,
+      "engagement_score": 59.1,
+      "speed_score": 32.5,
+      "cost_score": 52.5,
+      "missing_flag": "",
+      "raw": {
+        "mt_arena_elo": 1437.2,
+        "llm_judge_likert": 4.34,
+        "rubric_overall": 4.2,
+        "flaw_hunter_mean": 41.5,
+        "behavioral_composite_z": -0.003,
+        "ca_arena_elo": 1514.4,
+        "median_gen_ms": 19720,
+        "median_actual_cost": 0.001064
+      },
+      "rank": 15
+    },
+    {
+      "model": "glm_5_1",
+      "composite_score": 22.5,
+      "composite_z": -0.346,
+      "engagement_score": null,
+      "speed_score": 22.5,
+      "cost_score": 37.5,
+      "missing_flag": "*",
+      "raw": {
+        "mt_arena_elo": 1386.5,
+        "llm_judge_likert": 4.39,
+        "rubric_overall": null,
+        "flaw_hunter_mean": 45.8,
+        "behavioral_composite_z": 0.157,
+        "ca_arena_elo": null,
+        "median_gen_ms": 20238,
+        "median_actual_cost": 0.003708
+      },
+      "rank": 16
+    },
+    {
+      "model": "grok_4_1",
+      "composite_score": 17.5,
+      "composite_z": -0.427,
+      "engagement_score": 68.2,
+      "speed_score": 67.5,
+      "cost_score": 67.5,
+      "missing_flag": "",
+      "raw": {
+        "mt_arena_elo": 1487.3,
+        "llm_judge_likert": 4.19,
+        "rubric_overall": 4.32,
+        "flaw_hunter_mean": 12.8,
+        "behavioral_composite_z": 2.013,
+        "ca_arena_elo": 1517.0,
+        "median_gen_ms": 6529,
+        "median_actual_cost": 0.000547
+      },
+      "rank": 17
+    },
+    {
+      "model": "gemini_2_5_flash",
+      "composite_score": 12.5,
+      "composite_z": -0.898,
+      "engagement_score": 77.3,
+      "speed_score": 97.5,
+      "cost_score": 62.5,
+      "missing_flag": "",
+      "raw": {
+        "mt_arena_elo": 1372.4,
+        "llm_judge_likert": 4.14,
+        "rubric_overall": 4.21,
+        "flaw_hunter_mean": 43.6,
+        "behavioral_composite_z": 1.063,
+        "ca_arena_elo": 1529.1,
+        "median_gen_ms": 1088,
+        "median_actual_cost": 0.000829
+      },
+      "rank": 18
+    },
+    {
+      "model": "qwen3_5_flash",
+      "composite_score": 7.5,
+      "composite_z": -1.004,
+      "engagement_score": 40.9,
+      "speed_score": 17.5,
+      "cost_score": 47.5,
+      "missing_flag": "",
+      "raw": {
+        "mt_arena_elo": 1410.6,
+        "llm_judge_likert": 3.98,
+        "rubric_overall": 4.27,
+        "flaw_hunter_mean": 39.6,
+        "behavioral_composite_z": -0.721,
+        "ca_arena_elo": 1492.6,
+        "median_gen_ms": 27719,
+        "median_actual_cost": 0.001101
+      },
+      "rank": 19
+    },
+    {
+      "model": "llama_4_maverick",
+      "composite_score": 2.5,
+      "composite_z": -1.326,
+      "engagement_score": 13.6,
+      "speed_score": 77.5,
+      "cost_score": 77.5,
+      "missing_flag": "",
+      "raw": {
+        "mt_arena_elo": 1483.3,
+        "llm_judge_likert": 3.96,
+        "rubric_overall": 3.92,
+        "flaw_hunter_mean": 30.6,
+        "behavioral_composite_z": -0.483,
+        "ca_arena_elo": 1483.3,
+        "median_gen_ms": 4727,
+        "median_actual_cost": 0.000485
+      },
+      "rank": 20
+    }
+  ]
+}

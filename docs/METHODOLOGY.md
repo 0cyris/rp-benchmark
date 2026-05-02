@@ -480,9 +480,63 @@ Excludes the user simulator (`gemini_2_5_flash`) and the judge (`claude_sonnet_4
 
 ---
 
-## 13. Statistical Conventions
+## 13. Composite Leaderboard
 
-### 13.1 Standard error of the mean
+A single sortable headline score per model, plus three independent dimensions (Engagement, Speed, Cost). Reflects the paper's structural finding that several of our quality metrics rank-correlate with each other and measure the same latent ("sustained roleplay quality") while the single-message arena measures a different latent ("snap-judgment engagement") — folding both into one number would obscure the trade-off.
+
+### 13.1 Composite Score (0–100)
+
+Per-model z-score across the pool on each component, weighted sum, percentile-rank to 0–100:
+
+```
+quality_z(m) = 0.35 × z(mt_arena_elo)
+             + 0.25 × z(llm_judge_multiturn_likert)
+             + 0.20 × z(rubric_27dim_overall)
+             + 0.15 × z(flaw_hunter_session_mean)
+             + 0.05 × behavioral_z(m)
+   where
+     z(metric)      = (metric - mean(metric)) / stdev(metric) over the model pool
+     behavioral_z(m) = mean( z(TTR), z(1 − bigram_repetition) )
+
+composite_score(m) = percentile_rank(quality_z(m)) × 100
+```
+
+Weights chosen to give the four metrics that show direct or indirect human-ground-truth dominant influence (multi-turn arena humans + LLM judge agreeing at $\rho = +0.495$ form most of the weight; single-turn rubric + flaw hunter add additional methodological independence; behavioral metrics are minor lexical sanity checks). All weights sum to $1.0$.
+
+**Missing-data handling.** When a model lacks a component (e.g., the 9 Phase B models pre-Phase-B-rubric run), that component contributes $z = 0$ (population mean). The model's row is flagged `*` to indicate the imputation. Imputation does not move rank order materially but does narrow effective uncertainty.
+
+### 13.2 Engagement Score (independent axis, 0–100)
+
+Single-message community arena ELO percentile, computed only for the $11$ models with $\geq 30$ pairwise votes in that arena:
+
+```
+engagement_score(m) = percentile_rank(community_arena_elo(m)) × 100
+```
+
+Models without sufficient single-message votes show `—`. We do **not** fold Engagement into the Composite because the cross-method correlation (§7, §5.3) shows the single-message arena measures a different latent than the multi-turn-quality cluster.
+
+### 13.3 Operational axes (Speed, Cost — 0–100 each)
+
+```
+speed_score(m) = percentile_rank( 1 / median_gen_seconds(m) ) × 100
+cost_score(m)  = percentile_rank( 1 / median_actual_cost_usd(m) ) × 100
+```
+
+BYOK calls (cost = $0$) get the top percentile via a sentinel ($1/0 \to \infty$). Both speed and cost are reported per-model from the OpenRouter activity export (§11), independently of any human or judge evaluation.
+
+### 13.4 Why a percentile rather than a raw weighted z-score?
+
+Two reasons. First, percentile is bounded $[0, 100]$ regardless of pool size and outlier presence, which makes the leaderboard reading-friendly. Second, percentile respects rank but discards absolute spread, which matches what the composite is for: an ordering, not a metric. A user comparing model X (composite = $87.5$) to model Y (composite = $42.5$) should not interpret the gap as "X is exactly $2\times$ better"; they should interpret it as "X is at the $87$th percentile of our pool, Y at the $42$nd".
+
+### 13.5 What this composite is not
+
+It is not the "best single number" for selecting a model for a specific use case. The use-case-aware decision involves trading off Composite against Engagement (snap engagement matters for some products), against Speed (latency matters for live chat), and against Cost. A user-configurable weighting interface (presets like "production chat" / "creative writing" / "bulk batch") is on the roadmap; for now we expose the four axes and leave the trade-off explicit.
+
+---
+
+## 14. Statistical Conventions
+
+### 14.1 Standard error of the mean
 
 For a per-model metric computed from `n` independent observations:
 
@@ -497,7 +551,7 @@ Reported alongside any `mean ± value` notation.
 - Stochastic LLM generation variance (we run each session once)
 - Judge variance (we use a single judge, Sonnet 4)
 
-### 13.2 Wilson score interval (binomial proportions)
+### 14.2 Wilson score interval (binomial proportions)
 
 For binary failure rates:
 ```
@@ -507,7 +561,7 @@ W_low,high = (p̂ + z²/(2n) ± z × √(p̂(1−p̂)/n + z²/(4n²))) / (1 + z�
 
 Used wherever we report `4.2% [±2.1%]` for failure rates.
 
-### 13.3 Spearman rank correlation
+### 14.3 Spearman rank correlation
 
 For non-parametric rank agreement (no ties — exact form):
 ```
@@ -525,7 +579,7 @@ P-values use the t-approximation `t = ρ × √((n − 2) / (1 − ρ²))` with 
 
 Used in §7 (cross-method correlation), §5.3 (multi-turn arena vs other methods), and §8 (failure-target validation).
 
-### 13.4 Pearson correlation (rare — used for continuous metrics)
+### 14.4 Pearson correlation (rare — used for continuous metrics)
 
 ```
 r(X, Y) = Σ((x_i − x̄)(y_i − ȳ)) / √( Σ(x_i − x̄)² × Σ(y_i − ȳ)² )
@@ -533,7 +587,7 @@ r(X, Y) = Σ((x_i − x̄)(y_i − ȳ)) / √( Σ(x_i − x̄)² × Σ(y_i − �
 
 Used in `analyze_factor_and_clusters.py` for the per-dimension correlation matrix.
 
-### 13.5 Bonferroni correction
+### 14.5 Bonferroni correction
 
 When testing m hypotheses simultaneously (e.g. all pairwise model differences in arena), report adjusted p-values:
 ```
@@ -542,7 +596,7 @@ p_adjusted = min(1, m × p_raw)
 
 Used sparingly — most reported correlations are pre-registered single comparisons, not multiple-testing screens.
 
-### 13.6 What we don't have
+### 14.6 What we don't have
 
 For full transparency:
 - **Multi-judge ensembles** — single judge (Sonnet 4) for everything except community arena and multi-turn arena. Inter-rater agreement (Cohen's kappa) untested.
@@ -551,7 +605,7 @@ For full transparency:
 
 ---
 
-## 14. Bias Corrections Applied
+## 15. Bias Corrections Applied
 
 | Bias | Where it shows up | Correction |
 |---|---|---|
@@ -566,7 +620,7 @@ For full transparency:
 
 ---
 
-## 15. Test-Set Privacy
+## 16. Test-Set Privacy
 
 **Currently:** All 20 adversarial seeds + 8 standard seeds are public (HuggingFace `lazyweasel/roleplay-bench` dataset). This means future model versions can train on them — a known problem already documented in vals.ai's methodology.
 
@@ -580,7 +634,7 @@ Models trained on the public seeds (post-publication retrain) would show systema
 
 ---
 
-## 16. Reproducibility
+## 17. Reproducibility
 
 Every analysis in this benchmark is reproducible from the published artifacts. Each script is idempotent and incremental (re-running skips already-completed work).
 
@@ -614,7 +668,7 @@ Output files in `results/` are version-controlled snapshots; re-running with new
 
 ---
 
-## 17. Versioning
+## 18. Versioning
 
 | Snapshot | Date | Marker |
 |---|---|---|
@@ -627,7 +681,7 @@ Major version bumps when the model pool changes (Phase B added 8 next-gen models
 
 ---
 
-## 18. Honest Limitations
+## 19. Honest Limitations
 
 1. **Small N per cell.** `n=1` per (model, seed) on most multi-turn cells. CIs on per-mode means are wide.
 2. **Single judge for everything except community arena.** Sonnet 4's aesthetic preferences shape every Likert-derived ranking.
@@ -642,4 +696,4 @@ These are documented in `EXPERIMENT_DESIGN.md` and the README's empirical-valida
 
 ---
 
-*Document version 1.1 — 2026-05-01. v1.1 adds: §2.5 combined score, §3.7 per-target session aggregation, §4.5 expanded SFW/NSFW formulas, §4.6 win rate / exposure / position bias, §5 multi-turn arena, §6 LLM-judged adversarial ELO, §9 comparative validation, §10.2 actual cost, §11 latency leaderboard, §12 quality/speed leaderboard, §13.3 ties-form Spearman, §13.4 Pearson, §13.5 Bonferroni.*
+*Document version 1.2 — 2026-05-02. v1.2 adds: §13 Composite Leaderboard (sustained-quality composite + independent Engagement / Speed / Cost axes); subsections renumbered 13→14, 14→15, etc. v1.1 (2026-05-01) added: §2.5 combined score, §3.7 per-target session aggregation, §4.5 expanded SFW/NSFW formulas, §4.6 win rate / exposure / position bias, §5 multi-turn arena, §6 LLM-judged adversarial ELO, §9 comparative validation, §10.2 actual cost, §11 latency leaderboard, §12 quality/speed leaderboard, §14.3 ties-form Spearman, §14.4 Pearson, §14.5 Bonferroni.*
