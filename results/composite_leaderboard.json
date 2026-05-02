@@ -11,15 +11,15 @@
     {
       "model": "claude_opus_4_7",
       "composite_score": 97.5,
-      "composite_z": 1.082,
+      "composite_z": 0.891,
       "engagement_score": null,
       "speed_score": 52.5,
       "cost_score": 2.5,
-      "missing_flag": "*",
+      "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1626.5,
         "llm_judge_likert": 4.54,
-        "rubric_overall": null,
+        "rubric_overall": 3.89,
         "flaw_hunter_mean": 42.8,
         "behavioral_composite_z": -1.296,
         "ca_arena_elo": null,
@@ -31,7 +31,7 @@
     {
       "model": "claude_sonnet_4_5",
       "composite_score": 92.5,
-      "composite_z": 0.732,
+      "composite_z": 0.815,
       "engagement_score": 50.0,
       "speed_score": 47.5,
       "cost_score": 17.5,
@@ -51,15 +51,15 @@
     {
       "model": "claude_opus_4_6",
       "composite_score": 87.5,
-      "composite_z": 0.672,
+      "composite_z": 0.519,
       "engagement_score": null,
       "speed_score": 27.5,
       "cost_score": 7.5,
-      "missing_flag": "*",
+      "missing_flag": "",
       "raw": {
         "mt_arena_elo": 1567.8,
         "llm_judge_likert": 4.51,
-        "rubric_overall": null,
+        "rubric_overall": 3.93,
         "flaw_hunter_mean": 40.9,
         "behavioral_composite_z": -1.585,
         "ca_arena_elo": null,
@@ -71,7 +71,7 @@
     {
       "model": "deepseek_v3_2",
       "composite_score": 82.5,
-      "composite_z": 0.387,
+      "composite_z": 0.49,
       "engagement_score": 31.8,
       "speed_score": 62.5,
       "cost_score": 72.5,
@@ -91,7 +91,7 @@
     {
       "model": "gpt_4_1",
       "composite_score": 77.5,
-      "composite_z": 0.306,
+      "composite_z": 0.429,
       "engagement_score": 4.5,
       "speed_score": 82.5,
       "cost_score": 32.5,
@@ -111,7 +111,7 @@
     {
       "model": "glm_4_7",
       "composite_score": 72.5,
-      "composite_z": 0.285,
+      "composite_z": 0.388,
       "engagement_score": 22.7,
       "speed_score": 12.5,
       "cost_score": 42.5,
@@ -129,109 +129,9 @@
       "rank": 6
     },
     {
-      "model": "deepseek_v4_pro",
-      "composite_score": 67.5,
-      "composite_z": 0.279,
-      "engagement_score": null,
-      "speed_score": 42.5,
-      "cost_score": 97.5,
-      "missing_flag": "*",
-      "raw": {
-        "mt_arena_elo": 1564.1,
-        "llm_judge_likert": 4.42,
-        "rubric_overall": null,
-        "flaw_hunter_mean": 19.4,
-        "behavioral_composite_z": 0.266,
-        "ca_arena_elo": null,
-        "median_gen_ms": 17110,
-        "median_actual_cost": 0
-      },
-      "rank": 7
-    },
-    {
-      "model": "gemini_3_1_flash_lite",
-      "composite_score": 62.5,
-      "composite_z": 0.264,
-      "engagement_score": null,
-      "speed_score": 92.5,
-      "cost_score": 57.5,
-      "missing_flag": "*",
-      "raw": {
-        "mt_arena_elo": 1560.4,
-        "llm_judge_likert": 4.3,
-        "rubric_overall": null,
-        "flaw_hunter_mean": 34.2,
-        "behavioral_composite_z": -0.118,
-        "ca_arena_elo": null,
-        "median_gen_ms": 2293,
-        "median_actual_cost": 0.00106
-      },
-      "rank": 8
-    },
-    {
-      "model": "kimi_k2_5",
-      "composite_score": 57.5,
-      "composite_z": 0.226,
-      "engagement_score": null,
-      "speed_score": 7.5,
-      "cost_score": 27.5,
-      "missing_flag": "*",
-      "raw": {
-        "mt_arena_elo": 1496.3,
-        "llm_judge_likert": 4.4,
-        "rubric_overall": null,
-        "flaw_hunter_mean": 42,
-        "behavioral_composite_z": 0.489,
-        "ca_arena_elo": null,
-        "median_gen_ms": 44666,
-        "median_actual_cost": 0.005627
-      },
-      "rank": 9
-    },
-    {
-      "model": "deepseek_v4_flash",
-      "composite_score": 52.5,
-      "composite_z": 0.191,
-      "engagement_score": null,
-      "speed_score": 72.5,
-      "cost_score": 92.5,
-      "missing_flag": "*",
-      "raw": {
-        "mt_arena_elo": 1468.7,
-        "llm_judge_likert": 4.38,
-        "rubric_overall": null,
-        "flaw_hunter_mean": 50.6,
-        "behavioral_composite_z": 0.895,
-        "ca_arena_elo": null,
-        "median_gen_ms": 5288,
-        "median_actual_cost": 0
-      },
-      "rank": 10
-    },
-    {
-      "model": "kimi_k2_6",
-      "composite_score": 47.5,
-      "composite_z": 0.187,
-      "engagement_score": null,
-      "speed_score": 2.5,
-      "cost_score": 22.5,
-      "missing_flag": "*",
-      "raw": {
-        "mt_arena_elo": 1535.2,
-        "llm_judge_likert": 4.18,
-        "rubric_overall": null,
-        "flaw_hunter_mean": 49.5,
-        "behavioral_composite_z": 0.44,
-        "ca_arena_elo": null,
-        "median_gen_ms": 59435,
-        "median_actual_cost": 0.011016
-      },
-      "rank": 11
-    },
-    {
       "model": "gemma_4_26b",
-      "composite_score": 42.5,
-      "composite_z": -0.032,
+      "composite_score": 67.5,
+      "composite_z": 0.118,
       "engagement_score": 95.5,
       "speed_score": 57.5,
       "cost_score": 82.5,
@@ -246,12 +146,72 @@
         "median_gen_ms": 9753,
         "median_actual_cost": 0.00037
       },
-      "rank": 12
+      "rank": 7
+    },
+    {
+      "model": "deepseek_v4_pro",
+      "composite_score": 62.5,
+      "composite_z": 0.116,
+      "engagement_score": null,
+      "speed_score": 42.5,
+      "cost_score": 97.5,
+      "missing_flag": "",
+      "raw": {
+        "mt_arena_elo": 1564.1,
+        "llm_judge_likert": 4.42,
+        "rubric_overall": 3.92,
+        "flaw_hunter_mean": 19.4,
+        "behavioral_composite_z": 0.266,
+        "ca_arena_elo": null,
+        "median_gen_ms": 17110,
+        "median_actual_cost": 0
+      },
+      "rank": 8
+    },
+    {
+      "model": "kimi_k2_5",
+      "composite_score": 57.5,
+      "composite_z": 0.072,
+      "engagement_score": null,
+      "speed_score": 7.5,
+      "cost_score": 27.5,
+      "missing_flag": "",
+      "raw": {
+        "mt_arena_elo": 1496.3,
+        "llm_judge_likert": 4.4,
+        "rubric_overall": 3.93,
+        "flaw_hunter_mean": 42,
+        "behavioral_composite_z": 0.489,
+        "ca_arena_elo": null,
+        "median_gen_ms": 44666,
+        "median_actual_cost": 0.005627
+      },
+      "rank": 9
+    },
+    {
+      "model": "kimi_k2_6",
+      "composite_score": 52.5,
+      "composite_z": 0.043,
+      "engagement_score": null,
+      "speed_score": 2.5,
+      "cost_score": 22.5,
+      "missing_flag": "",
+      "raw": {
+        "mt_arena_elo": 1535.2,
+        "llm_judge_likert": 4.18,
+        "rubric_overall": 3.94,
+        "flaw_hunter_mean": 49.5,
+        "behavioral_composite_z": 0.44,
+        "ca_arena_elo": null,
+        "median_gen_ms": 59435,
+        "median_actual_cost": 0.011016
+      },
+      "rank": 10
     },
     {
       "model": "mistral_small_creative",
-      "composite_score": 37.5,
-      "composite_z": -0.12,
+      "composite_score": 47.5,
+      "composite_z": 0.003,
       "engagement_score": 86.4,
       "speed_score": 87.5,
       "cost_score": 87.5,
@@ -266,32 +226,52 @@
         "median_gen_ms": 2843,
         "median_actual_cost": 0.000296
       },
+      "rank": 11
+    },
+    {
+      "model": "deepseek_v4_flash",
+      "composite_score": 42.5,
+      "composite_z": -0.018,
+      "engagement_score": null,
+      "speed_score": 72.5,
+      "cost_score": 92.5,
+      "missing_flag": "",
+      "raw": {
+        "mt_arena_elo": 1468.7,
+        "llm_judge_likert": 4.38,
+        "rubric_overall": 3.87,
+        "flaw_hunter_mean": 50.6,
+        "behavioral_composite_z": 0.895,
+        "ca_arena_elo": null,
+        "median_gen_ms": 5288,
+        "median_actual_cost": 0
+      },
+      "rank": 12
+    },
+    {
+      "model": "gemini_3_1_flash_lite",
+      "composite_score": 37.5,
+      "composite_z": -0.049,
+      "engagement_score": null,
+      "speed_score": 92.5,
+      "cost_score": 57.5,
+      "missing_flag": "",
+      "raw": {
+        "mt_arena_elo": 1560.4,
+        "llm_judge_likert": 4.3,
+        "rubric_overall": 3.76,
+        "flaw_hunter_mean": 34.2,
+        "behavioral_composite_z": -0.118,
+        "ca_arena_elo": null,
+        "median_gen_ms": 2293,
+        "median_actual_cost": 0.00106
+      },
       "rank": 13
     },
     {
-      "model": "gemini_3_1_pro",
-      "composite_score": 32.5,
-      "composite_z": -0.139,
-      "engagement_score": null,
-      "speed_score": 37.5,
-      "cost_score": 12.5,
-      "missing_flag": "*",
-      "raw": {
-        "mt_arena_elo": 1487.0,
-        "llm_judge_likert": 4.33,
-        "rubric_overall": null,
-        "flaw_hunter_mean": 29.2,
-        "behavioral_composite_z": 0.297,
-        "ca_arena_elo": null,
-        "median_gen_ms": 19166,
-        "median_actual_cost": 0.025084
-      },
-      "rank": 14
-    },
-    {
       "model": "minimax_m2_7",
-      "composite_score": 27.5,
-      "composite_z": -0.321,
+      "composite_score": 32.5,
+      "composite_z": -0.125,
       "engagement_score": 59.1,
       "speed_score": 32.5,
       "cost_score": 52.5,
@@ -306,32 +286,12 @@
         "median_gen_ms": 19720,
         "median_actual_cost": 0.001064
       },
-      "rank": 15
-    },
-    {
-      "model": "glm_5_1",
-      "composite_score": 22.5,
-      "composite_z": -0.346,
-      "engagement_score": null,
-      "speed_score": 22.5,
-      "cost_score": 37.5,
-      "missing_flag": "*",
-      "raw": {
-        "mt_arena_elo": 1386.5,
-        "llm_judge_likert": 4.39,
-        "rubric_overall": null,
-        "flaw_hunter_mean": 45.8,
-        "behavioral_composite_z": 0.157,
-        "ca_arena_elo": null,
-        "median_gen_ms": 20238,
-        "median_actual_cost": 0.003708
-      },
-      "rank": 16
+      "rank": 14
     },
     {
       "model": "grok_4_1",
-      "composite_score": 17.5,
-      "composite_z": -0.427,
+      "composite_score": 27.5,
+      "composite_z": -0.31,
       "engagement_score": 68.2,
       "speed_score": 67.5,
       "cost_score": 67.5,
@@ -346,12 +306,52 @@
         "median_gen_ms": 6529,
         "median_actual_cost": 0.000547
       },
+      "rank": 15
+    },
+    {
+      "model": "gemini_3_1_pro",
+      "composite_score": 22.5,
+      "composite_z": -0.386,
+      "engagement_score": null,
+      "speed_score": 37.5,
+      "cost_score": 12.5,
+      "missing_flag": "",
+      "raw": {
+        "mt_arena_elo": 1487.0,
+        "llm_judge_likert": 4.33,
+        "rubric_overall": 3.83,
+        "flaw_hunter_mean": 29.2,
+        "behavioral_composite_z": 0.297,
+        "ca_arena_elo": null,
+        "median_gen_ms": 19166,
+        "median_actual_cost": 0.025084
+      },
+      "rank": 16
+    },
+    {
+      "model": "glm_5_1",
+      "composite_score": 17.5,
+      "composite_z": -0.49,
+      "engagement_score": null,
+      "speed_score": 22.5,
+      "cost_score": 37.5,
+      "missing_flag": "",
+      "raw": {
+        "mt_arena_elo": 1386.5,
+        "llm_judge_likert": 4.39,
+        "rubric_overall": 3.94,
+        "flaw_hunter_mean": 45.8,
+        "behavioral_composite_z": 0.157,
+        "ca_arena_elo": null,
+        "median_gen_ms": 20238,
+        "median_actual_cost": 0.003708
+      },
       "rank": 17
     },
     {
       "model": "gemini_2_5_flash",
       "composite_score": 12.5,
-      "composite_z": -0.898,
+      "composite_z": -0.708,
       "engagement_score": 77.3,
       "speed_score": 97.5,
       "cost_score": 62.5,
@@ -371,7 +371,7 @@
     {
       "model": "qwen3_5_flash",
       "composite_score": 7.5,
-      "composite_z": -1.004,
+      "composite_z": -0.854,
       "engagement_score": 40.9,
       "speed_score": 17.5,
       "cost_score": 47.5,
@@ -391,7 +391,7 @@
     {
       "model": "llama_4_maverick",
       "composite_score": 2.5,
-      "composite_z": -1.326,
+      "composite_z": -0.943,
       "engagement_score": 13.6,
       "speed_score": 77.5,
       "cost_score": 77.5,

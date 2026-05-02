@@ -70,17 +70,17 @@ A single sortable headline score per model, plus three independent dimensions (E
 | 4 | DeepSeek V3.2 | 82.5 | 32 | 62 | 72 | Strong open-weight |
 | 5 | GPT-4.1 | 77.5 | 4 | 82 | 32 | Quality + speed |
 | 6 | GLM 4.7 | 72.5 | 23 | 12 | 42 | Heavy reasoning |
-| 7 | DeepSeek V4 Pro | 67.5 | — | 42 | **98** | BYOK frontier-open |
-| 8 | Gemini 3.1 Flash Lite | 62.5 | — | 92 | 58 | Speed leader |
+| 7 | Gemma 4 26B | 67.5 | **96** | 58 | 82 | **Quality + engagement crossover** |
+| 8 | DeepSeek V4 Pro | 62.5 | — | 42 | **98** | BYOK frontier-open |
 | 9 | Kimi K2.5 | 57.5 | — | 8 | 28 | Slow reasoning |
-| 10 | DeepSeek V4 Flash | 52.5 | — | 72 | 92 | BYOK fast |
-| 11 | Kimi K2.6 | 47.5 | — | 2 | 22 | Slowest, 17% truncation |
-| 12 | Gemma 4 26B | 42.5 | **96** | 58 | 82 | **Engagement champion** |
-| 13 | Mistral SC | 37.5 | 86 | 88 | 88 | Engagement + cheap + fast |
-| 14 | Gemini 3.1 Pro | 32.5 | — | 38 | 12 | Heavy reasoning, expensive |
-| 15 | MiniMax M2.7 | 27.5 | 59 | 32 | 52 | Mid-tier all-around |
-| 16 | GLM 5.1 | 22.5 | — | 22 | 38 | Reasoning model |
-| 17 | Grok 4.1 | 17.5 | 68 | 68 | 68 | Balanced operationally |
+| 10 | Kimi K2.6 | 52.5 | — | 2 | 22 | Slowest, 17% truncation |
+| 11 | Mistral SC | 47.5 | 86 | 88 | 88 | Engagement + cheap + fast |
+| 12 | DeepSeek V4 Flash | 42.5 | — | 72 | 92 | BYOK fast |
+| 13 | Gemini 3.1 Flash Lite | 37.5 | — | 92 | 58 | Speed leader |
+| 14 | MiniMax M2.7 | 32.5 | 59 | 32 | 52 | Mid-tier all-around |
+| 15 | Grok 4.1 | 27.5 | 68 | 68 | 68 | Balanced operationally |
+| 16 | Gemini 3.1 Pro | 22.5 | — | 38 | 12 | Heavy reasoning, expensive |
+| 17 | GLM 5.1 | 17.5 | — | 22 | 38 | Reasoning model |
 | 18 | Gemini 2.5 Flash | 12.5 | 77 | 98 | 62 | Snap-judgment darling, weak multi-turn |
 | 19 | Qwen 3.5 Flash | 7.5 | 41 | 18 | 48 | Heavy reasoning, weak quality |
 | 20 | Llama 4 Maverick | 2.5 | 14 | 78 | 78 | Bottom on quality and engagement |
@@ -97,9 +97,9 @@ A single sortable headline score per model, plus three independent dimensions (E
 - **Speed** = 1 / median generation seconds, percentile.
 - **Cost** = 1 / median per-call $, percentile (BYOK / free routes top-percentile).
 
-**The rank inversion the paper documents** is visible at a glance: Gemma 4 26B places \#1 by Engagement and \#12 by Composite. Gemini 2.5 Flash is rank \#3 by Engagement and \#18 by Composite. The single-message arena and the multi-turn-quality composite measure different latents.
+**The rank inversion the paper documents** is visible at a glance: Gemma 4 26B places \#1 by Engagement and \#7 by Composite (closest cross-axis crossover in the pool). Gemini 2.5 Flash is rank \#3 by Engagement and \#18 by Composite. The single-message arena and the multi-turn-quality composite measure different latents.
 
-Caveat: at the current snapshot, $9$ models are still missing the single-turn 27-dim rubric (Phase B run in progress); their composite imputes that one component as the population mean (z=0). Refreshed numbers ship after the run completes.
+All 20 models have full coverage on the four quality components (multi-turn arena, LLM judge, 27-dim rubric, flaw hunter) as of the May 2026 snapshot.
 
 Raw data: [`results/composite_leaderboard.json`](results/composite_leaderboard.json). Reproduce with `python3 analyze_composite_score.py`.
 
