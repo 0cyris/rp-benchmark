@@ -1,0 +1,112 @@
+{
+  "judge_model": "anthropic/claude-sonnet-4",
+  "n_responses_scored": 476,
+  "validation_against_human_single_msg_arena": {
+    "n_models_overlap": 11,
+    "rho_vs_human_arena_elo": -0.0727,
+    "p_value": 0.8317,
+    "interpretation": "weak / suspect proxy"
+  },
+  "per_model": {
+    "claude_opus_4_6": {
+      "engagement_mean": 4.1048,
+      "engagement_std": 0.754,
+      "n_scored": 21
+    },
+    "claude_opus_4_7": {
+      "engagement_mean": 4.0476,
+      "engagement_std": 0.7387,
+      "n_scored": 21
+    },
+    "claude_sonnet_4_5": {
+      "engagement_mean": 4.0593,
+      "engagement_std": 0.332,
+      "n_scored": 27
+    },
+    "deepseek_v3_2": {
+      "engagement_mean": 4.0538,
+      "engagement_std": 0.3289,
+      "n_scored": 26
+    },
+    "deepseek_v4_flash": {
+      "engagement_mean": 3.94,
+      "engagement_std": 0.4512,
+      "n_scored": 20
+    },
+    "deepseek_v4_pro": {
+      "engagement_mean": 4.019,
+      "engagement_std": 0.296,
+      "n_scored": 21
+    },
+    "gemini_2_5_flash": {
+      "engagement_mean": 3.8444,
+      "engagement_std": 0.2694,
+      "n_scored": 27
+    },
+    "gemini_3_1_flash_lite": {
+      "engagement_mean": 4.019,
+      "engagement_std": 0.1965,
+      "n_scored": 21
+    },
+    "gemini_3_1_pro": {
+      "engagement_mean": 4.105,
+      "engagement_std": 0.2089,
+      "n_scored": 20
+    },
+    "gemma_4_26b": {
+      "engagement_mean": 3.7926,
+      "engagement_std": 0.7844,
+      "n_scored": 27
+    },
+    "glm_4_7": {
+      "engagement_mean": 4.0741,
+      "engagement_std": 0.1852,
+      "n_scored": 27
+    },
+    "glm_5_1": {
+      "engagement_mean": 4.12,
+      "engagement_std": 0.2093,
+      "n_scored": 20
+    },
+    "gpt_4_1": {
+      "engagement_mean": 4.0556,
+      "engagement_std": 0.2172,
+      "n_scored": 27
+    },
+    "grok_4_1": {
+      "engagement_mean": 4.037,
+      "engagement_std": 0.3972,
+      "n_scored": 27
+    },
+    "kimi_k2_5": {
+      "engagement_mean": 4.2333,
+      "engagement_std": 0.1932,
+      "n_scored": 21
+    },
+    "kimi_k2_6": {
+      "engagement_mean": 4.1882,
+      "engagement_std": 0.2804,
+      "n_scored": 17
+    },
+    "llama_4_maverick": {
+      "engagement_mean": 3.5926,
+      "engagement_std": 0.5173,
+      "n_scored": 27
+    },
+    "minimax_m2_7": {
+      "engagement_mean": 3.6185,
+      "engagement_std": 0.988,
+      "n_scored": 27
+    },
+    "mistral_small_creative": {
+      "engagement_mean": 4.1444,
+      "engagement_std": 0.2259,
+      "n_scored": 27
+    },
+    "qwen3_5_flash": {
+      "engagement_mean": 3.92,
+      "engagement_std": 0.2769,
+      "n_scored": 25
+    }
+  }
+}
