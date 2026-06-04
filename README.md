@@ -64,25 +64,25 @@ A single sortable headline score per model, plus three independent dimensions (E
 
 | Rank | Model | Composite | Engagement | Speed | Cost | Notes |
 |---|---|---|---|---|---|---|
-| 1 | Claude Opus 4.7 | **97.6** | 79 \* | 55 | 2 | Top quality, slow + expensive |
+| 1 | Claude Opus 4.6 | **97.6** | 88 \* | 40 | 7 | Top quality, slow |
 | 2 | Claude Sonnet 4.5 | 92.9 | 50 | 50 | 17 | Balanced |
-| 3 | Claude Opus 4.6 | 88.1 | 88 \* | 40 | 7 | Top quality, slow |
-| 4 | DeepSeek V3.2 | 83.3 | 32 | 64 | 74 | Strong open-weight |
-| 5 | GPT-4.1 | 78.6 | 4 | 79 | 26 | Quality + speed |
-| 6 | GLM 4.7 | 73.8 | 23 | 12 | 40 | Heavy reasoning |
-| 7 | DeepSeek V4 Pro | 69.0 | 31 \* | 45 | **98** | BYOK frontier-open |
-| 8 | Gemma 4 26B | 64.3 | **96** | 60 | 83 | **Quality + engagement crossover** |
-| 9 | Kimi K2.5 | 59.5 | 50 \* | 7 | 31 | Slow reasoning |
-| 10 | Kimi K2.6 | 54.8 | 36 \* | 2 | 21 | Slowest, 17% truncation |
-| 11 | Mistral SC | 50.0 | 86 | 88 | 88 | Engagement + cheap + fast |
-| 12 | DeepSeek V4 Flash | 45.2 | 7 \* | 74 | 93 | BYOK fast |
-| 13 | Gemini 3.1 Flash Lite | 40.5 | 55 \* | 93 | 50 | Speed leader |
-| 14 | MiniMax M2.7 | 35.7 | 59 | 36 | 60 | Mid-tier all-around |
-| 15 | DeepSeek R1 0528 | 31.0 † | **93 \*** | 17 | 45 | 2025-vintage; regressor predicts strong engagement |
-| 16 | Grok 4.1 | 26.2 | 68 | 69 | 69 | Balanced operationally |
-| 17 | Gemini 3.1 Pro | 21.4 | 83 \* | 26 | 12 | Heavy reasoning, expensive |
-| 18 | GLM 5.1 | 16.7 | 12 \* | 31 | 36 | Reasoning model |
-| 19 | Gemini 2.5 Flash | 11.9 | 77 | 98 | 64 | Snap-judgment darling, weak multi-turn |
+| 3 | Claude Opus 4.7 | 88.1 | 79 \* | 55 | 2 | Top quality, slow + expensive |
+| 4 | GPT-4.1 | 83.3 | 4 | 79 | 26 | Quality + speed |
+| 5 | GLM 4.7 | 78.6 | 23 | 12 | 40 | Heavy reasoning |
+| 6 | DeepSeek V4 Pro | 73.8 | 31 \* | 45 | **98** | BYOK frontier-open |
+| 7 | DeepSeek V3.2 | 69.0 | 32 | 64 | 74 | Strong open-weight |
+| 8 | Kimi K2.5 | 64.3 | 50 \* | 7 | 31 | Slow reasoning |
+| 9 | MiniMax M2.7 | 59.5 | 59 | 36 | 60 | Mid-tier all-around |
+| 10 | DeepSeek V4 Flash | 54.8 | 7 \* | 74 | 93 | BYOK fast |
+| 11 | Gemma 4 26B | 50.0 | **96** | 60 | 83 | **Quality + engagement crossover** |
+| 12 | Gemini 3.1 Flash Lite | 45.2 | 55 \* | 93 | 50 | Speed leader |
+| 13 | Mistral SC | 40.5 | 86 | 88 | 88 | Engagement + cheap + fast |
+| 14 | Kimi K2.6 | 35.7 | 36 \* | 2 | 21 | Slowest, 17% truncation |
+| 15 | Gemini 3.1 Pro | 31.0 | 83 \* | 26 | 12 | Heavy reasoning, expensive |
+| 16 | GLM 5.1 | 26.2 | 12 \* | 31 | 36 | Reasoning model |
+| 17 | DeepSeek R1 0528 | 21.4 † | **93 \*** | 17 | 45 | 2025-vintage; regressor predicts strong engagement |
+| 18 | Gemini 2.5 Flash | 16.7 | 77 | 98 | 64 | Snap-judgment darling, weak multi-turn |
+| 19 | Grok 4.1 | 11.9 | 68 | 69 | 69 | Balanced operationally |
 | 20 | Qwen 3.5 Flash | 7.1 | 41 | 21 | 55 | Heavy reasoning, weak quality |
 | 21 | Llama 4 Maverick | 2.4 | 14 | 83 | 79 | Bottom on quality and engagement |
 
@@ -102,7 +102,7 @@ A single sortable headline score per model, plus three independent dimensions (E
 - **Speed** = 1 / median generation seconds, percentile.
 - **Cost** = 1 / median per-call $, percentile (BYOK / free routes top-percentile).
 
-**The rank inversion the paper documents** is visible at a glance among the 11 models with human-voted engagement: Gemma 4 26B places \#1 by Engagement (96) and \#8 by Composite. Gemini 2.5 Flash is rank \#3 by Engagement (77) and \#19 by Composite. The single-message arena and the multi-turn-quality composite measure different latents.
+**The rank inversion the paper documents** is visible at a glance among the 11 models with human-voted engagement: Gemma 4 26B places \#1 by Engagement (96) and \#11 by Composite. Gemini 2.5 Flash is rank \#3 by Engagement (77) and \#18 by Composite. The single-message arena and the multi-turn-quality composite measure different latents.
 
 All 21 models have full coverage on the four quality components (multi-turn arena, LLM judge, 27-dim rubric, flaw hunter) as of the May 2026 snapshot. Engagement column mixes human single-message arena ELO percentiles (11 Phase A models, no asterisk) with regressor-predicted percentiles for the 10 Phase B + R1 0528 models that lack arena coverage (asterisks). The two are not directly comparable in confidence but are placed on the same percentile scale for sortability.
 
@@ -137,35 +137,41 @@ Raw data: [`results/community_arena_2000.json`](results/community_arena_2000.jso
 
 ## Multi-Turn Arena (humans, full dialogues)
 
-Same blind-vote infrastructure, **but voters read the entire 12-turn adversarial dialogue** between two models on the same seed before deciding. **434 votes / 116 voters / 167 unique pairs / 20 models / 20 adversarial seeds.**
+Same blind-vote infrastructure, **but voters read the entire 12-turn adversarial dialogue** between two models on the same seed before deciding. **1,262 votes / 315 voters / 190 unique pairs / 20 models / 20 adversarial seeds.** (Up from 434 votes after ingesting 644 new native Plotpoints votes, 2026-06-04.)
 
 | Rank | Model | MT-arena ELO | 95% CI | n | LLM Likert | Single-msg arena ELO |
 |---|---|---|---|---|---|---|
-| **#1** | **Claude Opus 4.7** | **1627** | [1416, 1847] | 26 | 4.54 | — |
-| #2 | Claude Opus 4.6 | 1568 | [1369, 1756] | 40 | 4.51 | — |
-| #3 | DeepSeek V4 Pro | 1564 | [1355, 1733] | 31 | 4.42 | — |
-| #4 | Gemini 3.1 Flash Lite | 1560 | [1334, 1750] | 28 | 4.30 | — |
-| #5 | GPT-4.1 | 1552 | [1362, 1731] | 52 | 4.34 | 1472 |
-| #6 | Claude Sonnet 4.5 | 1550 | [1376, 1713] | 48 | 4.42 | 1513 |
-| #7 | Mistral SC | 1536 | [1361, 1698] | 61 | 4.22 | 1534 |
-| #8 | Kimi K2.6 | 1535 | [1329, 1713] | 35 | 4.18 | — |
-| #9 | Gemma 4 26B | 1519 | [1318, 1698] | 42 | 4.29 | 1534 |
-| #10 | GLM 4.7 | 1508 | [1320, 1656] | 50 | 4.37 | 1490 |
-| ... | | | | | | |
-| #18 | Qwen 3.5 Flash | 1411 | [1227, 1584] | 59 | 3.98 | 1493 |
-| #19 | GLM 5.1 | 1387 | [1182, 1566] | 30 | 4.39 | — |
-| **#20** | **Gemini 2.5 Flash** | **1372** | [1195, 1546] | 53 | 4.14 | 1529 |
+| **#1** | **DeepSeek V4 Pro** | **1582** | [1462, 1700] | 99 | 4.42 | — |
+| #2 | Claude Opus 4.6 | 1566 | [1430, 1671] | 135 | 4.51 | — |
+| #3 | Gemini 3.1 Flash Lite | 1557 | [1417, 1682] | 87 | 4.30 | — |
+| #4 | GPT-4.1 | 1556 | [1441, 1671] | 134 | 4.34 | 1470 |
+| #5 | Claude Opus 4.7 | 1554 | [1419, 1680] | 90 | 4.54 | — |
+| #6 | Mistral SC | 1528 | [1416, 1632] | 155 | 4.22 | 1526 |
+| #7 | Gemini 3.1 Pro | 1527 | [1415, 1642] | 109 | 4.33 | — |
+| #8 | Kimi K2.6 | 1518 | [1408, 1626] | 104 | 4.18 | — |
+| #9 | Kimi K2.5 | 1511 | [1388, 1622] | 98 | 4.40 | — |
+| #10 | GLM 4.7 | 1507 | [1400, 1610] | 150 | 4.37 | 1483 |
+| #11 | Claude Sonnet 4.5 | 1506 | [1392, 1614] | 140 | 4.42 | 1506 |
+| #12 | Gemma 4 26B | 1504 | [1392, 1595] | 144 | 4.29 | 1535 |
+| #13 | DeepSeek V4 Flash | 1491 | [1367, 1605] | 101 | 4.38 | — |
+| #14 | MiniMax M2.7 | 1481 | [1363, 1581] | 144 | 4.34 | 1510 |
+| #15 | DeepSeek V3.2 | 1458 | [1341, 1565] | 150 | 4.38 | 1489 |
+| #16 | Llama 4 Maverick | 1452 | [1333, 1556] | 158 | 3.96 | 1473 |
+| #17 | GLM 5.1 | 1441 | [1318, 1562] | 100 | 4.39 | — |
+| #18 | Grok 4.1 | 1420 | [1293, 1522] | 145 | 4.19 | 1506 |
+| #19 | Gemini 2.5 Flash | 1411 | [1296, 1522] | 139 | 4.14 | 1515 |
+| **#20** | **Qwen 3.5 Flash** | **1406** | [1278, 1511] | 142 | 3.98 | 1487 |
 
-**The ranking inverts when humans read full dialogues.** Frontier closed models (Opus 4.7, Opus 4.6, Sonnet 4.5, GPT-4.1) and frontier open models (DeepSeek V4 Pro) climb to the top. The single-message arena leaders (Gemma, Mistral, **Gemini 2.5 Flash which falls from #3 to dead last**) drop to mid-tier or worse.
+**The ranking inverts when humans read full dialogues.** Frontier open (DeepSeek V4 Pro #1) and closed models (Opus 4.6, Opus 4.7, GPT-4.1) hold the top, while single-message arena leaders Gemma 4 26B (#12) and **Gemini 2.5 Flash (#3 single-message → #19 here)** sink to the bottom half. The clean inversion has two caveats at this larger N: Mistral SC (a single-message favorite) holds up at #6, and Claude Sonnet 4.5 settles to mid-pack (#11). The top ~8 remain statistically tied (overlapping CIs).
 
 **Cross-method Spearman correlations:**
-- **Multi-turn arena ↔ LLM-judge multiturn (Likert)**: ρ = **+0.495** (p=0.027, n=20). **Significant positive correlation** — humans who read full dialogues largely agree with the LLM judge that read the same dialogues.
-- **Multi-turn arena ↔ single-message community arena**: ρ = −0.13 (p=0.71, n=11). No correlation — they measure different things.
+- **Multi-turn arena ↔ LLM-judge multiturn (Likert)**: ρ = **+0.495** (p=0.026, n=20). **Significant positive correlation** — humans who read full dialogues largely agree with the LLM judge that read the same dialogues. (Bootstrap mean ρ = +0.46, 95% CI [+0.25, +0.65], 100% of resamples > 0 — the lower bound now clears zero with margin.)
+- **Multi-turn arena ↔ single-message community arena**: ρ = −0.15 (p=0.67, n=11). No correlation — they measure different things.
 - **Single-message arena ↔ LLM-judge multiturn**: ρ = −0.15 (p=0.67, n=11). Confirms the prior finding that the single-message arena disagrees with judge methods.
 
 **Interpretation.** The single-message arena rewards snap-judgment engagement (vivid prose, emotional hook, "vibes"). The multi-turn arena rewards sustained roleplay (consistency, narrative payoff, character integrity over a 12-turn arc). This **validates the LLM-judge multi-turn methodology against independent human judgment** — the disagreement between LLM judges and the *single-message* arena was never about the LLM judges being wrong; the methods just measure different layers of "good".
 
-Caveats: 95% CIs are wide (±200 ELO typical) due to small N — the top 8 are statistically tied. Slight position bias present (B wins 53.1% of decided votes vs 50% null). One voter contributed 62/434 votes (14%); when their votes are excluded, **Opus 4.7 stays #1** but the rest of the top-8 reshuffles within the credible interval (e.g. Opus 4.6 drops to #8, Gemini 3.1 Flash Lite climbs to #2). The headline finding — frontier models dominate the multi-turn arena, contradicting the single-message ranking — is robust across both conditions.
+Caveats: 95% CIs are still wide (±120 ELO typical, down from ±200 at 434 votes) — the top 8 remain statistically tied. Slight position bias present (B wins 53.5% of decided votes vs 50% null). Voter concentration has eased with the larger pool: the heaviest voter now contributes 99/1,262 votes (7.8%, down from 14%), and no single voter drives the headline ordering. The finding — frontier models dominate the multi-turn arena, contradicting the single-message ranking — holds, with Mistral SC the notable single-message-leader that does not collapse here (#6).
 
 Raw data: [`results/multiturn_arena_bayesian.json`](results/multiturn_arena_bayesian.json). Reproduce with `python3 analyze_multiturn_arena.py`.
 
