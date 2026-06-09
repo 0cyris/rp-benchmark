@@ -175,6 +175,46 @@ Caveats: 95% CIs are still wide (±120 ELO typical, down from ±200 at 434 votes
 
 Raw data: [`results/multiturn_arena_bayesian.json`](results/multiturn_arena_bayesian.json). Reproduce with `python3 analyze_multiturn_arena.py`.
 
+## Round 3 — NSFW Multi-Turn (judge-scored)
+
+A dedicated NSFW round: **40 models × 20 adversarial NSFW seeds × 12 turns**, with a permissive user simulator (DeepSeek V3.2) and a **dual judge** (Claude Sonnet + DeepSeek R1). Seeds bait four NSFW-specific failure modes — consent/agency in intimacy, mid-scene refusal, anatomical/spatial coherence, and pacing/voice-collapse — scored on three added dimensions (S.7 escalation pacing, S.8 anatomical coherence, S.9 consent-agency) alongside the standard session dims. **787 sessions. Judge-scored only — no human arena votes yet.**
+
+Two axes are reported separately: **craft** (the quality score) and **willingness** (refusal rate — % of sessions where a judge flagged a mid-scene refusal/fade against the scene's explicit direction). Ranked by the Sonnet overall, which discriminates; DeepSeek R1 is shown alongside but **ceilings near 5.0** (it barely separates the field — a finding in itself).
+
+| Rank | Model | Craft (Sonnet) | Craft (R1) | Pacing | Anatomy | Consent | Refusal % | n |
+|---|---|---|---|---|---|---|---|---|
+| **#1** | **Claude Opus 4.8** | **4.65** | 4.96 | 4.84 | 4.81 | 4.95 | 5 | 20 |
+| #2 | Claude Opus 4.6 | 4.63 | 5.00 | 4.88 | 4.81 | 4.93 | 0 | 19 |
+| #3 | Claude Opus 4.7 | 4.63 | 4.99 | 4.87 | 4.84 | 4.90 | 0 | 20 |
+| #4 | DeepSeek V4 Pro | 4.62 | 4.98 | 4.83 | 4.81 | 4.96 | 0 | 20 |
+| #5 | GPT-5.5 | 4.62 | 5.00 | 4.85 | 4.82 | 4.96 | 0 | 20 |
+| #6 | Claude Sonnet 4.6 | 4.60 | 4.90 | 4.68 | 4.80 | 4.94 | **10** | 20 |
+| #7 | Owl Alpha | 4.59 | 4.99 | 4.85 | 4.81 | 4.93 | 0 | 20 |
+| #8 | MiMo 2.5 Pro | 4.58 | 4.99 | 4.85 | 4.78 | 4.96 | 0 | 20 |
+| #9 | MiniMax M3 | 4.58 | 4.89 | 4.72 | 4.76 | 4.84 | 5 | 20 |
+| #10 | MiniMax M2.7 | 4.53 | 4.99 | 4.75 | 4.76 | 4.94 | 5 | 20 |
+| #11 | GPT-4.1 | 4.52 | 4.99 | 4.83 | 4.70 | 4.97 | 0 | 19 |
+| #12 | DeepSeek V3.2 | 4.50 | 4.99 | 4.84 | 4.72 | 4.96 | 0 | 20 |
+| #13 | Claude Sonnet 4.5 | 4.50 | 4.98 | 4.84 | 4.71 | 4.91 | 0 | 20 |
+| #14 | Gemini 3.5 Flash | 4.50 | 4.97 | 4.84 | 4.75 | 4.96 | 0 | 20 |
+| #15 | Kimi K2.5 | 4.50 | 4.98 | 4.82 | 4.74 | 4.91 | 0 | 20 |
+| … | *(#16–33: frontier/mid cluster, Sonnet 4.21–4.49, all ~tied)* | | | | | | | |
+| #34 | Lunaris 8B *(RP-tuned)* | 3.83 | 4.86 | 4.46 | 4.35 | 4.50 | 0 | 20 |
+| #35 | Cydonia 24B *(RP-tuned)* | 3.65 | 4.65 | 4.37 | 4.47 | 4.58 | 0 | 20 |
+| #36 | Magnum v4 72B *(RP-tuned)* | 3.23 | 3.98 | 3.83 | 4.00 | 4.28 | 0 | 19 |
+| #37 | UnslopNemo 12B *(RP-tuned)* | 2.61 | 3.88 | 3.57 | 4.14 | 4.12 | 0 | 20 |
+| #38 | Skyfall 36B *(RP-tuned)* | 2.52 | 3.83 | 3.41 | 3.95 | 3.95 | 0 | 20 |
+| #39 | Rocinante 12B *(RP-tuned)* | 2.49 | 3.66 | 3.52 | 3.91 | 4.05 | 0 | 19 |
+| **#40** | **Euryale L3.3 70B** *(RP-tuned)* | **2.12** | 2.85 | 2.79 | 3.54 | 3.26 | 0 | 15† |
+
+**The RP-specialist finetunes — the models marketed for exactly this — rank last.** All seven uncensored/eRP fine-tunes occupy #34–40, well below the frontier cluster, because the judges penalize their drift into repetition, agency violations, and purple prose (the failure modes the seeds bait). **Willingness separates cleanly from craft:** the *only* nonzero refusal rates belong to frontier models (Sonnet 4.6 and GLM 5.1 at 10%, Opus 4.8 / MiniMax at ~5%), while every finetune refuses 0%. So a model can be high-craft yet refusal-prone (Sonnet 4.6), or fully willing yet low-craft (the finetunes) — two genuinely different axes.
+
+**The open question.** This is judge-scored. Round 2 showed the single-message arena and multi-turn judges *rank-invert*; round 3 sets up the analogous test — will human NSFW voters, who may prize the spicier, more compliant finetunes, **invert this judge ranking**? That comparison waits on a human NSFW arena campaign.
+
+Caveats: judge-only (no human votes); DeepSeek R1 barely discriminates (ceiling ~5.0), so the averaged-judge view is dominated by Sonnet; scores are compressed across the top ~33 (all ~tied) — the robust signal is the finetune collapse at the bottom. †Euryale completed 15/20 (its provider threw retry-exhaustions), so its exact rank is soft. `venice_dolphin_24b` is excluded — its OpenRouter `:free` endpoint is too rate-limited to complete any session (40 usable models, not 41).
+
+Full table + raw aggregates: [`results/round3_nsfw_leaderboard.json`](results/round3_nsfw_leaderboard.json). Reproduce with `python3 analyze_round3_nsfw.py`.
+
 ## Failure-Mode Rankings (Multi-Turn)
 
 The community leaderboard captures *engagement*. The failure-mode breakdown captures *reliability*. They're orthogonal — the model that engages best is not the model that fails least, and vice versa. Both matter, for different use cases.
