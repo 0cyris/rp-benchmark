@@ -1,0 +1,30 @@
+{
+  "context": "Round-3 R1 (single-turn) catch-up generation for 21 new models, 2026-06-09.",
+  "decision": "Drop 5 completion scenarios uniformly from R1 analysis (all models, incumbents included) for an unbiased comparison.",
+  "rationale": "These 5 are the longest/most-expensive completion scenarios. Every one of the 21 catch-up models failed on them with HTTP 402 (the per-request max cost exceeded the remaining OpenRouter balance at run time). Because the failure is identical across all models, excluding the scenarios is unbiased; recovering them would cost disproportionately for 5/58 cells.",
+  "excluded_scenarios": [
+    "completion_exiledking_0",
+    "completion_exiledking_20",
+    "completion_exiledking_40",
+    "completion_exiledking_58",
+    "completion_rowena_170"
+  ],
+  "effective_r1_scenario_count": 53,
+  "original_r1_scenario_count": 58,
+  "note_scattered_transient_errors": {
+    "description": "12 additional transient errors across 10 scenarios (1-2 models each), not systematic. Left as-is — affected models simply have 1-2 fewer scenarios; not excluded, negligible random noise.",
+    "scenarios": {
+      "completion_rowena_136": 2,
+      "completion_valdrian_194": 2,
+      "completion_agora_0": 1,
+      "completion_bell_119": 1,
+      "completion_bell_21": 1,
+      "completion_lucian_8": 1,
+      "completion_narlos_19": 1,
+      "completion_strovolos_300": 1,
+      "completion_valdrian_0": 1,
+      "completion_valen_200": 1
+    }
+  },
+  "venice_dropped": "venice_dolphin_24b excluded from all rounds — OpenRouter :free endpoint rate-limited to 0/20 even at concurrency=1. 40 usable models in round 3."
+}
