@@ -21,10 +21,9 @@ MT, ST = "multiturn", "singleturn"
 FILES = {
     "round3gen_R3_nsfw.json":              dict(kind=MT, sim="deepseek/deepseek-v3.2",   nsfw=True,  turns=12, judges=DUAL,   seeds="nsfw"),
     "round3gen_R2_adversarial_catchup.json": dict(kind=MT, sim="google/gemini-2.5-flash", nsfw=False, turns=12, judges=SONNET, seeds="adv"),
-    "round3gen_venice_R3_nsfw.json":       dict(kind=MT, sim="deepseek/deepseek-v3.2",   nsfw=True,  turns=12, judges=DUAL,   seeds="nsfw"),
-    "round3gen_venice_R2_adversarial.json": dict(kind=MT, sim="google/gemini-2.5-flash", nsfw=False, turns=12, judges=SONNET, seeds="adv"),
+    # Venice (:free) is unrecoverable — endpoint 429s on every attempt (R3 was
+    # 0/20). Skipped so cleanup doesn't churn re-failing it / trip the tripwire.
     "round3gen_R1_singleturn_catchup.json": dict(kind=ST, mode="standard",    judges=SONNET),
-    "round3gen_venice_R1_singleturn.json":  dict(kind=ST, mode="standard",    judges=SONNET),
     "round3gen_R1_flawhunter_catchup.json": dict(kind=ST, mode="flaw_hunter", judges=SONNET),
 }
 
