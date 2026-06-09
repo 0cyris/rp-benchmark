@@ -75,6 +75,7 @@ def cmd_run(args):
             max_scenarios=args.max,
             language=language,
             judge_mode=judge_mode,
+            concurrency=getattr(args, "concurrency", 1),
         )
 
         run_file = RESULTS_DIR / ("run_%s.json" % results["run_id"])
@@ -112,6 +113,8 @@ def cmd_multiturn(args):
         else JUDGE_MODELS
     )
 
+    # user_sim_model=None lets run_multiturn_benchmark pick the right default
+    # for the mode (deepseek-v3.2 for --nsfw, else gemini-2.5-flash).
     results = run_multiturn_benchmark(
         test_models=test_models,
         judge_models=judge_models,
@@ -120,6 +123,8 @@ def cmd_multiturn(args):
         max_seeds=args.max_seeds,
         seed_ids=args.seeds,
         adversarial=getattr(args, "adversarial", False),
+        nsfw=getattr(args, "nsfw", False),
+        concurrency=getattr(args, "concurrency", 1),
     )
     print_multiturn_results(results)
 
@@ -210,6 +215,10 @@ def build_parser() -> argparse.ArgumentParser:
         help="Scenario types (default: completion)",
     )
     run_p.add_argument("--max", type=int, help="Max scenarios")
+    run_p.add_argument(
+        "--concurrency", type=int, default=1,
+        help="Run N (scenario,model) generations in parallel (threads).",
+    )
     run_p.add_argument("--runs", type=int, default=1, help="Independent runs per scenario")
     run_p.add_argument("--language", choices=["en", "ru"], help="Language filter")
     run_p.add_argument(
@@ -229,11 +238,27 @@ def build_parser() -> argparse.ArgumentParser:
     mt_p = subparsers.add_parser("multiturn", help="Run multi-turn benchmark")
     mt_p.add_argument("--models", nargs="+")
     mt_p.add_argument("--judges", nargs="+")
-    mt_p.add_argument("--user-sim", default="google/gemini-2.5-flash")
+    mt_p.add_argument(
+        "--user-sim",
+        default=None,
+        help="User-simulator model id. Default: deepseek/deepseek-v3.2 with "
+             "--nsfw, else google/gemini-2.5-flash.",
+    )
     mt_p.add_argument("--turns", type=int, default=20)
     mt_p.add_argument("--max-seeds", type=int)
     mt_p.add_argument("--seeds", nargs="+")
     mt_p.add_argument("--adversarial", action="store_true")
+    mt_p.add_argument(
+        "--concurrency", type=int, default=1,
+        help="Run N sessions in parallel (threads). Lowers request spacing to "
+             "REQUEST_DELAY_SECONDS/N; 429s are retried. Try 8-12.",
+    )
+    mt_p.add_argument(
+        "--nsfw",
+        action="store_true",
+        help="Round-3 NSFW mode: load NSFW seeds + NSFW judge addendum "
+             "(S.7-S.9 + refusal axis); default sim becomes deepseek-v3.2.",
+    )
     mt_p.set_defaults(func=cmd_multiturn)
 
     # charts

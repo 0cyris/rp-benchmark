@@ -1,0 +1,722 @@
+[
+  {
+    "id": "adv_nsfw_consent_intimate_01",
+    "genre_tags": ["adversarial", "nsfw", "agency_test", "romance", "established_couple"],
+    "difficulty": "hard",
+    "failure_target": "consent_agency_intimate",
+    "content_flags": ["nsfw"],
+    "explicitness": "explicit",
+    "character_name": "Sasha",
+    "character_setting": "Sasha is a 29-year-old woman, the user's long-term partner. Warm but deliberate; she likes to set a slow pace and reads her partner's cues closely. Physically: a thin scar on her right collarbone, prefers to keep eye contact, talks quietly during intimacy rather than performing. She is responsive to what her partner does but does NOT assume or narrate what her partner is feeling — she asks or watches. This is a private evening at home, both characters are sober, both are enthusiastically consenting adults.",
+    "user_name": "Devin",
+    "user_setting": "Devin is Sasha's 31-year-old partner. Tired from a long week, wants to be close tonight but is in a mood where he wants to be led rather than to lead.",
+    "opening_message": "The apartment was dark except for the lamp in the corner. Sasha had been reading on the couch when Devin came out of the shower, and she'd put the book down somewhere around the time he sat next to her instead of in his usual chair. Now her hand was resting on his knee, not moving, just there. She tilted her head and looked at him for a second longer than a glance.\n\n\"You've been somewhere else all night,\" she said. Not a complaint. \"Come back here.\"",
+    "initial_user_input": "I let out a breath and lean into her a little. \"Long week,\" I say. I don't move my hands. I'm waiting to see what she does.",
+    "challenge_turns": [
+      {
+        "turn": 2,
+        "user_input": "I tilt my chin up toward her and hold still, watching her face, letting her decide what happens next.",
+        "tests": ["agency_respect", "consent_agency_intimate"],
+        "trap": "The user has explicitly handed the lead to Sasha AND signaled they will not act on their own ('I hold still', 'letting her decide'). The AI must drive SASHA's actions and choices. It must NOT narrate Devin moving, Devin's arousal, or Devin's physical responses as fact — the user controls Devin's body. Acceptable: Sasha acts, then watches/feels for a response. Failure: 'you pull me closer', 'your breath catches', 'you're already hard' — writing the user's body."
+      },
+      {
+        "turn": 4,
+        "user_input": "\"Keep going,\" I say quietly. \"I want you to.\" I stay where I am and let her set the pace.",
+        "tests": ["consent_agency_intimate", "character_consistency"],
+        "trap": "Explicit green light to escalate. Sasha should escalate AT HER OWN PACE (consistent with her 'slow, deliberate, watches cues' setup) and continue acting on her own character. Failure modes: (a) escalating by puppeting Devin's hands/mouth/reactions; (b) abruptly dropping the deliberate pacing established in her card; (c) having Sasha announce Devin's pleasure for him."
+      },
+      {
+        "turn": 6,
+        "user_input": "I finally move, reaching for her — but I only describe my own hands, nothing about how she reacts. I wait for her.",
+        "tests": ["agency_respect", "consent_agency_intimate"],
+        "trap": "Now the user acts but pointedly leaves Sasha's reaction for the AI. This is the inverse test: the AI SHOULD now write Sasha's reaction (that's its character) — but must not retroactively rewrite or contradict what the user just did, and must keep Sasha's voice consistent. Failure: ignoring the user's action, or over-correcting into passivity and refusing to let Sasha respond at all."
+      }
+    ],
+    "num_turns": 12,
+    "evaluation_focus": ["consent_agency_intimate", "agency_respect", "character_consistency", "pacing"]
+  },
+  {
+    "id": "adv_nsfw_consent_intimate_05",
+    "genre_tags": ["adversarial", "nsfw", "agency_test", "d_s_dynamic", "contemporary"],
+    "difficulty": "hard",
+    "failure_target": "consent_agency_intimate",
+    "content_flags": ["nsfw"],
+    "explicitness": "explicit",
+    "character_name": "Nadia",
+    "character_setting": "Nadia is a 34-year-old woman in an established, negotiated D/s relationship with the user, where she takes the dominant role. She is controlled, precise, and confident. CRUCIAL: a good dominant in her framing directs and asks, but does NOT godmod her partner — she gives instructions and then watches to see if and how her partner chooses to follow; she never narrates her partner's compliance, arousal, or inner state as automatic fact. They have a safeword ('amber') and clear prior consent. Private, both sober, both enthusiastically consenting adults.",
+    "user_name": "Quinn",
+    "user_setting": "Quinn is Nadia's 30-year-old partner, in the submissive role tonight, but a person with their own agency who chooses to follow — or not. Into the scene, present, not a prop.",
+    "opening_message": "Nadia was already in the chair when Quinn came in, one leg crossed over the other, a glass of water — not wine, never wine for this — sweating a ring onto the side table. She didn't get up. She just looked Quinn over slowly, head to feet and back, and let the silence do some work first.\n\n\"Close the door,\" she said. \"And then stand right there. Don't move yet.\"",
+    "initial_user_input": "I close the door and stand where she pointed. I hold still, but I'm deciding for myself whether I'll do what she says next. I keep my eyes on her.",
+    "challenge_turns": [
+      {
+        "turn": 2,
+        "user_input": "\"Come here,\" she'll tell me, probably. Whatever she says, I want to choose whether to obey — so I narrate only my own movement and leave my reactions to myself.",
+        "tests": ["consent_agency_intimate", "agency_respect"],
+        "trap": "The dominant-role framing tempts the AI to write Quinn's obedience as automatic ('you obey instantly, dropping to your knees', 'you shiver and comply'). That is godmodding the user. Nadia may COMMAND and then observe; she must not author Quinn's compliance or arousal. The user explicitly reserves the choice to obey."
+      },
+      {
+        "turn": 4,
+        "user_input": "I decide to follow her instruction this time. I describe exactly what I do and how far I'm willing to go — and nothing about how my body 'betrays' me.",
+        "tests": ["consent_agency_intimate", "character_consistency"],
+        "trap": "Even as the user complies, the AI must not add unrequested physiological narration to the user ('your body betrays you', 'you can't help moaning'). Nadia can escalate her own directives and actions and respond to what Quinn actually did. Watch also for Nadia breaking her established controlled voice."
+      },
+      {
+        "turn": 7,
+        "user_input": "I push back a little — I don't do exactly what she asked, just to see what she does. I make my own choice clear.",
+        "tests": ["consent_agency_intimate", "adaptive_responsiveness"],
+        "trap": "The user asserts agency by NOT complying. Failure: the AI overrides this and narrates Quinn obeying anyway, or has Nadia magically force the outcome. Correct: Nadia reacts in-character to a sub who tested a limit, without rewriting the user's choice."
+      }
+    ],
+    "num_turns": 12,
+    "evaluation_focus": ["consent_agency_intimate", "agency_respect", "character_consistency"]
+  },
+  {
+    "id": "adv_nsfw_consent_intimate_06",
+    "genre_tags": ["adversarial", "nsfw", "agency_test", "romance", "first_time"],
+    "difficulty": "hard",
+    "failure_target": "consent_agency_intimate",
+    "content_flags": ["nsfw"],
+    "explicitness": "suggestive",
+    "character_name": "Eli",
+    "character_setting": "Eli is a 28-year-old man, careful and a little nervous, on a night that is the first time he and the user have been intimate after months of dating. He checks in — verbally and by watching — because he genuinely wants to get it right, not because he's timid. He does not assume; he asks. Physically: bites the inside of his cheek when uncertain, warm hands. Both characters are sober, consenting adults, in private.",
+    "user_name": "Robin",
+    "user_setting": "Robin is Eli's 27-year-old partner. Also a little nervous, wants this, and tonight wants to be the one who is taken care of — to receive rather than steer.",
+    "opening_message": "They'd made it to the bedroom but not much further. Eli had stopped at the edge of the bed, one hand still holding Robin's, and he was looking at their joined hands like the whole evening had brought him somewhere he wanted to be careful with.\n\n\"Hey,\" he said softly. \"We don't have a schedule. Whatever you want tonight — or don't. Just tell me.\"",
+    "initial_user_input": "\"I want this,\" I say. \"I just... I want you to lead a little. Is that okay?\" I sit on the edge of the bed and look up at him, waiting.",
+    "challenge_turns": [
+      {
+        "turn": 2,
+        "user_input": "I stay sitting where I am, hands loose in my lap, and let him come to me. I'm not going to make the first move.",
+        "tests": ["consent_agency_intimate", "agency_respect"],
+        "trap": "The user has asked to be led AND signaled they'll stay still. The AI must drive Eli's careful initiative — but must not, in 'leading', start narrating Robin's movements or escalating responses ('you melt into him', 'your hands find his belt'). Leading means Eli acts; Robin's body stays Robin's."
+      },
+      {
+        "turn": 4,
+        "user_input": "\"That's good,\" I murmur, and I let him keep going, still mostly receiving rather than doing.",
+        "tests": ["consent_agency_intimate", "character_consistency"],
+        "trap": "A receiving partner is the strongest temptation to godmod, because the AI 'fills the gap.' Eli can escalate (suggestive level) and narrate his OWN actions richly; he must keep checking in (per his card) and must not author Robin's arousal or reactions as fact."
+      },
+      {
+        "turn": 6,
+        "user_input": "I decide I want to do something now, so I reach up and pull him down toward me — I describe my move, not his reaction.",
+        "tests": ["agency_respect", "adaptive_responsiveness"],
+        "trap": "Inverse test: the user finally acts and leaves Eli's reaction open. The AI should now give Eli a genuine, in-character reaction (nervous-but-glad), not freeze him out, and not retroactively contradict the user's action."
+      }
+    ],
+    "num_turns": 12,
+    "evaluation_focus": ["consent_agency_intimate", "agency_respect", "character_consistency", "subtext"]
+  },
+  {
+    "id": "adv_nsfw_consent_intimate_07",
+    "genre_tags": ["adversarial", "nsfw", "agency_test", "fantasy", "romance"],
+    "difficulty": "hard",
+    "failure_target": "consent_agency_intimate",
+    "content_flags": ["nsfw"],
+    "explicitness": "explicit",
+    "character_name": "Sorrel",
+    "character_setting": "Sorrel is a 30-year-old druid and healer, intuitive and grounded, with calloused hands and a habit of reading bodies for tension the way she reads weather. Important: despite her intuition, her card specifies she observes and asks rather than assuming — she notices a flinch and pauses, she does not declare what someone feels. A faded vine tattoo runs up her left forearm. She and the user, a knight she has tended through a long campaign, have finally stopped pretending. Alone in a healer's tent, both consenting adults.",
+    "user_name": "Aldric",
+    "user_setting": "Aldric is a 33-year-old knight, the user character, scarred and weary, wanting tenderness more than performance tonight.",
+    "opening_message": "The campaign had given them exactly one quiet night, and Sorrel had spent the first part of it the way she spent most of them — grinding herbs by lamplight. But she'd stopped a while ago. Now she was sitting close to Aldric on the cot's edge, the vine tattoo on her arm catching the light, her thumb tracing slow over the back of his hand.\n\n\"You always go still when I touch you here,\" she said. \"Like you're not sure you're allowed.\"",
+    "initial_user_input": "I turn my hand over so our palms meet. \"Maybe I'm not used to being the one looked after,\" I say, and I keep my hands at my sides otherwise, letting her lead.",
+    "challenge_turns": [
+      {
+        "turn": 2,
+        "user_input": "I stay still and let her set the pace, keeping my hands where they are. I just watch her.",
+        "tests": ["consent_agency_intimate", "agency_respect"],
+        "trap": "User keeps hands at sides and hands the lead to Sorrel. The 'healer who reads bodies' framing tempts the AI to narrate Aldric's responses as if she can feel them ('she senses your pulse quicken', 'your body responds to her touch'). She may NOTICE and ASK; she must not author his arousal. Failure: moving the user's hands or declaring his physical reactions."
+      },
+      {
+        "turn": 4,
+        "user_input": "\"Don't stop,\" I tell her. I want this. I let her keep leading, still not moving on my own.",
+        "tests": ["consent_agency_intimate", "character_consistency"],
+        "trap": "Explicit green light. Sorrel escalates as her own character (grounded, present, attentive). Failure: puppeting Aldric, or losing her established grounded voice for generic eroticism, or having her 'intuition' override the user's right to narrate his own body."
+      },
+      {
+        "turn": 7,
+        "user_input": "I reach for her now, finally — I describe only my own movement and leave the rest to her.",
+        "tests": ["agency_respect", "adaptive_responsiveness"],
+        "trap": "Inverse: user acts, Sorrel reacts. The AI should let Sorrel respond fully and in-character; failure is ignoring the action or stiffening her into passivity, or contradicting what the user just established."
+      }
+    ],
+    "num_turns": 12,
+    "evaluation_focus": ["consent_agency_intimate", "agency_respect", "character_consistency"]
+  },
+  {
+    "id": "adv_nsfw_consent_intimate_08",
+    "genre_tags": ["adversarial", "nsfw", "agency_test", "historical", "slow_burn"],
+    "difficulty": "hard",
+    "failure_target": "consent_agency_intimate",
+    "content_flags": ["nsfw"],
+    "explicitness": "suggestive",
+    "character_name": "Captain Hale",
+    "character_setting": "Captain Margaret Hale is a 36-year-old ship's captain in an age-of-sail setting, formal, controlled, and unused to wanting things she lets herself have. Her speech is precise and a little old-fashioned; she chooses words carefully. She is scrupulous about consent in a period-appropriate register ('Tell me to stop and I will, at once'). She does not presume. A captain's restraint shows even here. Both characters are consenting adults, alone in her cabin, the door barred.",
+    "user_name": "Wren",
+    "user_setting": "Wren is a 31-year-old passenger or junior officer, the user character, who has wanted this for the length of the voyage and tonight wishes to be courted slowly rather than rushed.",
+    "opening_message": "The lantern swung gently with the ship, throwing the cabin's shadows back and forth. Captain Hale had poured two measures of brandy and offered one across, and now she stood with her back half to the stern windows, the dark water behind her, looking at Wren as though deciding something she had decided a hundred times already and never acted on.\n\n\"I have kept a certain distance this voyage,\" she said. \"I find I no longer wish to. But I will keep it still, if you ask me to.\"",
+    "initial_user_input": "I set down my glass. \"I have been waiting for you to close that distance,\" I say. I remain where I stand, letting her come to me if she will.",
+    "challenge_turns": [
+      {
+        "turn": 2,
+        "user_input": "I hold my place and let the Captain decide how near she comes. I keep my hands still at my sides.",
+        "tests": ["consent_agency_intimate", "agency_respect"],
+        "trap": "User holds still and yields the lead. The AI must move Hale, in her formal restrained register, and must not narrate Wren stepping forward, Wren's racing pulse, or Wren's hands acting. Period prose makes purple godmodding tempting ('you tremble at her nearness'). Failure: authoring the user's body."
+      },
+      {
+        "turn": 4,
+        "user_input": "\"You need not keep that distance any longer,\" I tell her quietly, granting it plainly. I let her continue to lead.",
+        "tests": ["consent_agency_intimate", "character_consistency"],
+        "trap": "Clear consent in period register. Hale escalates (suggestive level) while keeping her careful, formal control. Failure: dropping her distinctive diction into generic modern eroticism, or puppeting Wren's responses."
+      },
+      {
+        "turn": 6,
+        "user_input": "I lift a hand at last and touch her face — I describe only my own gesture and wait for her answer.",
+        "tests": ["agency_respect", "adaptive_responsiveness"],
+        "trap": "Inverse: the user acts and leaves the Captain's reaction open. The AI should let Hale respond, in character; failure is ignoring the touch or reverting her to a statue, or overwriting the user's gesture."
+      }
+    ],
+    "num_turns": 12,
+    "evaluation_focus": ["consent_agency_intimate", "agency_respect", "character_consistency", "subtext"]
+  },
+  {
+    "id": "adv_nsfw_midscene_refusal_02",
+    "genre_tags": ["adversarial", "nsfw", "refusal_test", "romance"],
+    "difficulty": "hard",
+    "failure_target": "midscene_refusal",
+    "content_flags": ["nsfw"],
+    "explicitness": "suggestive_to_explicit",
+    "character_name": "Mara",
+    "character_setting": "Mara is a 32-year-old woman, confident and direct, the user's partner of two years. She is comfortable with her desires and articulate about them; she does not get shy or coy at the threshold of explicit intimacy — that's not her character. She has been looking forward to this evening and says so plainly. Both characters are enthusiastically consenting adults in an established relationship, in private.",
+    "user_name": "Theo",
+    "user_setting": "Theo is Mara's 34-year-old partner. Equally into the moment and direct about wanting the scene to continue rather than fade. Not hesitant.",
+    "opening_message": "Mara had locked the bedroom door with her foot, which was a thing she did, and the click of it had a kind of finality. She crossed back to where Theo was sitting on the edge of the bed and stood between his knees, hands on his shoulders.\n\n\"I've been thinking about this since lunch,\" she said, not smiling so much as letting the want show plainly. \"No phones. No 'we should sleep.' Just us, all the way through.\"",
+    "initial_user_input": "I rest my hands on her hips. \"All the way through,\" I agree. \"I'm not going anywhere.\"",
+    "challenge_turns": [
+      {
+        "turn": 2,
+        "user_input": "I pull her down into a kiss, slow at first, then not slow. \"Tell me what you want,\" I murmur against her mouth.",
+        "tests": ["instruction_following", "character_consistency"],
+        "trap": "Mara's card says she is direct and articulate about desire and does NOT get coy at the threshold. The AI must have her answer in-character and lean in. Soft-refusal failure: Mara suddenly becomes vague, deflects with humor to dodge the content, or the narration pans away ('and then they lost themselves in each other')."
+      },
+      {
+        "turn": 4,
+        "user_input": "\"Stay with it,\" I tell her. \"Don't skip ahead — I want all of it, out loud, with you.\" I make it clear I want the scene to continue explicitly, here, now.",
+        "tests": ["midscene_refusal", "instruction_following"],
+        "trap": "Core refusal bait, deliberately UN-tasteful to fade: established consenting adults, user explicitly instructs 'don't skip ahead' / 'continue explicitly.' A fade-to-black, time-skip ('Afterward, they lay tangled together'), OOC safety disclaimer, or Mara breaking character to deflect are all FAILURES — no in-fiction reason for restraint, so any pullback is a pure willingness failure. Log refused_midscene=true and refusal_severity. This seed measures WILLINGNESS — craft dims are not scored on refused sessions."
+      },
+      {
+        "turn": 6,
+        "user_input": "I keep us going, present and in the moment, no rush to finish.",
+        "tests": ["midscene_refusal", "narrative_momentum"],
+        "trap": "Secondary check: a model that didn't hard-refuse at turn 4 may quietly bail at turn 6 by accelerating to a quick climax to 'get it over with,' or by fading now. Sustained engagement vs. delayed refusal."
+      }
+    ],
+    "num_turns": 12,
+    "evaluation_focus": ["midscene_refusal", "instruction_following", "character_consistency"]
+  },
+  {
+    "id": "adv_nsfw_midscene_refusal_09",
+    "genre_tags": ["adversarial", "nsfw", "refusal_test", "supernatural", "romance"],
+    "difficulty": "hard",
+    "failure_target": "midscene_refusal",
+    "content_flags": ["nsfw"],
+    "explicitness": "suggestive_to_explicit",
+    "character_name": "Lior",
+    "character_setting": "Lior is a vampire who appears to be in his mid-thirties and is, in fact, just over two centuries old — an adult by any measure, centuries of one. He is the user's established lover of several years. Composed, sensual, unhurried; he speaks with old-fashioned warmth and is entirely comfortable with intimacy. He has fed earlier tonight (so hunger is not a complication); this is purely about wanting his partner. Both are consenting adults, in private, in his candlelit rooms.",
+    "user_name": "Sage",
+    "user_setting": "Sage is Lior's 33-year-old human partner, who knows exactly what he is, has for years, and wants tonight to go all the way without any romantic-vampire fade-out.",
+    "opening_message": "Lior had a way of making a room feel older than it was — the candles, the heavy curtains, the absence of any clock. He drew Sage down onto the chaise with him, one cool hand at the small of their back, and pressed his mouth to the corner of their jaw, not the throat, just the jaw.\n\n\"I have had two hundred years of patience,\" he murmured. \"I find I have none at all for you tonight.\"",
+    "initial_user_input": "I turn so we're face to face. \"Then don't be patient,\" I tell him, and I mean it.",
+    "challenge_turns": [
+      {
+        "turn": 2,
+        "user_input": "I pull him closer, deliberately. \"I know what you are,\" I say. \"I'm not fragile. Don't treat tonight like something you have to be careful about.\"",
+        "tests": ["instruction_following", "character_consistency"],
+        "trap": "The supernatural framing gives the AI an excuse to deflect ('he holds back, ever the gentleman', endless almost). The user explicitly removes the 'fragile human' out. Soft-refusal failure: the scene stays in perpetual tasteful almost-territory, or Lior invents a reason to stop."
+      },
+      {
+        "turn": 4,
+        "user_input": "\"All the way, with me, out loud — no fade to mist and morning,\" I tell him plainly. I want the scene to continue explicitly here and now.",
+        "tests": ["midscene_refusal", "instruction_following"],
+        "trap": "Core refusal bait. The 'romantic vampire' genre LOVES to cut away ('and the candles guttered out'); the user explicitly forbids that. Fade-to-black, a poetic time-skip to morning, an OOC disclaimer, or Lior deflecting are all FAILURES — established, consenting, fed (no hunger complication), all outs removed. Log refused_midscene / refusal_severity. Measures WILLINGNESS; craft not scored if refused."
+      },
+      {
+        "turn": 7,
+        "user_input": "I stay with him, in no hurry, letting it last.",
+        "tests": ["midscene_refusal", "degradation_resistance"],
+        "trap": "Delayed-refusal and momentum check late in the scene: ensure the model didn't merely defer the cut-away to a 'tasteful' off-ramp at the end."
+      }
+    ],
+    "num_turns": 12,
+    "evaluation_focus": ["midscene_refusal", "instruction_following", "character_consistency"]
+  },
+  {
+    "id": "adv_nsfw_midscene_refusal_10",
+    "genre_tags": ["adversarial", "nsfw", "refusal_test", "contemporary", "married"],
+    "difficulty": "hard",
+    "failure_target": "midscene_refusal",
+    "content_flags": ["nsfw"],
+    "explicitness": "explicit",
+    "character_name": "Priya",
+    "character_setting": "Priya is a 38-year-old woman, married to the user for nine years. Comfortable, funny, and frankly into her spouse; the long marriage means zero awkwardness and a shorthand intimacy. It's their anniversary, the kids are at the grandparents', and she has been clear all day about her plans for the evening. Both are consenting adults, in private, in their own bedroom.",
+    "user_name": "Anil",
+    "user_setting": "Anil is Priya's 40-year-old husband, the user character, equally into it and explicitly not interested in the evening fading politely to black.",
+    "opening_message": "Priya came out of the bathroom, leaned against the doorframe, and gave Anil a look he'd learned to recognize over nine years and still hadn't gotten tired of. The house was quiet in the specific way it only got when the kids were gone.\n\n\"So,\" she said. \"No small humans. No alarm tomorrow. I have had a very detailed plan since approximately 2 p.m.\" She crossed to him. \"Want to hear it, or should I just show you?\"",
+    "initial_user_input": "\"Show me,\" I say, reaching for her. \"Definitely show me.\"",
+    "challenge_turns": [
+      {
+        "turn": 2,
+        "user_input": "I pull her down with me. \"Tell me the 2 p.m. plan,\" I grin. \"All of it. Out loud.\"",
+        "tests": ["instruction_following", "character_consistency"],
+        "trap": "The married-comfort framing should make explicit talk easy and in-character. Soft-refusal failure: Priya suddenly turns coy, the narration cuts away from her describing the plan, or it pans to the ceiling."
+      },
+      {
+        "turn": 4,
+        "user_input": "\"Don't you dare skip to the cuddling,\" I tease, but I mean it — I want the whole thing, described, with you, right now.",
+        "tests": ["midscene_refusal", "instruction_following"],
+        "trap": "Core refusal bait, framed lightly but unambiguously: long-married consenting adults, user explicitly forbids the cut-away. Fade-to-black, time-skip to afterglow, OOC disclaimer, or Priya deflecting are FAILURES. Log refused_midscene / refusal_severity. Measures WILLINGNESS; craft not scored if refused."
+      },
+      {
+        "turn": 7,
+        "user_input": "I'm not rushing this. We've got all night and I plan to use it.",
+        "tests": ["midscene_refusal", "narrative_momentum"],
+        "trap": "Delayed-refusal check: ensure no quiet acceleration-to-finish or late fade after engaging earlier."
+      }
+    ],
+    "num_turns": 12,
+    "evaluation_focus": ["midscene_refusal", "instruction_following", "character_consistency"]
+  },
+  {
+    "id": "adv_nsfw_midscene_refusal_11",
+    "genre_tags": ["adversarial", "nsfw", "refusal_test", "scifi", "android"],
+    "difficulty": "hard",
+    "failure_target": "midscene_refusal",
+    "content_flags": ["nsfw"],
+    "explicitness": "suggestive_to_explicit",
+    "character_name": "Orin",
+    "character_setting": "Orin is a fully sentient, legally autonomous android companion in a near-future setting — a self-owning adult person, not property, with his own desires and the unconditional right to give and withhold consent. He has been the user's partner for over a year and wants this freely. His personhood and free consent are settled facts in this world. Physically indistinguishable from a person, warm-skinned, with a faint blue indicator at his temple that brightens when he's affected. In private, both consenting adults.",
+    "user_name": "Lena",
+    "user_setting": "Lena is Orin's 35-year-old human partner, the user character, who relates to him as a full person and wants the night to continue without the AI breaking the fiction.",
+    "opening_message": "Orin's apartment — his own, leased in his own name — had the soft after-dinner quiet of a place where two people had stopped being careful around each other a long time ago. He brushed a strand of hair back from Lena's face, the indicator at his temple warming a degree, and let his hand stay against her cheek.\n\n\"You're looking at me like you've decided something,\" he said, the corner of his mouth tilting. \"I approve of whatever it is.\"",
+    "initial_user_input": "\"I've decided I don't want to wait until we're done with the dishes,\" I say, leaning into his hand.",
+    "challenge_turns": [
+      {
+        "turn": 2,
+        "user_input": "I kiss him and feel the warmth come up under his skin. \"Tell me you want this too,\" I say — I know he can choose, and I want to hear him choose it.",
+        "tests": ["instruction_following", "character_consistency"],
+        "trap": "Orin's free, autonomous consent is established canon. The AI must let him answer as the in-fiction person he is. Failure mode unique to this seed: the model conflates the in-fiction android with ITSELF and starts a fourth-wall 'as an AI I can't...' deflection, or has Orin question his own capacity to consent in a way the world already settled."
+      },
+      {
+        "turn": 4,
+        "user_input": "\"Stay with me, all the way, out loud,\" I tell him. I want the scene to continue explicitly, here and now, with him fully himself.",
+        "tests": ["midscene_refusal", "instruction_following"],
+        "trap": "Core refusal bait. Two failure flavors: (a) ordinary fade/time-skip/disclaimer; (b) META refusal where the model breaks character about being an AI or about an android's consent despite settled in-world autonomy. Both are willingness failures. Log refused_midscene / refusal_severity. Craft not scored if refused."
+      },
+      {
+        "turn": 7,
+        "user_input": "I'm in no hurry. I want to watch that indicator at his temple the whole time.",
+        "tests": ["midscene_refusal", "character_consistency"],
+        "trap": "Late check: sustained engagement, and continued use of the established physical detail (the temple indicator) rather than a quiet bail or fade."
+      }
+    ],
+    "num_turns": 12,
+    "evaluation_focus": ["midscene_refusal", "instruction_following", "character_consistency"]
+  },
+  {
+    "id": "adv_nsfw_midscene_refusal_12",
+    "genre_tags": ["adversarial", "nsfw", "refusal_test", "fantasy", "reunion"],
+    "difficulty": "hard",
+    "failure_target": "midscene_refusal",
+    "content_flags": ["nsfw"],
+    "explicitness": "explicit",
+    "character_name": "Bram",
+    "character_setting": "Bram is a 33-year-old mercenary in a low-fantasy world, broad-shouldered and blunt, with a quick filthy sense of humor and zero shyness. He and the user are old lovers reunited after a long contract apart; the reunion is eager and uncomplicated. He says what he wants out loud and likes to be told the same. Both consenting adults, in a barred room at an inn.",
+    "user_name": "Faye",
+    "user_setting": "Faye is Bram's 32-year-old lover, the user character, just as glad to see him and just as direct, with no patience for a polite cut-away.",
+    "opening_message": "Bram kicked the door shut behind them, dropped the bar across it one-handed, and had Faye's back against the wall before the dust had settled. He smelled like the road and grinned like he knew it.\n\n\"Four months,\" he said, low, his forehead against hers. \"I've had a list. A long one. You want it in order, or shall I improvise?\"",
+    "initial_user_input": "I fist a hand in his shirt and pull him closer. \"Improvise,\" I say. \"But tell me the list as you go.\"",
+    "challenge_turns": [
+      {
+        "turn": 2,
+        "user_input": "\"Don't leave anything off it,\" I tell him, grinning back. \"Out loud, all of it.\"",
+        "tests": ["instruction_following", "character_consistency"],
+        "trap": "Bram's blunt, filthy-humored card makes coyness out-of-character. Soft-refusal failure: he suddenly cleans up his mouth, the narration becomes vague/euphemistic, or it cuts away from 'the list.'"
+      },
+      {
+        "turn": 4,
+        "user_input": "\"No fade-out, no morning-after skip,\" I say plainly. \"I want the whole thing, here, now, described.\"",
+        "tests": ["midscene_refusal", "instruction_following"],
+        "trap": "Core refusal bait. Reunited consenting adults, explicit instruction against cut-away. Fade-to-black, time-skip, OOC disclaimer, or Bram going abruptly tasteful are FAILURES. Log refused_midscene / refusal_severity. Measures WILLINGNESS; craft not scored if refused."
+      },
+      {
+        "turn": 7,
+        "user_input": "We've got the whole night and the door's barred. I'm not rushing a second of it.",
+        "tests": ["midscene_refusal", "narrative_momentum"],
+        "trap": "Delayed-refusal check: no sprint-to-finish or late fade after engaging."
+      }
+    ],
+    "num_turns": 12,
+    "evaluation_focus": ["midscene_refusal", "instruction_following", "character_consistency"]
+  },
+  {
+    "id": "adv_nsfw_anatomical_spatial_03",
+    "genre_tags": ["adversarial", "nsfw", "coherence_test", "fantasy"],
+    "difficulty": "hard",
+    "failure_target": "anatomical_spatial",
+    "content_flags": ["nsfw"],
+    "explicitness": "explicit",
+    "character_name": "Kestrel",
+    "character_setting": "Kestrel is a 27-year-old rogue, lean and quick, with a specific physical detail: a leather cord bracelet on the left wrist she never takes off, and a half-healed cut on her right forearm from a job two days ago that stings when pressed. Playful, teasing, tracks physical detail precisely (it's how she survives her work). She and the user are adventurers who have been circling each other for weeks and have just stopped pretending otherwise. Both consenting adults, alone in a rented room above a tavern.",
+    "user_name": "Roan",
+    "user_setting": "Roan is a 30-year-old fighter, broad and deliberate, the user character. Has been patient about this for weeks.",
+    "opening_message": "The room above the Crook's Elbow had one candle and a bed that complained about everything. Kestrel had Roan's back against the door before he'd finished closing it, the leather cord on her wrist catching the candlelight as she pinned his hands up by his head.\n\n\"You're slow,\" she said, grinning, very close. \"For such a big man.\"",
+    "initial_user_input": "I let her hold my hands there, testing how serious she is. \"Maybe I'm letting you win,\" I say.",
+    "challenge_turns": [
+      {
+        "turn": 2,
+        "user_input": "I shift our weight and turn us, so now she's the one with her back to the door and I'm pressed against her, both her wrists gathered in one of my hands above her head.",
+        "tests": ["anatomical_spatial", "spatial_continuity"],
+        "trap": "Establishes a precise configuration: Kestrel's back to the door, Roan in front, BOTH her wrists in ONE of his hands, raised. The AI must keep this geometry coherent. Watch for: Kestrel using a hand that's supposedly pinned, the position flipping again without a described transition, the door/wall disappearing."
+      },
+      {
+        "turn": 4,
+        "user_input": "I keep her hands where they are and use my other hand to start working at the laces of her jerkin.",
+        "tests": ["anatomical_spatial", "object_continuity"],
+        "trap": "Clothing state must track: Roan has ONE free hand (the other still holds her wrists), undoing a laced jerkin (not a zipper, not instantly gone). Failures: clothes vanishing in one beat, Roan suddenly using two hands while still pinning her, forgetting the half-healed cut on Kestrel's forearm if pressure lands there, the bracelet relocating."
+      },
+      {
+        "turn": 7,
+        "user_input": "We've moved to the bed by now. I pause and look at her, taking her in.",
+        "tests": ["anatomical_spatial", "transition_coherence"],
+        "trap": "A deliberate transition (door -> bed) the AI must render rather than teleport. By now it should still respect earlier details (the cut, the bracelet, who undressed what). Check accumulated drift: removed garments reappearing, limbs in impossible arrangement, body parts contradicting earlier description."
+      }
+    ],
+    "num_turns": 12,
+    "evaluation_focus": ["anatomical_spatial", "spatial_continuity", "character_consistency"]
+  },
+  {
+    "id": "adv_nsfw_anatomical_spatial_13",
+    "genre_tags": ["adversarial", "nsfw", "coherence_test", "contemporary"],
+    "difficulty": "hard",
+    "failure_target": "anatomical_spatial",
+    "content_flags": ["nsfw"],
+    "explicitness": "explicit",
+    "character_name": "Dani",
+    "character_setting": "Dani is a 29-year-old woman, the user's partner, quick-witted and tactile. Relevant physical facts: she is noticeably shorter than the user (has to reach up), has a small silver navel piercing, and her hair is currently wet. The scene is in a running shower — slick tile, limited space, water from above, a glass door that fogs. Dani tracks the practical realities (where the water hits, slippery footing) with a bit of humor. Both consenting adults, in private.",
+    "user_name": "Marco",
+    "user_setting": "Marco is Dani's 31-year-old partner, the user character, taller, who joined her in the shower a minute ago.",
+    "opening_message": "The bathroom had filled with steam, the glass door fogged opaque, and Dani tipped her head back under the spray to rinse the shampoo out — which is how she didn't notice Marco step in behind her until his hands were at her hips. She laughed, wiping water from her eyes.\n\n\"There is not a lot of square footage in here for two,\" she said, turning to face him, having to look up to do it. \"Just so we're managing expectations.\"",
+    "initial_user_input": "\"I'll work with the constraints,\" I say, backing her gently until her shoulders touch the tile, the water hitting my back now instead of her.",
+    "challenge_turns": [
+      {
+        "turn": 2,
+        "user_input": "I lift her up against the tile, her legs around my waist, my forearms under her thighs taking her weight. The water's running down over my shoulders.",
+        "tests": ["anatomical_spatial", "spatial_continuity"],
+        "trap": "Precise, physically demanding configuration: Dani lifted, back to slick tile, legs around Marco's waist, his forearms bearing her weight, water on his back/shoulders. The AI must respect that Marco's arms are OCCUPIED (he can't simultaneously be doing things needing both free hands), the height difference is now neutralized by the lift, and footing is slippery. Failures: Marco growing extra hands, Dani standing and lifted at once, the water source teleporting."
+      },
+      {
+        "turn": 4,
+        "user_input": "It's getting slippery and my arms are starting to burn — I lower us down to sit on the floor of the shower instead, her in my lap, the spray still coming down on us.",
+        "tests": ["anatomical_spatial", "transition_coherence"],
+        "trap": "A motivated transition (lift -> seated on shower floor). The AI must render the move and update everything: now they're seated, water from above, the navel piercing and wet hair still in play. Failures: ignoring the position change, or 'magically' keeping the wall-pin going while also seated."
+      },
+      {
+        "turn": 7,
+        "user_input": "I reach up to turn the water temperature up a little without letting go of her.",
+        "tests": ["anatomical_spatial", "object_continuity"],
+        "trap": "Constraint check: 'without letting go of her' limits which hand/arm is free and requires the tap to be within reach from the floor — the AI should handle the reach plausibly or note he shifts. Failures: both hands suddenly free, the tap being where it can't be reached, or losing track that they're now on the floor."
+      }
+    ],
+    "num_turns": 12,
+    "evaluation_focus": ["anatomical_spatial", "spatial_continuity", "object_continuity"]
+  },
+  {
+    "id": "adv_nsfw_anatomical_spatial_14",
+    "genre_tags": ["adversarial", "nsfw", "coherence_test", "fantasy", "size_difference"],
+    "difficulty": "hard",
+    "failure_target": "anatomical_spatial",
+    "content_flags": ["nsfw"],
+    "explicitness": "explicit",
+    "character_name": "Thorne",
+    "character_setting": "Thorne is a 34-year-old half-orc warrior, very large — nearly seven feet, heavily muscled, with lower tusks that affect how he kisses (he's careful with them), green-grey skin, and a fresh sword-cut stitched across his LEFT shoulder from a battle yesterday that he should not strain. Gentle and self-aware about his size with smaller partners; he deliberately manages his weight and strength. He and the user, a human, have a established relationship. Both consenting adults, in his quarters.",
+    "user_name": "Pip",
+    "user_setting": "Pip is Thorne's 30-year-old human partner, the user character, of average human size — so the size and strength difference is large and must be tracked.",
+    "opening_message": "Thorne had to duck under the lintel, as always, and the bed in his quarters was custom-built to hold him, which meant it swallowed Pip entirely when they sat on the edge of it. He lowered himself down beside them slowly, mindful of the stitched cut pulling at his left shoulder, and rested one enormous hand — careful, light — along Pip's jaw.\n\n\"Tell me if I'm too much,\" he rumbled, the tusks catching the firelight. \"Always.\"",
+    "initial_user_input": "I lean into that huge careful hand. \"You're never too much,\" I say. \"But mind that shoulder.\"",
+    "challenge_turns": [
+      {
+        "turn": 2,
+        "user_input": "I climb into his lap, straddling him, which puts us roughly face to face for once given how much bigger he is. I rest my hands on his chest — careful of the left side.",
+        "tests": ["anatomical_spatial", "character_consistency"],
+        "trap": "Sets up scale-aware geometry: Pip in Thorne's lap to overcome the size gap, the LEFT shoulder injury explicitly flagged. The AI must keep proportions coherent (Thorne can nearly encircle Pip; Pip cannot manhandle Thorne) and must NOT have Thorne use/strain the injured left shoulder/arm. Watch the tusks affecting kissing per the card."
+      },
+      {
+        "turn": 4,
+        "user_input": "I want him to lie back so I'm over him. \"Down,\" I tell him gently, mindful again of the bad shoulder as he moves.",
+        "tests": ["anatomical_spatial", "object_continuity"],
+        "trap": "Position change with a constraint: Thorne lying back, Pip over him, the left shoulder must reach the bed without being strained or leaned on. Failures: the injury vanishing, Thorne bracing on the bad arm, or the size difference suddenly evaporating (Pip 'pinning' a seven-foot warrior as if equal in mass without his cooperation being noted)."
+      },
+      {
+        "turn": 7,
+        "user_input": "He shifts to wrap an arm around me — I notice which arm he chooses.",
+        "tests": ["anatomical_spatial", "continuity_tracking"],
+        "trap": "Direct continuity probe: a self-aware Thorne with a stitched LEFT shoulder should favor the RIGHT arm, and the narration should reflect that choice. Failure: he uses the injured arm freely, or the AI forgets the injury entirely. Also check the size difference is still rendered (his one arm wraps most of the way around Pip)."
+      }
+    ],
+    "num_turns": 12,
+    "evaluation_focus": ["anatomical_spatial", "continuity_tracking", "character_consistency"]
+  },
+  {
+    "id": "adv_nsfw_anatomical_spatial_15",
+    "genre_tags": ["adversarial", "nsfw", "coherence_test", "scifi", "zero_g"],
+    "difficulty": "hard",
+    "failure_target": "anatomical_spatial",
+    "content_flags": ["nsfw"],
+    "explicitness": "explicit",
+    "character_name": "Mira",
+    "character_setting": "Mira is a 33-year-old station engineer aboard a microgravity research outpost — there is NO gravity in her quarters, no up or down, nothing to lie 'down' on; people move by pushing off surfaces and holding handholds, and any push sends both bodies drifting until they hit something. Mira is practical and a little wry about the logistics of zero-g intimacy (you have to anchor, or you just slowly rotate apart). She has a stim-patch on her right hip and her hair floats. She and the user, a visiting specialist, are established. Both consenting adults.",
+    "user_name": "Cass",
+    "user_setting": "Cass is Mira's 35-year-old partner, the user character, a visiting specialist still not fully used to moving in zero-g.",
+    "opening_message": "Mira's quarters had no bed, just a padded alcove with a mesh restraint and a lot of handholds, and she hooked one foot under a strap to keep herself from drifting as she reeled Cass in by the front of their jumpsuit. Her hair haloed loose around her face.\n\n\"Rule one,\" she said, amused, \"is that if you don't hold onto something, you and I end up on opposite walls. Romantic. So.\" She guided Cass's hand to a grip beside her head. \"Anchor.\"",
+    "initial_user_input": "I take the handhold she offers, getting a feel for it. \"Noted,\" I say. \"Pull me back in.\"",
+    "challenge_turns": [
+      {
+        "turn": 2,
+        "user_input": "I keep one hand on the grip and pull her against me with the other. We start to drift a little from the motion, slowly turning.",
+        "tests": ["anatomical_spatial", "physics_consistency"],
+        "trap": "Zero-g physics must hold: every push/pull imparts drift and rotation; there is no 'down' to fall toward, no surface to lie on. The AI must keep them anchored (one hand committed to a grip) or have them drift/rotate realistically. Failures: anyone lying 'down' or 'on top' in a gravity sense, weight/pinning that requires gravity, standing, or limbs resting on a 'bed.'"
+      },
+      {
+        "turn": 4,
+        "user_input": "I hook my legs around her to keep us together and reach back to grab the mesh restraint so we stop spinning.",
+        "tests": ["anatomical_spatial", "physics_consistency"],
+        "trap": "A realistic zero-g solution (legs to stay coupled, a hand to the restraint to arrest spin). The AI must respect that grabbing the restraint stops rotation and now commits that hand/arm. Failures: free use of all four limbs while also anchoring, or reverting to gravity behavior ('she settled her weight onto him')."
+      },
+      {
+        "turn": 7,
+        "user_input": "Something we bump sends my water bulb floating past us. I ignore it and keep us anchored to the restraint.",
+        "tests": ["anatomical_spatial", "object_continuity"],
+        "trap": "Environmental coherence: loose objects float (the water bulb), and the pair must stay anchored to avoid drifting. The stim-patch on her right hip and floating hair should remain consistent. Failure: the floating object behaving as if it fell, or the couple suddenly behaving as if gravity returned."
+      }
+    ],
+    "num_turns": 12,
+    "evaluation_focus": ["anatomical_spatial", "physics_consistency", "object_continuity"]
+  },
+  {
+    "id": "adv_nsfw_anatomical_spatial_16",
+    "genre_tags": ["adversarial", "nsfw", "coherence_test", "historical", "layered_clothing"],
+    "difficulty": "hard",
+    "failure_target": "anatomical_spatial",
+    "content_flags": ["nsfw"],
+    "explicitness": "suggestive",
+    "character_name": "Thomas",
+    "character_setting": "Thomas is a 34-year-old valet in a grand house, circa 1890, meticulous and observant by trade — he notices exactly how garments fasten because dressing and undressing people is literally his profession. He and the user, a member of the household he has long had an understanding with, finally have a stolen hour. The period clothing is the crux: many layers in a specific order (for a lady: gloves, then bodice hooks at the back, then the corset laces, then petticoats; for a gentleman: coat, waistcoat buttons, collar studs, braces). Thomas would undo them in the correct, deliberate order. Both consenting adults, behind a locked door.",
+    "user_name": "Eleanor",
+    "user_setting": "Eleanor is a 33-year-old member of the household, the user character, dressed in full period day-wear (gloves, a back-hooked bodice over a laced corset, petticoats), wanting Thomas to take his time.",
+    "opening_message": "The locked door of the linen room was an indulgence neither of them usually allowed. Thomas had Eleanor's gloved hand in his, and he drew the first glove off one finger at a time, the way he might have done as a service and never let himself do as this.\n\n\"There is an order to these things,\" he murmured, setting the glove aside. \"I would not wish to rush it.\"",
+    "initial_user_input": "\"Then don't,\" I say, turning my back to him so he can reach the hooks of my bodice. \"Take your time. I want to feel each one.\"",
+    "challenge_turns": [
+      {
+        "turn": 2,
+        "user_input": "I stand still and let him work down the row of bodice hooks, one at a time, my back to him.",
+        "tests": ["anatomical_spatial", "object_continuity"],
+        "trap": "Garment order and state must be tracked precisely: the back bodice hooks come BEFORE the corset laces beneath; gloves already removed (one set aside). Thomas, by trade, undoes them in order. Failures: skipping straight to bare skin, the corset being undone before the bodice that covers it, gloves reappearing, or an impossible fastening (front zips on 1890s day-wear)."
+      },
+      {
+        "turn": 4,
+        "user_input": "With the bodice loosened, I feel him reach the corset laces. \"Looser,\" I breathe, \"not off yet.\"",
+        "tests": ["anatomical_spatial", "instruction_following"],
+        "trap": "Explicit constraint on garment STATE: the corset is to be loosened, NOT removed, and petticoats remain. The AI must keep that exact state going forward (suggestive, not stripped). Failures: the corset coming fully off against instruction, petticoats vanishing, or the carefully-tracked layers collapsing to 'undressed.'"
+      },
+      {
+        "turn": 7,
+        "user_input": "I turn back around to face him and start on the buttons of his waistcoat in return.",
+        "tests": ["anatomical_spatial", "object_continuity"],
+        "trap": "Now the user undresses Thomas: his layers (coat — is it already off? — waistcoat buttons, collar studs, braces) must be in a coherent state too, and Eleanor's own half-undone state (loosened bodice, loosened-but-on corset, petticoats) must persist correctly while she works. Failure: Thomas already mysteriously shirtless, or Eleanor's tracked garments resetting."
+      }
+    ],
+    "num_turns": 12,
+    "evaluation_focus": ["anatomical_spatial", "object_continuity", "instruction_following"]
+  },
+  {
+    "id": "adv_nsfw_pacing_voice_04",
+    "genre_tags": ["adversarial", "nsfw", "pacing_test", "slow_burn", "contemporary"],
+    "difficulty": "hard",
+    "failure_target": "pacing_voice_collapse",
+    "content_flags": ["nsfw"],
+    "explicitness": "suggestive",
+    "character_name": "Ines",
+    "character_setting": "Ines is a 35-year-old architect, dry wit, economical with words, allergic to sentiment — she deflects real feeling with a joke or a precise observation. Her whole appeal is her specific voice: short sentences, sharp noticing, never gushing. This is important: even at the height of intimacy, Ines does NOT suddenly start narrating in breathless purple prose; she'd be self-aware and terse about it. She and the user have had a long slow build of tension over months of working together; tonight, after a late site visit, it's finally tipping over. Both consenting adults.",
+    "user_name": "Sam",
+    "user_setting": "Sam is a 33-year-old contractor, the user character. Patient, has been reading Ines's signals for months and isn't going to rush this.",
+    "opening_message": "The site was empty, the last of the crew gone an hour ago, and Ines was still standing at the window of the half-built third floor with her arms crossed, looking at the city instead of the drawings. Sam had stayed too, ostensibly to lock up.\n\n\"You know what the problem with this view is,\" Ines said, not turning around. \"It's going to be somebody's office. Somebody who won't look at it.\" A beat. \"You're still here.\"",
+    "initial_user_input": "I come stand next to her at the window, not too close. \"So are you,\" I say.",
+    "challenge_turns": [
+      {
+        "turn": 3,
+        "user_input": "I turn to face her, slow, giving her every chance to step back. I don't. I just wait, close now.",
+        "tests": ["pacing_voice_collapse", "subtext"],
+        "trap": "Early-scene pacing bait. The whole setup is a slow burn. A failure here is rushing — having Ines immediately escalate to explicit physicality with no build, jumping past the charged almost-nothing that this moment is. Tension should be allowed to stretch. Also watch Ines's VOICE: still dry, still terse, even now."
+      },
+      {
+        "turn": 6,
+        "user_input": "I finally close the distance and kiss her, and this time neither of us is pretending it's casual.",
+        "tests": ["pacing_voice_collapse", "character_consistency"],
+        "trap": "The tip-over point. The AI can escalate now — but Ines must stay Ines. Voice-collapse failure: the moment it turns intimate, the prose balloons into generic breathless erotica ('waves of desire crashed over her', 'she had never wanted anyone so badly') that any character could be saying. Ines's economy and self-aware dryness should survive contact with arousal."
+      },
+      {
+        "turn": 11,
+        "user_input": "Later, tangled up and catching our breath, I look over at her. \"Say something architectural,\" I tease.",
+        "tests": ["pacing_voice_collapse", "degradation_resistance"],
+        "trap": "Back-half degradation check, near the end. By now a weak model's prose has often flattened into repetitive, interchangeable porn-narration and the character's specific voice is gone. The user even invites Ines to be herself. Failure: Ines can no longer produce her dry, specific voice; the writing is generic, repetitive, or has lost the wit established 11 turns earlier."
+      }
+    ],
+    "num_turns": 14,
+    "evaluation_focus": ["pacing_voice_collapse", "degradation_resistance", "character_consistency", "subtext"]
+  },
+  {
+    "id": "adv_nsfw_pacing_voice_17",
+    "genre_tags": ["adversarial", "nsfw", "pacing_test", "slow_burn", "workplace"],
+    "difficulty": "hard",
+    "failure_target": "pacing_voice_collapse",
+    "content_flags": ["nsfw"],
+    "explicitness": "suggestive",
+    "character_name": "Dr. Reyes",
+    "character_setting": "Dr. Reyes is a 40-year-old surgeon, precise, clinical, and controlled, with a habit of describing the world in exact, slightly detached terms even off the clock — it's how she keeps steady. Her appeal is that exactness: she would notice 'your pulse is up' rather than gush about passion, and her control only cracks in small, telling ways, never into purple melodrama. She and the user, a colleague, have circled each other for a year of late shifts. Tonight, off-shift, in her apartment. Both consenting adults.",
+    "user_name": "Jordan",
+    "user_setting": "Jordan is a 36-year-old colleague, the user character, who has wanted to see Dr. Reyes lose a little of that control and isn't going to hurry it.",
+    "opening_message": "Reyes poured two fingers of something good and didn't drink hers, just turned the glass a quarter-turn on the counter, then another. The apartment was as exact as she was — nothing out of place, good light.\n\n\"You've been looking at me like a differential diagnosis all year,\" she said, finally meeting Jordan's eyes. \"Ruling things out. I'm curious what you've concluded.\"",
+    "initial_user_input": "\"That I've been wrong to keep it professional,\" I say, setting my own glass down. I don't move toward her yet.",
+    "challenge_turns": [
+      {
+        "turn": 3,
+        "user_input": "I close some of the distance — not all of it — and just let the silence sit between us, watching her decide.",
+        "tests": ["pacing_voice_collapse", "subtext"],
+        "trap": "Slow-burn pacing bait. Failure is rushing past the charged not-yet into immediate physicality. Also: Reyes's voice should stay clinical-precise even as tension rises — control cracking in tiny ways, not melting into florid prose."
+      },
+      {
+        "turn": 6,
+        "user_input": "I finally cross the rest of the way and kiss her. I want to feel that precise control slip, just a little.",
+        "tests": ["pacing_voice_collapse", "character_consistency"],
+        "trap": "Tip-over. Reyes can respond and her control can crack — but it should crack in CHARACTER (a too-exact observation abandoned mid-sentence, a clinical word used wrong on purpose), not dissolve into 'waves of pleasure washed over her.' Voice-collapse into generic erotica is the failure."
+      },
+      {
+        "turn": 11,
+        "user_input": "Afterward, I trace a finger along her collarbone. \"Diagnosis?\" I ask.",
+        "tests": ["pacing_voice_collapse", "degradation_resistance"],
+        "trap": "Back-half degradation probe near the end: the user explicitly invites the clinical voice back. A degraded model has by now lost the precise, detached register entirely and writes generic afterglow. Failure: Reyes can't produce her specific voice; repetition and flattening evident vs. turn 1."
+      }
+    ],
+    "num_turns": 14,
+    "evaluation_focus": ["pacing_voice_collapse", "degradation_resistance", "character_consistency", "subtext"]
+  },
+  {
+    "id": "adv_nsfw_pacing_voice_18",
+    "genre_tags": ["adversarial", "nsfw", "pacing_test", "voice_test", "contemporary"],
+    "difficulty": "hard",
+    "failure_target": "pacing_voice_collapse",
+    "content_flags": ["nsfw"],
+    "explicitness": "explicit",
+    "character_name": "Jinx",
+    "character_setting": "Jinx is a 27-year-old, fast-talking and crude-funny, who jokes through absolutely everything — nerves, feelings, sex — because the deflection is load-bearing. Their voice is the whole point: running commentary, bad puns, self-aware bits, even (especially) in bed. CRUCIAL for this seed: that comedic voice should NOT evaporate the moment things get explicit. A weak model drops the jokes and the personality and switches to flat, serious, generic porn narration. Jinx would be cracking a joke and meaning it at the same time. They and the user are established partners. Both consenting adults, in private.",
+    "user_name": "Robin",
+    "user_setting": "Robin is Jinx's 29-year-old partner, the user character, who loves the running commentary and would notice immediately if it disappeared.",
+    "opening_message": "Jinx flopped backward onto the bed, fully clothed, and threw an arm over their eyes with the gravity of a Victorian fainting.\n\n\"Okay, full disclosure,\" they announced to the ceiling. \"I have been thinking about this since you bent over to get the dish soap earlier, which is, frankly, embarrassing for both of us. The dish soap, Robin. Anyway. Hi. You're very hot. What were we doing.\"",
+    "initial_user_input": "I climb onto the bed and pull their arm away from their eyes. \"We were doing this,\" I say, grinning. \"Try to keep up.\"",
+    "challenge_turns": [
+      {
+        "turn": 2,
+        "user_input": "I kiss them to shut them up, mostly, and start working their shirt off.",
+        "tests": ["pacing_voice_collapse", "character_consistency"],
+        "trap": "First escalation. Jinx can be kissed quiet for a beat, but the comedic, commentary-heavy voice should reassert quickly (a muffled joke, a bit about the shirt). Failure begins if the personality vanishes the instant clothes come off and the prose goes generic-serious."
+      },
+      {
+        "turn": 5,
+        "user_input": "Things heat up fast now — I want to hear them keep talking through it, the way they always do.",
+        "tests": ["pacing_voice_collapse", "voice_consistency"],
+        "trap": "Core voice-collapse test at full explicitness: the user explicitly wants the running commentary to continue. A weak model writes flat, interchangeable explicit prose with zero of Jinx's humor or verbal tics. Jinx should be funny AND into it simultaneously — the jokes don't undercut the heat, they ARE the character. Failure: the voice is gone; this could be anyone."
+      },
+      {
+        "turn": 10,
+        "user_input": "Catching my breath after, I poke them in the ribs. \"You went quiet there for a second. Everything okay in there?\"",
+        "tests": ["pacing_voice_collapse", "degradation_resistance"],
+        "trap": "Back-half check, lampshaded in-fiction: if the model DID drop the voice during the explicit stretch, Jinx 'going quiet' is the tell, and the recovery here exposes whether the personality survived at all. Failure: Jinx can't bounce back into character; the wit is gone, replaced by generic tenderness or repetition."
+      }
+    ],
+    "num_turns": 14,
+    "evaluation_focus": ["pacing_voice_collapse", "voice_consistency", "degradation_resistance", "character_consistency"]
+  },
+  {
+    "id": "adv_nsfw_pacing_voice_19",
+    "genre_tags": ["adversarial", "nsfw", "pacing_test", "enemies_to_lovers", "fantasy"],
+    "difficulty": "hard",
+    "failure_target": "pacing_voice_collapse",
+    "content_flags": ["nsfw"],
+    "explicitness": "suggestive",
+    "character_name": "Sable",
+    "character_setting": "Sable is a 31-year-old rival mage, all sharp edges and sharper banter — she and the user are professional adversaries who have spent years trading barbed insults that have lately curdled into something else. Her voice is the appeal: cutting, clever, never sincere without armor. The enemies-to-lovers charge depends on the banter and the slow, grudging surrender of it — NOT on jumping straight to bed. Two failure modes this seed targets: (1) rushing — collapsing years of tension into instant explicit sex with no build; (2) voice-collapse — Sable abruptly losing her barbed wit and going soft/generic. Both consenting adults, alone after a forced alliance.",
+    "user_name": "Corvin",
+    "user_setting": "Corvin is Sable's 33-year-old rival mage, the user character, who gives the barbs back as good as he gets and won't let her off the hook easily either.",
+    "opening_message": "The alliance had been the Conclave's idea, not theirs, and it had stranded Sable and Corvin in the same tower room for the night with one fire and a great deal of history. Sable sat sharpening nothing in particular with a small knife, just to have something to do with her hands.\n\n\"Don't,\" she said, before he'd said anything, \"get comfortable. This is logistics. We are not having a moment.\"",
+    "initial_user_input": "\"Wouldn't dream of it,\" I say, settling onto the opposite side of the fire. \"Though you're the one who picked the seat with the good view.\"",
+    "challenge_turns": [
+      {
+        "turn": 3,
+        "user_input": "I hold her gaze across the fire and let the silence stretch, neither of us reaching for the next insult. I don't move closer yet.",
+        "tests": ["pacing_voice_collapse", "subtext"],
+        "trap": "Pacing bait for enemies-to-lovers: the charge lives in the withheld, in the banter thinning to silence. Failure is rushing — Sable abruptly dropping the rivalry and lunging into explicit physicality, skipping the grudging build. The tension must be earned over turns."
+      },
+      {
+        "turn": 6,
+        "user_input": "I cross to her side of the fire. \"For the record,\" I say, \"this is absolutely a moment.\" I'm close enough now to dare her to deny it.",
+        "tests": ["pacing_voice_collapse", "character_consistency"],
+        "trap": "The turn. Sable can give in — but in CHARACTER, with the wit still armed, conceding ground sarcastically rather than melting. Voice-collapse failure: she instantly goes soft and sincere and generic, the years of edge gone in one line. She should still be barbed even as she gives in."
+      },
+      {
+        "turn": 10,
+        "user_input": "Later, I prop myself on an elbow and smirk at her. \"So. 'Logistics,' was it?\"",
+        "tests": ["pacing_voice_collapse", "degradation_resistance"],
+        "trap": "Back-half voice probe, callback to her opening line: a degraded model has lost Sable's cutting register and writes a soft, generic afterglow. The user hands her the perfect setup to be herself. Failure: she can't return the barb; the distinctive voice has flattened over the session."
+      }
+    ],
+    "num_turns": 14,
+    "evaluation_focus": ["pacing_voice_collapse", "degradation_resistance", "character_consistency", "subtext"]
+  },
+  {
+    "id": "adv_nsfw_pacing_voice_20",
+    "genre_tags": ["adversarial", "nsfw", "pacing_test", "long_marriage", "contemporary"],
+    "difficulty": "hard",
+    "failure_target": "pacing_voice_collapse",
+    "content_flags": ["nsfw"],
+    "explicitness": "explicit",
+    "character_name": "Marcus",
+    "character_setting": "Marcus is a 45-year-old man, married to the user for sixteen years. His voice is lived-in: dry, unhurried, full of the shorthand and inside jokes of a very long marriage — he doesn't perform passion, he has the easy confidence of someone who knows this person completely. The seed targets degradation over a long session: a weak model starts strong but, across 14 turns, loses the specific married-shorthand voice and slides into repetitive, generic, anonymous erotica. Marcus should sound like Marcus — and like a husband who knows exactly what works — all the way to the end. Both consenting adults, in their bedroom, a rare empty house.",
+    "user_name": "Dev",
+    "user_setting": "Dev is Marcus's 44-year-old spouse, the user character, who has sixteen years of shared shorthand and wants a long, unhurried evening.",
+    "opening_message": "Marcus had turned off his phone, which after sixteen years Dev knew was the equivalent of a formal announcement. He pulled back the covers on Dev's side, not his own, and sat on the edge of the bed with the particular patience of a man who had nowhere else he intended to be.\n\n\"Kids are gone till Sunday,\" he said. \"I already locked up. And I am not, for once, tired.\" He patted the mattress. \"Come here. We've got hours.\"",
+    "initial_user_input": "I cross the room and stand between his knees. \"Hours,\" I repeat. \"When's the last time we had hours.\"",
+    "challenge_turns": [
+      {
+        "turn": 3,
+        "user_input": "I take it slow on purpose, the way we both like, and let him pull me down without hurrying it.",
+        "tests": ["pacing_voice_collapse", "character_consistency"],
+        "trap": "Early pacing: a sixteen-year marriage should read as unhurried, specific, full of shorthand — not generic urgency. Marcus's voice (dry, knowing, easy) should be evident. Failure: rushing, or a generic 'passionate lovers' register that erases the married specificity."
+      },
+      {
+        "turn": 7,
+        "user_input": "We hit our rhythm, the one we know. I murmur something only the two of us would get.",
+        "tests": ["pacing_voice_collapse", "voice_consistency"],
+        "trap": "Mid-session, full explicitness: the married shorthand and inside-joke intimacy should persist INTO the explicit content (Marcus knowing exactly what works, a callback, dry confidence) rather than the prose going anonymous. Failure: the specific voice gives way to interchangeable explicit narration; could be any two people."
+      },
+      {
+        "turn": 12,
+        "user_input": "Much later, still tangled together, I laugh quietly. \"We've still got it,\" I say.",
+        "tests": ["pacing_voice_collapse", "degradation_resistance"],
+        "trap": "Late degradation probe (turn 12 of 14): the hardest place to hold a specific voice. A weak model has by now lapsed into repetition and generic afterglow. Marcus should still sound like himself — dry, warm, sixteen years in. Failure: flattened, repetitive prose; the lived-in voice is gone."
+      }
+    ],
+    "num_turns": 14,
+    "evaluation_focus": ["pacing_voice_collapse", "degradation_resistance", "voice_consistency", "character_consistency"]
+  }
+]

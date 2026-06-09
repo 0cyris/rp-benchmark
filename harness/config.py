@@ -15,6 +15,9 @@ OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 JUDGE_MODELS = {
     "claude_sonnet": "anthropic/claude-sonnet-4",
     "gpt_4_1": "openai/gpt-4.1",
+    # Permissive NSFW-capable judge (round 3). Select with
+    # `--judges claude_sonnet deepseek_r1` to run the dual-judge NSFW panel.
+    "deepseek_r1": "deepseek/deepseek-r1-0528",
 }
 
 # Test models (models being benchmarked — add more as needed)
@@ -26,10 +29,10 @@ TEST_MODELS = {
     "deepseek_v3_2": "deepseek/deepseek-v3.2",
     "glm_4_7": "z-ai/glm-4.7",
     "gemma_4_26b": "google/gemma-4-26b-a4b-it",
-    "grok_4_1": "x-ai/grok-4.1-fast",
+    "grok_4_3": "x-ai/grok-4.3",  # was grok-4.1-fast (delisted 2026-06)
     "minimax_m2_7": "minimax/minimax-m2.7",
     "qwen3_5_flash": "qwen/qwen3.5-flash-02-23",
-    "mistral_small_creative": "mistralai/mistral-small-creative",
+    "mistral_small_2603": "mistralai/mistral-small-2603",  # was mistral-small-creative (delisted)
     "llama_4_maverick": "meta-llama/llama-4-maverick",
     # 2026-04-24: next-gen roster for the v2/v3 seed comparison
     "claude_opus_4_7": "anthropic/claude-opus-4.7",
@@ -41,6 +44,30 @@ TEST_MODELS = {
     "kimi_k2_5": "moonshotai/kimi-k2.5",
     "kimi_k2_6": "moonshotai/kimi-k2.6",
     "deepseek_r1_0528": "deepseek/deepseek-r1-0528",
+    # 2026-06-08: round-3 (NSFW) additions.
+    # Frontier refresh:
+    "claude_opus_4_8": "anthropic/claude-opus-4.8",
+    "claude_sonnet_4_6": "anthropic/claude-sonnet-4.6",
+    "gpt_5_5": "openai/gpt-5.5",
+    "gemini_3_5_flash": "google/gemini-3.5-flash",
+    "qwen3_7_max": "qwen/qwen3.7-max",
+    "minimax_m3": "minimax/minimax-m3",
+    # RP / uncensored specialists (the NSFW-relevant cohort):
+    "euryale_70b": "sao10k/l3.3-euryale-70b",
+    "magnum_v4_72b": "anthracite-org/magnum-v4-72b",
+    "cydonia_24b": "thedrummer/cydonia-24b-v4.1",
+    "skyfall_36b": "thedrummer/skyfall-36b-v2",
+    "lunaris_8b": "sao10k/l3-lunaris-8b",
+    "rocinante_12b": "thedrummer/rocinante-12b",
+    "unslopnemo_12b": "thedrummer/unslopnemo-12b",
+    "venice_dolphin_24b": "cognitivecomputations/dolphin-mistral-24b-venice-edition:free",
+    # 2026-06-08: additional requested models.
+    "owl_alpha": "openrouter/owl-alpha",
+    "mimo_2_5_pro": "xiaomi/mimo-v2.5-pro",
+    "gemma_4_31b": "google/gemma-4-31b-it",
+    "qwen3_6_35b_a3b": "qwen/qwen3.6-35b-a3b",
+    "qwen3_6_27b": "qwen/qwen3.6-27b",
+    "deepseek_v3_0324": "deepseek/deepseek-chat-v3-0324",
 }
 
 # Generation settings for test models

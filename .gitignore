@@ -24,6 +24,14 @@ eval_payload_example.json
 results/run_*.json
 results/leaderboard_*.json
 results/charts/
+# Single-turn round-3 data embeds private scenarios/ content — keep out (like run_*.json)
+results/round3gen_R1_*.json
+# Generation run logs and cleanup backups
+results/*.log
+*.json.bak
+
+# Local virtualenv
+.venv/
 
 # Paper draft (private — not for repo)
 paper/

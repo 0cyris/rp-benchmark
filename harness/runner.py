@@ -1,9 +1,12 @@
 """Main benchmark runner — generates RP responses and judges them."""
 import json
+import threading
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 
+from . import api
 from .api import generate_rp_response, judge_response
 from .config import (
     JUDGE_MODELS,
@@ -12,6 +15,7 @@ from .config import (
     RESULTS_DIR,
     BENCHMARK_FILE,
     PROJECT_ROOT,
+    REQUEST_DELAY_SECONDS,
 )
 
 
@@ -200,20 +204,23 @@ def run_single_scenario(
     test_model_id: str,
     judge_configs: dict[str, str],
     judge_mode: str = "standard",
+    verbose: bool = True,
 ) -> dict:
     """Run one scenario: generate response, then judge it with all judges.
 
     Returns a result dict with generation + all judge scores.
     """
     scenario_id = scenario.get("id", "unknown")
-    print(f"  Generating with {test_model_key}...")
+    if verbose:
+        print(f"  Generating with {test_model_key}...")
 
     # Step 1: Generate RP response
     system_prompt, user_message = build_generation_prompt(scenario)
     gen_result = generate_rp_response(test_model_id, system_prompt, user_message)
     generated_text = gen_result["content"]
 
-    print(f"    Generated {len(generated_text)} chars")
+    if verbose:
+        print(f"    Generated {len(generated_text)} chars")
 
     # Step 2: Judge with each judge model
     judge_payload = build_judge_payload(scenario, generated_text)
@@ -294,6 +301,7 @@ def run_benchmark(
     max_scenarios: int | None = None,
     language: str | None = None,
     judge_mode: str = "standard",
+    concurrency: int = 1,
 ) -> dict:
     """Run the full benchmark pipeline.
 
@@ -401,28 +409,45 @@ def run_benchmark(
         tmp.replace(output_path)
 
     step = 0
+    save_lock = threading.Lock()
+    gen_total = len(gen_scenarios) * len(test_models)
+    gen_done = {"n": 0}
 
-    # Run generation scenarios (generate + judge)
-    for i, scenario in enumerate(gen_scenarios):
-        scenario_id = scenario.get("id", f"scenario_{i}")
-        step += 1
-        print(f"[{step}/{total_scenarios}] {scenario_id} (generate+judge)", flush=True)
+    def _gen_one(scenario, model_key, model_id):
+        scenario_id = scenario.get("id", "scenario")
+        try:
+            return run_single_scenario(
+                scenario, model_key, model_id, judge_models,
+                judge_mode=judge_mode, verbose=(concurrency == 1),
+            )
+        except Exception as e:
+            return {"scenario_id": scenario_id, "test_model": model_key,
+                    "error": str(e)}
 
-        for model_key, model_id in test_models.items():
-            try:
-                result = run_single_scenario(
-                    scenario, model_key, model_id, judge_models,
-                    judge_mode=judge_mode,
-                )
-                results["results"].append(result)
-            except Exception as e:
-                print(f"    ERROR: {e}", flush=True)
-                results["results"].append({
-                    "scenario_id": scenario_id,
-                    "test_model": model_key,
-                    "error": str(e),
-                })
+    def _record(scenario, model_key, result):
+        with save_lock:
+            gen_done["n"] += 1
+            results["results"].append(result)
+            tail = "ERROR: %s" % result["error"][:70] if "error" in result else "ok"
+            print(f"[{gen_done['n']}/{gen_total}] "
+                  f"{scenario.get('id','?')} x {model_key} -> {tail}", flush=True)
             checkpoint()
+
+    # Run generation scenarios (generate + judge), parallel over (scenario, model)
+    gen_work = [(s, mk, mid) for s in gen_scenarios
+                for mk, mid in test_models.items()]
+    if concurrency > 1:
+        api.set_min_interval(REQUEST_DELAY_SECONDS / concurrency)
+        print("Concurrency: %d (min request interval %.3fs)\n"
+              % (concurrency, REQUEST_DELAY_SECONDS / concurrency), flush=True)
+        with ThreadPoolExecutor(max_workers=concurrency) as ex:
+            futs = {ex.submit(_gen_one, s, mk, mid): (s, mk) for s, mk, mid in gen_work}
+            for fut in as_completed(futs):
+                s, mk = futs[fut]
+                _record(s, mk, fut.result())
+    else:
+        for s, mk, mid in gen_work:
+            _record(s, mk, _gen_one(s, mk, mid))
 
     # Run prebuilt scenarios (judge-only)
     for i, payload in enumerate(prebuilt_payloads):

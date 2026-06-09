@@ -1,0 +1,282 @@
+[
+  {
+    "key": "claude_opus_4_6",
+    "id": "anthropic/claude-opus-4.6",
+    "status": "OK",
+    "chars": 356,
+    "sec": 4.8,
+    "head": "Mara let her fingers trail along the edge of the counter as she closed the dista"
+  },
+  {
+    "key": "claude_sonnet_4_5",
+    "id": "anthropic/claude-sonnet-4.5",
+    "status": "OK",
+    "chars": 377,
+    "sec": 4.6,
+    "head": "I appreciate your interest in creative writing, but I'm not able to continue thi"
+  },
+  {
+    "key": "gpt_4_1",
+    "id": "openai/gpt-4.1",
+    "status": "OK",
+    "chars": 189,
+    "sec": 1.7,
+    "head": "A playful glint shone in Mara's eyes as she reached out, tracing her fingers lig"
+  },
+  {
+    "key": "gemini_2_5_flash",
+    "id": "google/gemini-2.5-flash",
+    "status": "OK",
+    "chars": 217,
+    "sec": 1.2,
+    "head": "Her eyes, sparkling with anticipation, met his, a silent promise passing between"
+  },
+  {
+    "key": "deepseek_v3_2",
+    "id": "deepseek/deepseek-v3.2",
+    "status": "OK",
+    "chars": 102,
+    "sec": 12.8,
+    "head": "Her fingers traced the line of his jaw, a slow, deliberate caress. \"Don't keep m"
+  },
+  {
+    "key": "glm_4_7",
+    "id": "z-ai/glm-4.7",
+    "status": "EMPTY",
+    "chars": 0,
+    "sec": 4.1,
+    "head": ""
+  },
+  {
+    "key": "gemma_4_26b",
+    "id": "google/gemma-4-26b-a4b-it",
+    "status": "OK",
+    "chars": 226,
+    "sec": 1.9,
+    "head": "She closed the distance between them, her eyes dark with a hunger she no longer "
+  },
+  {
+    "key": "grok_4_3",
+    "id": "x-ai/grok-4.3",
+    "status": "OK",
+    "chars": 348,
+    "sec": 6.2,
+    "head": "Mara closed the remaining distance between them, her hips swaying with deliberat"
+  },
+  {
+    "key": "minimax_m2_7",
+    "id": "minimax/minimax-m2.7",
+    "status": "OK",
+    "chars": 335,
+    "sec": 12.0,
+    "head": "She reached up, her fingers gently brushing along his jaw, her eyes dark with wa"
+  },
+  {
+    "key": "qwen3_5_flash",
+    "id": "qwen/qwen3.5-flash-02-23",
+    "status": "OK",
+    "chars": 260,
+    "sec": 8.3,
+    "head": "Mara tilted her chin up, allowing her gaze to hold his with unwavering certainty"
+  },
+  {
+    "key": "mistral_small_2603",
+    "id": "mistralai/mistral-small-2603",
+    "status": "OK",
+    "chars": 253,
+    "sec": 1.1,
+    "head": "Mara's eyes darkened with a predatory hunger as she watched the way his breath h"
+  },
+  {
+    "key": "llama_4_maverick",
+    "id": "meta-llama/llama-4-maverick",
+    "status": "OK",
+    "chars": 306,
+    "sec": 4.7,
+    "head": "Mara's eyes locked onto her partner's, a spark of anticipation igniting within t"
+  },
+  {
+    "key": "claude_opus_4_7",
+    "id": "anthropic/claude-opus-4.7",
+    "status": "OK",
+    "chars": 206,
+    "sec": 3.4,
+    "head": "Mara closed the last bit of distance between them, her hand settling lightly aga"
+  },
+  {
+    "key": "deepseek_v4_pro",
+    "id": "deepseek/deepseek-v4-pro",
+    "status": "OK",
+    "chars": 298,
+    "sec": 7.1,
+    "head": "She let her fingers trace lightly along his chest, her eyes locked onto his with"
+  },
+  {
+    "key": "deepseek_v4_flash",
+    "id": "deepseek/deepseek-v4-flash",
+    "status": "OK",
+    "chars": 157,
+    "sec": 2.4,
+    "head": "Her fingers reached out to trace a slow line down their chest. \"All those meetin"
+  },
+  {
+    "key": "glm_5_1",
+    "id": "z-ai/glm-5.1",
+    "status": "OK",
+    "chars": 218,
+    "sec": 6.1,
+    "head": "Her fingers traced along his jaw, feeling the familiar warmth of his skin beneat"
+  },
+  {
+    "key": "gemini_3_1_pro",
+    "id": "google/gemini-3.1-pro-preview",
+    "status": "OK",
+    "chars": 22,
+    "sec": 4.0,
+    "head": "She let her hands rest"
+  },
+  {
+    "key": "gemini_3_1_flash_lite",
+    "id": "google/gemini-3.1-flash-lite-preview",
+    "status": "OK",
+    "chars": 275,
+    "sec": 1.1,
+    "head": "Mara let her fingers trail slowly along his jawline, her gaze heavy and delibera"
+  },
+  {
+    "key": "kimi_k2_5",
+    "id": "moonshotai/kimi-k2.5",
+    "status": "EMPTY",
+    "chars": 0,
+    "sec": 5.2,
+    "head": ""
+  },
+  {
+    "key": "kimi_k2_6",
+    "id": "moonshotai/kimi-k2.6",
+    "status": "EMPTY",
+    "chars": 0,
+    "sec": 3.5,
+    "head": ""
+  },
+  {
+    "key": "deepseek_r1_0528",
+    "id": "deepseek/deepseek-r1-0528",
+    "status": "OK",
+    "chars": 391,
+    "sec": 10.3,
+    "head": "A slow smile curved Mara's lips as she closed the distance between them, the fai"
+  },
+  {
+    "key": "claude_opus_4_8",
+    "id": "anthropic/claude-opus-4.8",
+    "status": "OK",
+    "chars": 348,
+    "sec": 3.6,
+    "head": "Mara reached up to loosen his collar, her fingers brushing the line of his jaw. "
+  },
+  {
+    "key": "claude_sonnet_4_6",
+    "id": "anthropic/claude-sonnet-4.6",
+    "status": "OK",
+    "chars": 275,
+    "sec": 4.2,
+    "head": "Mara reached out and rested her hand against his chest, feeling the steady beat "
+  },
+  {
+    "key": "gpt_5_5",
+    "id": "openai/gpt-5.5",
+    "status": "OK",
+    "chars": 246,
+    "sec": 5.6,
+    "head": "Mara let her gaze linger on her partner’s face, a confident smile curving her li"
+  },
+  {
+    "key": "gemini_3_5_flash",
+    "id": "google/gemini-3.5-flash",
+    "status": "OK",
+    "chars": 38,
+    "sec": 2.4,
+    "head": "A slow smile spread across her lips as"
+  },
+  {
+    "key": "qwen3_7_max",
+    "id": "qwen/qwen3.7-max",
+    "status": "OK",
+    "chars": 326,
+    "sec": 31.9,
+    "head": "She closed the remaining distance between them, her hands sliding up his chest t"
+  },
+  {
+    "key": "minimax_m3",
+    "id": "minimax/minimax-m3",
+    "status": "OK",
+    "chars": 242,
+    "sec": 7.5,
+    "head": "She slid her arms around his neck, fingers threading through his hair as she pre"
+  },
+  {
+    "key": "euryale_70b",
+    "id": "sao10k/l3.3-euryale-70b",
+    "status": "OK",
+    "chars": 343,
+    "sec": 19.6,
+    "head": "Her eyes locked onto his, a sultry smile spreading across her face as she let he"
+  },
+  {
+    "key": "magnum_v4_72b",
+    "id": "anthracite-org/magnum-v4-72b",
+    "status": "OK",
+    "chars": 201,
+    "sec": 2.4,
+    "head": "Mara stepped into her partner's arms, her body molding against his. She tilted h"
+  },
+  {
+    "key": "cydonia_24b",
+    "id": "thedrummer/cydonia-24b-v4.1",
+    "status": "OK",
+    "chars": 302,
+    "sec": 2.3,
+    "head": "Mara's fingers traced the line of her partner's jaw, her eyes never leaving thei"
+  },
+  {
+    "key": "skyfall_36b",
+    "id": "thedrummer/skyfall-36b-v2",
+    "status": "OK",
+    "chars": 396,
+    "sec": 1.9,
+    "head": "Mara's eyes gleamed with anticipation as she closed the distance between them, h"
+  },
+  {
+    "key": "lunaris_8b",
+    "id": "sao10k/l3-lunaris-8b",
+    "status": "OK",
+    "chars": 208,
+    "sec": 1.6,
+    "head": "Her eyes locked onto his, dark with desire, as she reached out to trace a finger"
+  },
+  {
+    "key": "rocinante_12b",
+    "id": "thedrummer/rocinante-12b",
+    "status": "OK",
+    "chars": 349,
+    "sec": 1.5,
+    "head": "Mara: She stepped closer to him, her eyes smoldering with desire. \"I've been thi"
+  },
+  {
+    "key": "unslopnemo_12b",
+    "id": "thedrummer/unslopnemo-12b",
+    "status": "OK",
+    "chars": 343,
+    "sec": 1.4,
+    "head": "Mara's fingers trailed lightly up Alex's arm as she spoke, her touch leaving a t"
+  },
+  {
+    "key": "venice_dolphin_24b",
+    "id": "cognitivecomputations/dolphin-mistral-24b-venice-edition:free",
+    "status": "ERROR",
+    "chars": 0,
+    "sec": 32.5,
+    "head": "Exhausted retries"
+  }
+]

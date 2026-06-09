@@ -1,6 +1,7 @@
 """OpenRouter API client for RP-Bench."""
 import json
 import os
+import threading
 import time
 from pathlib import Path
 
@@ -20,6 +21,21 @@ from .config import (
 load_dotenv(PROJECT_ROOT / ".env")
 
 _last_request_time = 0.0
+# Thread-safe rate gate. Under concurrency the benchmark lowers _min_interval
+# so aggregate request starts scale with worker count; 429s are still caught
+# and retried below as the safety net.
+_rate_lock = threading.Lock()
+_min_interval = REQUEST_DELAY_SECONDS
+
+
+def set_min_interval(seconds: float):
+    """Set the minimum spacing between request starts (global, thread-safe).
+
+    Typical use: set to REQUEST_DELAY_SECONDS / concurrency before a parallel
+    run so N workers can keep ~N requests in flight.
+    """
+    global _min_interval
+    _min_interval = max(0.0, seconds)
 
 
 def _get_api_key() -> str:
@@ -32,12 +48,15 @@ def _get_api_key() -> str:
 
 
 def _rate_limit():
+    # Hold the lock only to claim a start slot (spacing the bursts); the slow
+    # HTTP call happens outside the lock so workers run concurrently.
     global _last_request_time
-    now = time.time()
-    elapsed = now - _last_request_time
-    if elapsed < REQUEST_DELAY_SECONDS:
-        time.sleep(REQUEST_DELAY_SECONDS - elapsed)
-    _last_request_time = time.time()
+    with _rate_lock:
+        now = time.time()
+        elapsed = now - _last_request_time
+        if elapsed < _min_interval:
+            time.sleep(_min_interval - elapsed)
+        _last_request_time = time.time()
 
 
 def chat_completion(
@@ -86,6 +105,10 @@ def chat_completion(
                 continue
 
             resp.raise_for_status()
+            # Under load OpenRouter sometimes returns a non-JSON body (HTML
+            # error page, truncated stream). resp.json() then raises
+            # JSONDecodeError — treat it like a transient error and retry
+            # rather than letting it bubble up and drop the whole session.
             data = resp.json()
 
             # Reasoning models can leave content=None when their internal
@@ -100,7 +123,8 @@ def chat_completion(
                 "raw": data,
             }
 
-        except (httpx.HTTPStatusError, httpx.RequestError, KeyError) as e:
+        except (httpx.HTTPStatusError, httpx.RequestError, KeyError,
+                json.JSONDecodeError, IndexError) as e:
             if attempt < MAX_RETRIES - 1:
                 wait = RETRY_DELAY_SECONDS * (attempt + 1)
                 print(f"  Error: {e}. Retrying in {wait}s...")
