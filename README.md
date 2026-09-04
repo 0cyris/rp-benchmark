@@ -8,7 +8,7 @@ The LLM-as-judge signals in this benchmark disagree with real users about half t
 
 **Dataset & Leaderboard:** [lazyweasel/roleplay-bench on HuggingFace](https://huggingface.co/datasets/lazyweasel/roleplay-bench)
 
-**Methodology:** [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md) — every formula, sample size, and bias correction documented. **Experiment philosophy:** [`docs/EXPERIMENT_DESIGN.md`](docs/EXPERIMENT_DESIGN.md).
+**Methodology:** [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md) — every formula, sample size, and bias correction documented. **Experiment philosophy:** [`docs/EXPERIMENT_DESIGN.md`](docs/EXPERIMENT_DESIGN.md). **What counts as "good roleplay" here (and how to retune it):** [`docs/WHAT_IS_GOOD_RP.md`](docs/WHAT_IS_GOOD_RP.md).
 
 ## Install
 
