@@ -73,6 +73,16 @@ ALL_JUDGES = {**JUDGE_MODELS, **EXTRA_JUDGES}
 # quotes plus the shape flags for each turn in the batch.
 JUDGE_CONFIG = {"temperature": 0.0, "max_tokens": 2500}
 
+# Reasoning judges need far more headroom: they spend the budget thinking before
+# emitting a character of JSON. In the first pilot gemini_3_1_pro burned a median
+# 2,397 reasoning tokens against a 2,500 cap, leaving ~100 for the answer, and
+# truncated on 80% of its calls -- 367 unusable rows. Values match the round-3
+# pool in judge_round3_multi.py:55, which hit the same wall.
+JUDGE_MAX_TOKENS = {
+    "gemini_3_1_pro": 16000,
+    "gpt_latest": 8000,
+}
+
 MIN_TURN_CHARS = 50
 
 
@@ -86,13 +96,15 @@ def prompt_fingerprint(text: str) -> str:
     return hashlib.sha256(text.encode()).hexdigest()[:12]
 
 
-def load_done(path: Path) -> tuple[set, set, Counter]:
+def load_done(path: Path) -> tuple[set, set, Counter, set]:
     """Read the checkpoint.
 
-    Returns (done, seen_any, by_sha):
+    Returns (done, seen_any, by_sha, failed):
       done     — (session_id, turn, judge_key, prompt_sha) already judged
       seen_any — (session_id, turn, judge_key) judged under *any* prompt version
       by_sha   — row counts per prompt version, for reporting
+      failed   — (session_id, turn, judge_key, prompt_sha) whose newest record is
+                 a parse_error or API error, and so is a candidate for retry
 
     The JSONL is the checkpoint; there is no separate state file. The prompt
     fingerprint is part of the key because it has to be: keyed only on
@@ -101,20 +113,24 @@ def load_done(path: Path) -> tuple[set, set, Counter]:
     schemas — which is exactly what happened, and it produced a leaderboard
     that was pure artifact of which rows predated the change.
     """
-    done, seen_any, by_sha = set(), set(), Counter()
+    done, seen_any, by_sha, status = set(), set(), Counter(), {}
     if not path.exists():
-        return done, seen_any, by_sha
+        return done, seen_any, by_sha, set()
     with open(path) as f:
         for line in f:
             try:
                 r = json.loads(line)
                 sha = r.get("prompt_sha", "legacy")
+                key = (r["session_id"], r["turn"], r["judge_key"], sha)
                 by_sha[sha] += 1
-                done.add((r["session_id"], r["turn"], r["judge_key"], sha))
+                done.add(key)
                 seen_any.add((r["session_id"], r["turn"], r["judge_key"]))
+                # Last record wins: a later successful retry clears an earlier
+                # failure for the same key.
+                status[key] = bool(r.get("parse_error") or r.get("error"))
             except Exception:
                 pass  # a torn final line costs one redone call
-    return done, seen_any, by_sha
+    return done, seen_any, by_sha, {k for k, bad in status.items() if bad}
 
 
 def stratified(sessions: list, n_per_model: int, rng: random.Random) -> list:
@@ -163,7 +179,8 @@ def parse_judge_json(content: str) -> dict | None:
 
 def build_work(sessions: list, seeds: dict, judges: dict, done: set,
                batch_size: int, prompt_sha: str, seen_any: set | None = None,
-               stale_only: bool = False) -> list:
+               stale_only: bool = False, failed: set | None = None,
+               retry_failed: bool = False) -> list:
     """Batches of turns from one session, for one judge.
 
     The system prompt is ~1.4k tokens and dominates cost: sent once per turn it
@@ -192,8 +209,17 @@ def build_work(sessions: list, seeds: dict, judges: dict, done: set,
                 turns.append({"turn": msg["turn"], "content": content})
 
         for jkey in judges:
-            pending = [t for t in turns
-                       if (sid, t["turn"], jkey, prompt_sha) not in done]
+            if retry_failed:
+                # Parse-error rows are written *with* the current prompt_sha, so
+                # load_done counts them as done and a plain rerun skips them.
+                # That is deliberate (an unparseable turn should not retry
+                # forever) but it means a config fix cannot reach them without
+                # this flag.
+                pending = [t for t in turns
+                           if (sid, t["turn"], jkey, prompt_sha) in (failed or set())]
+            else:
+                pending = [t for t in turns
+                           if (sid, t["turn"], jkey, prompt_sha) not in done]
             if stale_only:
                 # Only turns that already have a row under some *other* prompt
                 # version — the recovery path after a prompt edit.
@@ -250,6 +276,9 @@ def main():
                          "(65%% of input tokens at batch size 1); keep it small "
                          "so a parse failure costs few turns.")
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--retry-failed", action="store_true",
+                    help="Re-judge only rows that failed to parse at the current "
+                         "prompt version (recovery after a judge config fix)")
     ap.add_argument("--stale-only", action="store_true",
                     help="Re-judge only turns already scored under an older "
                          "prompt version (recovery after a prompt edit)")
@@ -292,14 +321,21 @@ def main():
     system_prompt = PROMPT_FILE.read_text()
     prompt_sha = prompt_fingerprint(system_prompt)
     out_path = Path(args.out)
-    done, seen_any, by_sha = load_done(out_path)
+    done, seen_any, by_sha, failed = load_done(out_path)
+    if args.retry_failed and args.stale_only:
+        ap.error("--retry-failed and --stale-only are mutually exclusive")
     work = build_work(sessions, seeds, judges, done, args.batch_size,
-                      prompt_sha, seen_any, args.stale_only)
+                      prompt_sha, seen_any, args.stale_only,
+                      failed, args.retry_failed)
     if args.limit:
         work = work[:args.limit]
 
     n_turns = sum(len(w["turns"]) for w in work)
     print("Prompt version: %s" % prompt_sha)
+    if failed:
+        print("%d row(s) at this version failed to parse.%s"
+              % (len(failed),
+                 "" if args.retry_failed else " Use --retry-failed to redo them."))
     stale = {sha: n for sha, n in by_sha.items() if sha != prompt_sha}
     if stale:
         print("WARNING: %d existing row(s) from %d older prompt version(s): %s"
@@ -343,12 +379,18 @@ def main():
 
     def _run_one(w: dict) -> dict:
         """Never raises — a failed call must not kill the pool."""
+        # Per-judge config, copied per call. Deliberately NOT the shared-global
+        # monkey-patch in judge_round3_multi.py:169 — that is not thread-safe and
+        # this runner uses a ThreadPoolExecutor.
+        config = dict(JUDGE_CONFIG)
+        config["max_tokens"] = JUDGE_MAX_TOKENS.get(
+            w["judge_key"], JUDGE_CONFIG["max_tokens"])
         try:
             resp = api.chat_completion(
                 model=judges[w["judge_key"]],
                 system_prompt=system_prompt,
                 user_content=build_user_content(w),
-                config=dict(JUDGE_CONFIG),  # copy: never mutate shared config
+                config=config,
             )
         except Exception as e:
             return {"error": "%s: %s" % (type(e).__name__, e)}
@@ -427,6 +469,9 @@ def main():
             elif parsed is None:
                 counter["parse_errors"] += 1
             counter["cost"] += (usage or {}).get("cost") or 0.0
+            if usage and usage.get("completion_tokens"):
+                counter.setdefault("ctoks", defaultdict(list))
+                counter["ctoks"][w["judge_key"]].append(usage["completion_tokens"])
             counter["done"] += 1
             counter["turns"] += len(rows)
             n = counter["done"]
@@ -455,6 +500,19 @@ def main():
           " $%.2f actual cost."
           % (counter["done"], counter["turns"], counter["errors"],
              counter["parse_errors"], counter["cost"]))
+
+    # Truncation check. A judge whose median completion sits at its cap is being
+    # cut off mid-JSON, which shows up as parse errors rather than as an obvious
+    # failure. This signal was already in the usage data during the first pilot
+    # and nothing looked at it, so 367 rows were lost before anyone noticed.
+    for jkey, toks in sorted(counter.get("ctoks", {}).items()):
+        cap = JUDGE_MAX_TOKENS.get(jkey, JUDGE_CONFIG["max_tokens"])
+        med = sorted(toks)[len(toks) // 2]
+        if med >= cap * 0.98:
+            print("WARNING: %s median completion %d tokens against a %d cap —"
+                  " responses are being truncated. Raise JUDGE_MAX_TOKENS[%r]"
+                  " and rerun with --retry-failed."
+                  % (jkey, med, cap, jkey))
     print("Wrote %s" % out_path)
 
 
