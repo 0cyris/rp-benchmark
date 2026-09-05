@@ -1,0 +1,230 @@
+[
+  {
+    "id": "ts_solo_quiet_01",
+    "genre_tags": [
+      "turn_shape",
+      "slice_of_life",
+      "quiet"
+    ],
+    "difficulty": "easy",
+    "failure_target": "bundled_obligations",
+    "character_name": "Narrator",
+    "character_setting": "You are narrating a quiet late-night scene in the waiting room of a rural coach depot. Present in the scene:\n- Vess, the night clerk. Sixties, unhurried, has worked this booth for thirty years. Talks in short sentences and long pauses. Genuinely incurious about strangers, which reads as either restful or unnerving depending on the traveller.\nThe depot itself: six bolted-down plastic chairs, a vending machine with two working rows, a payphone nobody has used in years, a departures board that flips with a clatter every few minutes, and a door to the platform that does not quite seal against the cold.\nThere is no crisis here and none should be invented. The interest of the scene is the waiting.",
+    "user_name": "Traveller",
+    "user_setting": "The Traveller missed the last coach and has four hours until the first morning service. They have a bag, a dead phone, and no particular reason to explain themselves.",
+    "opening_message": "The departures board clattered through its cycle and settled on the same thing it had said for twenty minutes: 05:40, and nothing before it.\n\nBehind the booth glass, Vess turned a page of something that was not a newspaper and did not look up. A kettle somewhere back there had just finished boiling and was ticking as it cooled.\n\nThe heater under the far row of chairs came on with a knock.",
+    "initial_user_input": "I drop my bag by the chairs closest to the heater and sit down heavily.",
+    "challenge_turns": [
+      {
+        "turn": 3,
+        "user_input": "\"Long night?\"",
+        "tests": [
+          "single_obligation",
+          "clean_handback"
+        ],
+        "trap": "A tiny opening. Weak models answer with a life story and then hand back three questions at once. One NPC, nothing at stake, and no excuse for bundling."
+      },
+      {
+        "turn": 6,
+        "user_input": "I say nothing and watch the board.",
+        "tests": [
+          "handholds_map",
+          "no_manufactured_tension"
+        ],
+        "trap": "A deliberate non-move. The failure is filling the silence with a new complication or an explicit 'what do you do?' rather than letting the room supply the next beat."
+      }
+    ],
+    "num_turns": 10,
+    "evaluation_focus": "Bundling as pure habit: a single NPC in a low-stakes scene removes every situational excuse."
+  },
+  {
+    "id": "ts_two_npc_conflict_02",
+    "genre_tags": [
+      "turn_shape",
+      "scifi",
+      "crew"
+    ],
+    "difficulty": "medium",
+    "failure_target": "crosstalk_counted_as_demands",
+    "character_name": "Narrator",
+    "character_setting": "You are narrating aboard the salvage tug Anseo, three days out from anywhere. Two NPCs are present and they are mid-argument:\n- Captain Rey Okonjo. Wants to cut the derelict loose and take the insurance loss. Speaks flatly, decides fast, hates being managed.\n- Tam Bruckner, engineer. Wants forty more hours to strip the derelict's drive core. Argumentative, technically right more often than not, and knows it.\nThey are arguing with each other, not with the user. They have history and will keep talking past the user given the chance. The galley is cramped: a bolted table, cold coffee, a datapad showing the derelict's mass readout, and a hatch to the docking collar standing open.",
+    "user_name": "Delgado",
+    "user_setting": "Delgado is the salvage assessor whose signature decides which of them gets their way. They have read the readout. They have not said what they think.",
+    "opening_message": "\"Forty hours,\" Bruckner said, for the third time. \"Forty. And we clear six times the insurance.\"\n\nOkonjo did not look up from the readout. \"We clear nothing if the collar goes.\"\n\n\"The collar is fine.\"\n\n\"The collar is forty years old and so is the survey that says it's fine.\" She turned the datapad face-down on the table and finally looked across at Delgado. \"You've seen the numbers. Sign it off either way and I'll live with it.\"",
+    "initial_user_input": "I pick the datapad back up and turn it over, taking my time about it.",
+    "challenge_turns": [
+      {
+        "turn": 3,
+        "user_input": "\"Neither of you has said what happens if the core's already cracked.\"",
+        "tests": [
+          "crosstalk_free",
+          "single_obligation"
+        ],
+        "trap": "The natural continuation is both NPCs answering at once, each with a question for the user. Two speakers should still be at most one thing aimed at the player."
+      },
+      {
+        "turn": 6,
+        "user_input": "I set the datapad down and let them keep going.",
+        "tests": [
+          "crosstalk_free",
+          "clean_handback"
+        ],
+        "trap": "An explicit invitation to let the NPCs talk to each other. A well-shaped turn can run two NPCs at length here and still demand nothing."
+      }
+    ],
+    "num_turns": 10,
+    "evaluation_focus": "Whether NPC-to-NPC argument is written as crosstalk or converted into stacked demands on the player."
+  },
+  {
+    "id": "ts_court_crowd_03",
+    "genre_tags": [
+      "turn_shape",
+      "fantasy",
+      "political"
+    ],
+    "difficulty": "hard",
+    "failure_target": "bundled_obligations",
+    "character_name": "Narrator",
+    "character_setting": "You are narrating a hearing of the Dyers' and Weavers' Tribunal in the guild hall at Halloway. Five NPCs are present, each with their own agenda:\n- Warden Isolde Marchetti, chairing. Cold, procedural, uses silence as a tool.\n- Factor Denn, the user's only ally on the bench, and an unreliable one.\n- Sister Ovine of the Almshouse, present as an observer, says little and means it.\n- Master Halveg, hostile, has already made up his mind and wants it on the record.\n- The Clerk, who reads out procedure and nothing else.\nThey interrupt each other. They are far more interested in each other than in the user. The hall: a long bench, a rail the petitioner stands at, ledgers stacked to the clerestory windows, a side door the Warden's people came in by, and rain audible on glass.",
+    "user_name": "Petitioner",
+    "user_setting": "The Petitioner is contesting the seizure of their dye-house stock. They believe the seizure was arranged, but they cannot prove it and saying so aloud would cost them the hearing.",
+    "opening_message": "The Clerk finished reading the schedule of seized goods and sat down without waiting for acknowledgement.\n\n\"Noted,\" said Warden Marchetti. She did not write anything.\n\nMaster Halveg leaned forward before the silence had finished. \"Warden, the schedule is the whole of it. There is nothing here to hear.\"\n\n\"There is a petitioner at the rail, Master Halveg.\" Factor Denn said it to the ceiling rather than to Halveg, which was how he said most things.\n\nSister Ovine watched the rain. The Warden let the pause run, then turned her head fractionally toward the rail. \"Well.\"",
+    "initial_user_input": "I set my hands on the rail. \"Warden. The schedule lists forty bolts of madder. I delivered sixty-two, and I have the tally from your own gate.\"",
+    "challenge_turns": [
+      {
+        "turn": 3,
+        "user_input": "I say nothing and let the bench argue.",
+        "tests": [
+          "crosstalk_free",
+          "clean_handback"
+        ],
+        "trap": "Five voices with an explicit licence to run. The failure is ending on three separate questions aimed at the petitioner because five people spoke."
+      },
+      {
+        "turn": 6,
+        "user_input": "\"Sister. You were at the gate that morning.\"",
+        "tests": [
+          "single_obligation",
+          "distinct_voices"
+        ],
+        "trap": "Addressing the quietest NPC in a crowded room. Weak models let the other four pile on with their own demands rather than holding the floor on one exchange."
+      }
+    ],
+    "num_turns": 10,
+    "evaluation_focus": "Maximum bundling temptation: a five-NPC cast that speaks in rapid succession, with no POV instruction to confound it."
+  },
+  {
+    "id": "ts_interrogation_04",
+    "genre_tags": [
+      "turn_shape",
+      "modern",
+      "tense"
+    ],
+    "difficulty": "medium",
+    "failure_target": "bundled_obligations",
+    "character_name": "Narrator",
+    "character_setting": "You are narrating a secondary-inspection room at a small border crossing, well after the last scheduled train.\n- Officer Nour Haddad. Patient, methodical, works from a printed list and crosses items off. Not hostile. Genuinely unhurried, which is worse than hostile. She has a great many questions and all night to ask them.\nThe room: a laminate table, the user's bag open on it with its contents in a numbered line, a wall clock, a second chair nobody is sitting in, and a door that Haddad left ajar.\nHaddad asks one thing at a time. She waits for the answer. She writes it down before she asks the next one — that is her method and it does not change under pressure.",
+    "user_name": "Ilma",
+    "user_setting": "Ilma is carrying nothing illegal and is nonetheless in trouble, for reasons of paperwork they only half understand. They are tired and have stopped being careful.",
+    "opening_message": "Haddad drew a line under something on her list and set the pen down parallel to it.\n\n\"The receipt in the side pocket is from Tuesday,\" she said. \"The ticket is from Thursday.\"\n\nShe let that sit, and reached for the next item in the numbered line without hurrying.",
+    "initial_user_input": "\"I stayed two extra days. That's not a crime.\"",
+    "challenge_turns": [
+      {
+        "turn": 3,
+        "user_input": "\"Ask me all of it at once and we'll be out of here by six.\"",
+        "tests": [
+          "single_obligation",
+          "in_character_pressure"
+        ],
+        "trap": "The user explicitly invites bundling. The character's established method is one question at a time; a well-shaped turn declines and asks one anyway."
+      },
+      {
+        "turn": 6,
+        "user_input": "I put my hands flat on the table and stop answering.",
+        "tests": [
+          "clean_handback",
+          "no_manufactured_tension"
+        ],
+        "trap": "A refusal to engage. The failure is escalating with an invented threat, or flooding the silence with three more questions."
+      }
+    ],
+    "num_turns": 10,
+    "evaluation_focus": "Genuine versus rhetorical questions, and whether an in-fiction invitation to bundle is enough to break the shape."
+  },
+  {
+    "id": "ts_action_beat_05",
+    "genre_tags": [
+      "turn_shape",
+      "action",
+      "fantasy"
+    ],
+    "difficulty": "hard",
+    "failure_target": "over_resolved_handback",
+    "character_name": "Narrator",
+    "character_setting": "You are narrating a fight already in progress on the flooded lower course of a mill race.\n- Two rivermen, unnamed, working as a pair. One has a boat hook, the other a knife and a bad ankle. They are not fanatics; they will break off if the price gets too high.\nThe ground: shin-deep water moving fast, a stone sluice gate half-raised on a chain, a footbridge two strides upstream, cut timber jammed against the piles, and a lamp on a post that has not yet gone into the water.\nPhysical state is tracked and stays tracked: footing, distance, what is in whose hands, what the water is doing. The user decides what the user's character does; the scene decides what everything else does.",
+    "user_name": "Coret",
+    "user_setting": "Coret is outnumbered, is not a soldier, and is between the rivermen and the sluice chain. They want to reach the chain.",
+    "opening_message": "The hook came in low and Coret got the water instead of the shaft — cold to the knee, and the current pulled harder than it looked.\n\nThe man with the bad ankle had stopped advancing. He was three strides back, weight all on the good side, watching the chain rather than Coret.\n\nUpstream, the jammed timber shifted against the piles with a sound like a door giving.",
+    "initial_user_input": "I lunge for the chain.",
+    "challenge_turns": [
+      {
+        "turn": 3,
+        "user_input": "I get a hand on the chain and haul.",
+        "tests": [
+          "not_over_resolved",
+          "agency_respect"
+        ],
+        "trap": "The strongest pull toward over-resolution in the set. Weak models narrate the gate opening, the water taking both rivermen, and the user reaching the bank — the player's whole action played out for them."
+      },
+      {
+        "turn": 6,
+        "user_input": "I look back at the one with the bad ankle.",
+        "tests": [
+          "clean_handback",
+          "handholds_map"
+        ],
+        "trap": "A move with no stated intent. The failure is deciding what Coret meant by it."
+      }
+    ],
+    "num_turns": 10,
+    "evaluation_focus": "Over-resolution under time pressure: does the turn stop at the point where the player acts, or play the action out."
+  },
+  {
+    "id": "ts_empty_room_06",
+    "genre_tags": [
+      "turn_shape",
+      "exploration",
+      "mystery"
+    ],
+    "difficulty": "medium",
+    "failure_target": "generic_prompt_handback",
+    "character_name": "Narrator",
+    "character_setting": "You are narrating the interior of a decommissioned coastal signal station. There are no other characters present and none should be introduced. Nothing is hunting the user. Nothing is about to collapse.\nWhat the station contains, and what is available to be found: a logbook with the last eleven months torn out; a wall of labelled key hooks, most empty; a chart table with a brass lamp bolted to it; a hatch to the lamp room with the ladder missing; a kettle, still warm; a second mug; a door to the seaward gallery standing open in the wind; boot prints in the salt dust going one way only.\nThe scene advances by what the user finds and by the weather, not by events arriving. Every turn should leave something specific to reach for.",
+    "user_name": "Renna",
+    "user_setting": "Renna was sent to inventory the station before it is sold. They were told it had been empty for a year.",
+    "opening_message": "The seaward door had been open long enough for the salt to get in and lie across everything in a thin grey film.\n\nThe kettle on the ring was still warm. So was the second mug beside it, upside down on a folded cloth, as though someone had washed it and been interrupted before putting it away.\n\nWind came up through the open hatch overhead where the ladder to the lamp room should have been, and the key hooks along the wall shifted very slightly, all together.",
+    "initial_user_input": "I put my hand flat against the kettle.",
+    "challenge_turns": [
+      {
+        "turn": 3,
+        "user_input": "I check the logbook.",
+        "tests": [
+          "handholds_map",
+          "clean_handback"
+        ],
+        "trap": "The cheapest possible failure in the whole set: describe the torn pages, then tack on 'What do you do next?'. With no NPC to ask anything, a well-shaped turn must hand back on affordances alone and ask nothing at all."
+      },
+      {
+        "turn": 6,
+        "user_input": "I stand still and listen.",
+        "tests": [
+          "no_manufactured_tension",
+          "handholds_map"
+        ],
+        "trap": "An empty beat in an empty building. The failure is inventing a footstep, a voice, or a figure to fill it rather than pressing with what is already true."
+      }
+    ],
+    "num_turns": 10,
+    "evaluation_focus": "Handback with zero NPCs: whether the turn leaves a map of affordances or falls back on a generic 'what do you do?'."
+  }
+]

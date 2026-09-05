@@ -22,18 +22,33 @@ reports four things:
      judge pair on turns they both scored. The benchmark's single-judge dependence
      is its most-documented weakness; this metric should not repeat it.
 
+On a corpus generated with two system-prompt arms (run_turn_shape_generation.py)
+it also reports the arm contrast: the same model on the same seed with and
+without a floor-discipline instruction, paired per cell. That delta is the
+steerability reading — whether a model that bundles by default will stop when
+asked — and it is the one thing the adversarial corpus structurally cannot
+answer, since nothing in its system prompt addresses turn shape at all.
+
 Note on kappa: analyze_round3_kappa.py uses quadratic-weighted kappa over a 1-5
 Likert, which degenerates on a binary flag (both values clip into one level), so
 plain unweighted Cohen's kappa is computed here instead.
 
 Usage:
     python3 analyze_turn_shape_judged.py
+
+    python3 analyze_turn_shape_judged.py \
+        --judged results/turn_shape_corpus_judged.jsonl \
+        --sessions results/turn_shape_corpus.json \
+        --seeds-file hf_dataset/_source/turn_shape_seeds.json \
+        --out results/turn_shape_corpus_judged.json
 """
+import argparse
 import json
 import statistics as st
 import sys
 from collections import Counter, defaultdict
 from itertools import combinations
+from math import comb
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -122,9 +137,9 @@ def is_well_shaped(r: dict) -> bool:
 is_clean = is_well_shaped
 
 
-def load_judged() -> list[dict]:
+def load_judged(path: Path = JUDGED) -> list[dict]:
     rows = []
-    with open(JUDGED) as f:
+    with open(path) as f:
         for line in f:
             try:
                 rows.append(json.loads(line))
@@ -159,21 +174,43 @@ def safe_load(path: Path):
     return json.loads(path.read_text()) if path.exists() else None
 
 
-def rule_based_per_turn() -> dict:
+def sign_test(up: int, down: int) -> float | None:
+    """Two-sided exact sign test on paired seeds. None when nothing moved.
+
+    Each cell is only ~9 turns, so a per-model arm delta of +/-13 points can
+    come out of sampling alone -- the synthetic check produced exactly that
+    from a model planted with no real effect. With at most 6 paired seeds this
+    can never beat p=0.031, which is the honest ceiling of the design and the
+    reason the delta is reported with its p rather than on its own.
+    """
+    n = up + down
+    if n == 0:
+        return None
+    k = min(up, down)
+    tail = sum(comb(n, i) for i in range(k + 1))
+    return min(1.0, 2.0 * tail / (2 ** n))
+
+
+def rule_based_per_turn(sessions_file: Path = SESSIONS_FILE,
+                        seeds_file: Path = SEEDS_FILE) -> dict:
     """{(session_id, turn): obligations} from the free rule-based detector."""
-    data = json.loads(SESSIONS_FILE.read_text())
-    seeds = {s["id"]: s for s in json.loads(SEEDS_FILE.read_text())}
+    data = json.loads(sessions_file.read_text())
+    seeds = {s["id"]: s for s in json.loads(seeds_file.read_text())}
     rosters = {sid: build_roster(s) for sid, s in seeds.items()}
     out, seen = {}, set()
     for sess in data["sessions"]:
-        key = (sess["test_model"], sess["seed_id"])
+        key = (sess["test_model"], sess["seed_id"], sess.get("arm"))
         if key in seen:
             continue
         seen.add(key)
         roster = rosters.get(sess["seed_id"])
         if roster is None:
             continue
-        sid = "%s::%s" % key
+        # Must reproduce judge_turn_shape.build_work's id exactly, or the
+        # rules-vs-judge join silently finds nothing to compare.
+        sid = "%s::%s" % (sess["test_model"], sess["seed_id"])
+        if sess.get("arm"):
+            sid += "::%s" % sess["arm"]
         for msg in sess["dialogue"]:
             if msg.get("role") != "character":
                 continue
@@ -184,12 +221,24 @@ def rule_based_per_turn() -> dict:
 
 
 def main():
-    if not JUDGED.exists():
-        print("No %s yet — run judge_turn_shape.py first." % JUDGED)
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--judged", default=str(JUDGED),
+                    help="Judge output .jsonl. Default: %s" % JUDGED)
+    ap.add_argument("--sessions", default=str(SESSIONS_FILE),
+                    help="Session corpus the judged rows came from (used only "
+                         "for the free rule-based comparison).")
+    ap.add_argument("--seeds-file", default=str(SEEDS_FILE),
+                    help="Seed set matching --sessions.")
+    ap.add_argument("--out", default=str(OUTPUT))
+    args = ap.parse_args()
+
+    judged_path = Path(args.judged)
+    if not judged_path.exists():
+        print("No %s yet — run judge_turn_shape.py first." % judged_path)
         print("  smoke:  python3 judge_turn_shape.py --judges claude_sonnet --limit 20")
         return 1
 
-    rows = load_judged()
+    rows = load_judged(judged_path)
     all_scored = [r for r in rows if "n_obligations" in r]
     failed = [r for r in rows if r.get("parse_error") or r.get("error")]
     cost = sum((r.get("usage") or {}).get("cost") or 0.0 for r in rows)
@@ -328,6 +377,99 @@ def main():
     print("  leak%% is reported at reliability '%s' — read it as indicative."
           % reliability_label(src.get("pc_interiority_leak")))
 
+    # --- 1b. arm contrast: steerability ------------------------------------
+    # Only fires on a corpus generated with two system-prompt arms. Paired per
+    # (model, seed) cell: same model, same scene, one paragraph of prompt
+    # different, so the delta is a within-subject effect and the seed-difficulty
+    # spread that confounds the cross-model rate cancels out of it.
+    arms = sorted({r["arm"] for r in scored if r.get("arm")})
+    arm_report = {}
+    if len(arms) == 2:
+        base_arm, test_arm = arms if arms[0] == "unprompted" else arms[::-1]
+        cells = defaultdict(list)
+        for r in scored:
+            if r["judge_key"] == primary and r.get("arm"):
+                cells[(r["model"], r["seed"], r["arm"])].append(r)
+
+        def cell_rate(rs):
+            live = [x for x in rs if x.get("player_present", True)]
+            return (sum(1 for x in live if is_clean(x)) / len(live)) if live else None
+
+        print("\nARM CONTRAST — does asking for the shape get it? (paired by"
+              " model x seed, primary judge)")
+        print("%-24s %10s %10s %8s %10s %7s"
+              % ("model", base_arm[:10], test_arm[:10], "delta", "seeds +/-", "p"))
+        print("-" * 76)
+        rowsy = []
+        for model in sorted({m for m, _, _ in cells}):
+            paired = []
+            for seed_id in sorted({s for m, s, _ in cells if m == model}):
+                b = cell_rate(cells.get((model, seed_id, base_arm), []))
+                t = cell_rate(cells.get((model, seed_id, test_arm), []))
+                if b is not None and t is not None:
+                    paired.append((b, t))
+            if not paired:
+                continue
+            mb = st.mean(p[0] for p in paired)
+            mt = st.mean(p[1] for p in paired)
+            up = sum(1 for b, t in paired if t > b)
+            down = sum(1 for b, t in paired if t < b)
+            rowsy.append({
+                "model": model, "n_paired_seeds": len(paired),
+                base_arm: round(mb, 4), test_arm: round(mt, 4),
+                "delta": round(mt - mb, 4), "seeds_up": up, "seeds_down": down,
+                "sign_test_p": sign_test(up, down),
+            })
+        rowsy.sort(key=lambda r: -r["delta"])
+        for r in rowsy:
+            p_ = r["sign_test_p"]
+            print("%-24s %9.0f%% %9.0f%% %+7.0f%% %6d/%d %7s"
+                  % (r["model"], r[base_arm] * 100, r[test_arm] * 100,
+                     r["delta"] * 100, r["seeds_up"], r["seeds_down"],
+                     "n/a" if p_ is None else "%.3f" % p_))
+        arm_report = {"base": base_arm, "test": test_arm, "per_model": rowsy}
+        if rowsy:
+            print("  Read the delta as steerability. Low base + high delta ="
+                  " usable if you ask for it;")
+            print("  low in both = cannot hold the floor even when told to,"
+                  " which is the finding that matters.")
+            n_seeds = max(r["n_paired_seeds"] for r in rowsy)
+            print("  p is a two-sided sign test over paired seeds; with %d of"
+                  " them it bottoms out at %.3f,"
+                  % (n_seeds, sign_test(n_seeds, 0) or 1.0))
+            print("  so treat a delta whose p is not small as unmeasured, not"
+                  " as zero.")
+            if all(abs(r["delta"]) < 0.02 for r in rowsy):
+                print("  <-- WARNING: delta ~0 for every model. Suspect the"
+                      " instruction or its placement")
+                print("      before believing that no model is steerable.")
+    elif arms:
+        print("\nOnly one arm present (%s); no steerability contrast to draw."
+              % arms[0])
+
+    # --- 1c. per-seed difficulty -------------------------------------------
+    per_seed = defaultdict(list)
+    for r in scored:
+        if r["judge_key"] == primary and r.get("player_present", True):
+            per_seed[r["seed"]].append(r)
+    if len(per_seed) > 1:
+        fully_crossed = len({
+            (r["model"], r.get("arm")) for r in scored if r["judge_key"] == primary
+        }) * len(per_seed) == len({
+            (r["model"], r["seed"], r.get("arm")) for r in scored
+            if r["judge_key"] == primary
+        })
+        print("\nPER-SEED (well-shaped%%, primary judge) — %s"
+              % ("fully crossed, so this is seed difficulty"
+                 if fully_crossed else
+                 "NOT fully crossed: seed difficulty and model assignment are"
+                 " confounded here"))
+        for seed_id, rs in sorted(per_seed.items(),
+                                  key=lambda kv: -sum(1 for r in kv[1] if is_clean(r)) / len(kv[1])):
+            print("  %-32s %5.1f%%  (n=%d, %d models)"
+                  % (seed_id, sum(1 for r in rs if is_clean(r)) / len(rs) * 100,
+                     len(rs), len({r["model"] for r in rs})))
+
     sec = [(r["model"], r["npc_grading_rate"], r["monologue_rate"],
             r["manufactured_tension_rate"], r["handholds_map_rate"],
             r["generic_prompt_rate"]) for r in lb]
@@ -402,7 +544,7 @@ def main():
 
     # --- 3. rules vs judge -------------------------------------------------
     print("\nRULES vs JUDGE (obligation counts per turn, primary judge)")
-    rules = rule_based_per_turn()
+    rules = rule_based_per_turn(Path(args.sessions), Path(args.seeds_file))
     pairs = [(rules[(r["session_id"], r["turn"])], r["n_obligations"])
              for r in scored if r["judge_key"] == primary
              and (r["session_id"], r["turn"]) in rules]
@@ -456,14 +598,15 @@ def main():
         print("  agreement and a lopsided positive rate is base-rate skew, not")
         print("  judges disagreeing about what a clean handback is.")
 
-    OUTPUT.write_text(json.dumps({
+    Path(args.out).write_text(json.dumps({
         "n_records": len(rows), "n_scored": len(scored), "n_failed": len(failed),
         "judges": judges, "primary_judge": primary, "actual_cost_usd": round(cost, 4),
         "correlations": {k: {"rho": v[0], "n": v[1]} for k, v in gate.items()},
         "inter_judge": inter,
+        "arm_contrast": arm_report,
         "leaderboard": lb,
     }, indent=2))
-    print("\nWrote %s" % OUTPUT)
+    print("\nWrote %s" % args.out)
     return 0
 
 

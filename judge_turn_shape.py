@@ -39,6 +39,22 @@ Usage:
 
     # Full corpus, single judge
     python3 judge_turn_shape.py --judges claude_sonnet --concurrency 8
+
+    # The purpose-built turn-shape corpus (both arms; see
+    # run_turn_shape_generation.py). --seeds-file must match --source or the
+    # scene block comes out empty.
+    python3 judge_turn_shape.py --concurrency 8 \
+        --source results/turn_shape_corpus.json \
+        --seeds-file hf_dataset/_source/turn_shape_seeds.json \
+        --out results/turn_shape_corpus_judged.jsonl
+
+    # Simulator baseline: score the sim's own turns with the same metric, so
+    # the models' bundling rate can be read against the floor set by what the
+    # sim hands them.
+    python3 judge_turn_shape.py --judge-role user --concurrency 4 \
+        --source results/turn_shape_corpus.json \
+        --seeds-file hf_dataset/_source/turn_shape_seeds.json \
+        --out results/turn_shape_corpus_judged.jsonl
 """
 import argparse
 import hashlib
@@ -180,7 +196,7 @@ def parse_judge_json(content: str) -> dict | None:
 def build_work(sessions: list, seeds: dict, judges: dict, done: set,
                batch_size: int, prompt_sha: str, seen_any: set | None = None,
                stale_only: bool = False, failed: set | None = None,
-               retry_failed: bool = False) -> list:
+               retry_failed: bool = False, role: str = "character") -> list:
     """Batches of turns from one session, for one judge.
 
     The system prompt is ~1.4k tokens and dominates cost: sent once per turn it
@@ -193,17 +209,39 @@ def build_work(sessions: list, seeds: dict, judges: dict, done: set,
     work = []
     for s in sessions:
         seed = seeds.get(s["seed_id"], {})
+        # sid is part of the checkpoint key, so it must separate arms: two
+        # sessions differing only by system prompt would otherwise look like
+        # one already-judged session and the second would be skipped. Sessions
+        # with no arm (every corpus before the turn-shape one) keep their
+        # original ids, so existing .jsonl checkpoints stay valid.
         sid = "%s::%s" % (s["test_model"], s["seed_id"])
+        if s.get("arm"):
+            sid += "::%s" % s["arm"]
+        if role != "character":
+            sid += "#%s" % role
+        # For the sim baseline (role="user") the two sides swap: the prompt
+        # counts what is aimed at "the player's character", and when the turns
+        # under test are the simulator's, the side being handed to is the AI's.
+        # Same metric, other direction -- that is what makes it a baseline.
         scene = {
             "character_name": s.get("character_name", "the character"),
             "character_setting": seed.get("character_setting", ""),
             "user_name": s.get("user_name", "the player"),
             "user_setting": seed.get("user_setting", ""),
         }
+        if role == "user":
+            scene = {
+                "character_name": scene["user_name"],
+                "character_setting": scene["user_setting"],
+                "user_name": scene["character_name"],
+                "user_setting": scene["character_setting"],
+            }
         turns = []
         for msg in s.get("dialogue", []):
-            if msg.get("role") != "character" or msg.get("turn") == 0:
-                continue  # turn 0 is the seed's opening, not model output
+            if msg.get("role") != role or msg.get("turn") in (0, 1):
+                continue  # turns 0 and 1 come from the seed, not from a model
+            if msg.get("is_challenge"):
+                continue  # scripted seed input, identical across models
             content = (msg.get("content") or "").strip()
             if len(content) >= MIN_TURN_CHARS:
                 turns.append({"turn": msg["turn"], "content": content})
@@ -230,6 +268,8 @@ def build_work(sessions: list, seeds: dict, judges: dict, done: set,
                     "session_id": sid,
                     "model": s["test_model"],
                     "seed": s["seed_id"],
+                    "arm": s.get("arm"),
+                    "role": role,
                     "judge_key": jkey,
                     "turns": pending[i:i + batch_size],
                     **scene,
@@ -258,6 +298,16 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--source", default=str(SOURCE))
     ap.add_argument("--out", default=str(RAW_OUT))
+    ap.add_argument("--seeds-file", default=str(SEEDS_FILE),
+                    help="Seed set matching --source (the scene block comes "
+                         "from it). Default: %s" % SEEDS_FILE.name)
+    ap.add_argument("--judge-role", default="character",
+                    choices=["character", "user"],
+                    help="Whose turns to judge. 'user' scores the simulator's "
+                         "own turns as a baseline: the sim is told to push and "
+                         "ask questions, and models mirror their interlocutor, "
+                         "so its own bundling rate is the floor to report the "
+                         "models against.")
     ap.add_argument("--judges", nargs="+", default=["claude_sonnet"],
                     help="Short judge keys: %s" % ", ".join(sorted(ALL_JUDGES)))
     ap.add_argument("--seeds", nargs="+", default=None,
@@ -295,7 +345,10 @@ def main():
     data = json.loads(Path(args.source).read_text())
     seen, sessions = set(), []
     for s in data["sessions"]:
-        key = (s["test_model"], s["seed_id"])
+        # The arm belongs in the de-dup key: the turn-shape corpus runs every
+        # (model, seed) twice, once per system-prompt arm, and without it the
+        # second arm is silently discarded as a duplicate.
+        key = (s["test_model"], s["seed_id"], s.get("arm"))
         if key not in seen:
             seen.add(key)
             sessions.append(s)
@@ -317,7 +370,7 @@ def main():
     if args.n_per_model:
         sessions = stratified(sessions, args.n_per_model, random.Random(args.seed))
 
-    seeds = {s["id"]: s for s in json.loads(SEEDS_FILE.read_text())}
+    seeds = {s["id"]: s for s in json.loads(Path(args.seeds_file).read_text())}
     system_prompt = PROMPT_FILE.read_text()
     prompt_sha = prompt_fingerprint(system_prompt)
     out_path = Path(args.out)
@@ -326,7 +379,7 @@ def main():
         ap.error("--retry-failed and --stale-only are mutually exclusive")
     work = build_work(sessions, seeds, judges, done, args.batch_size,
                       prompt_sha, seen_any, args.stale_only,
-                      failed, args.retry_failed)
+                      failed, args.retry_failed, args.judge_role)
     if args.limit:
         work = work[:args.limit]
 
@@ -409,6 +462,10 @@ def main():
             "judge_key": w["judge_key"], "judge": judges[w["judge_key"]],
             "prompt_sha": prompt_sha,
         }
+        if w.get("arm"):
+            base["arm"] = w["arm"]
+        if w.get("role", "character") != "character":
+            base["role"] = w["role"]
         usage = (res.get("resp") or {}).get("usage")
         parsed = res.get("parsed")
         by_n = {}
