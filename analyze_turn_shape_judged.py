@@ -174,6 +174,18 @@ def safe_load(path: Path):
     return json.loads(path.read_text()) if path.exists() else None
 
 
+def _share(rows: list[dict], pred) -> float | None:
+    """Fraction of rows satisfying pred, or None when there are none."""
+    return (sum(1 for r in rows if pred(r)) / len(rows)) if rows else None
+
+
+def _mean_words(rows: list[dict], turn_words: dict) -> float | None:
+    """Mean words per turn for these judged rows, joined on (session_id, turn)."""
+    vals = [turn_words[(r["session_id"], r["turn"])] for r in rows
+            if (r["session_id"], r["turn"]) in turn_words]
+    return round(st.mean(vals), 1) if vals else None
+
+
 def sign_test(up: int, down: int) -> float | None:
     """Two-sided exact sign test on paired seeds. None when nothing moved.
 
@@ -192,32 +204,45 @@ def sign_test(up: int, down: int) -> float | None:
 
 
 def rule_based_per_turn(sessions_file: Path = SESSIONS_FILE,
-                        seeds_file: Path = SEEDS_FILE) -> dict:
-    """{(session_id, turn): obligations} from the free rule-based detector."""
+                        seeds_file: Path = SEEDS_FILE) -> tuple[dict, dict]:
+    """Per-turn data read straight off the session corpus. No API calls.
+
+    Returns ({(session_id, turn): rule_based_obligations},
+             {(session_id, turn): word_count}).
+
+    Words come back separately because the arm contrast needs them: the shape
+    instruction cut mean turn length 19% in the smoke test, and the headline is
+    negatively correlated with length (rho = -0.456 on the pilot), so "bought
+    shape" and "bought brevity" are indistinguishable without length on the
+    table. results/turn_shape.json cannot supply them -- it only covers the
+    adversarial corpus, and has no per-arm split.
+    """
     data = json.loads(sessions_file.read_text())
     seeds = {s["id"]: s for s in json.loads(seeds_file.read_text())}
     rosters = {sid: build_roster(s) for sid, s in seeds.items()}
-    out, seen = {}, set()
+    obligations, words, seen = {}, {}, set()
     for sess in data["sessions"]:
         key = (sess["test_model"], sess["seed_id"], sess.get("arm"))
         if key in seen:
             continue
         seen.add(key)
-        roster = rosters.get(sess["seed_id"])
-        if roster is None:
-            continue
         # Must reproduce judge_turn_shape.build_work's id exactly, or the
         # rules-vs-judge join silently finds nothing to compare.
         sid = "%s::%s" % (sess["test_model"], sess["seed_id"])
         if sess.get("arm"):
             sid += "::%s" % sess["arm"]
+        roster = rosters.get(sess["seed_id"])
         for msg in sess["dialogue"]:
             if msg.get("role") != "character":
                 continue
-            r = analyze_turn(msg.get("content"), roster, sess.get("character_name"))
+            content = msg.get("content") or ""
+            words[(sid, msg["turn"])] = len(content.split())
+            if roster is None:
+                continue  # unknown seed: no rule-based count, words still fine
+            r = analyze_turn(content, roster, sess.get("character_name"))
             if not r["empty"]:
-                out[(sid, msg["turn"])] = r["obligations_loose"]
-    return out
+                obligations[(sid, msg["turn"])] = r["obligations_loose"]
+    return obligations, words
 
 
 def main():
@@ -276,6 +301,29 @@ def main():
         print("No rows at the current prompt version. Nothing to report.")
         return 1
 
+    # Read once: the free rule-based counts and the per-turn word counts, both
+    # straight off the session corpus.
+    try:
+        rules, turn_words = rule_based_per_turn(Path(args.sessions),
+                                                Path(args.seeds_file))
+    except (OSError, json.JSONDecodeError) as e:
+        print("Could not read --sessions/--seeds-file (%s); skipping the"
+              " rules comparison and the length column.\n" % e)
+        rules, turn_words = {}, {}
+
+    # --- seeds that cannot move the headline ------------------------------
+    # A seed whose verdict is the same for every model in every arm carries no
+    # ranking signal, and averaging it in dilutes the spread. ts_empty_room_06
+    # is the built case: with no NPC in the scene nothing can address the
+    # player, so n_obligations is structurally 0 and the headline returns a
+    # free 100% whatever the model does. That seed is still worth running --
+    # its target is handholds and interiority leak, reported below -- it just
+    # must not be scored on a metric that cannot represent it.
+    by_seed_verdicts = defaultdict(set)
+    for r in scored:
+        by_seed_verdicts[r["seed"]].add(is_clean(r))
+    constant_seeds = {s for s, v in by_seed_verdicts.items() if len(v) == 1}
+
     # --- 1. per-model leaderboard, primary judge --------------------------
     primary = judges[0] if len(judges) == 1 else (
         "claude_sonnet" if "claude_sonnet" in judges else judges[0])
@@ -320,8 +368,18 @@ def main():
             "manufactured_tension_rate": rate(
                 lambda r: r.get("manufactured_tension")),
             "mean_obligations": round(st.mean(r["n_obligations"] for r in rs), 3),
+            "mean_words": _mean_words(rs, turn_words),
         })
-    lb.sort(key=lambda r: -(r["clean_handback_rate"] or 0))
+        # The same headline over discriminating seeds only. Where a constant
+        # seed exists this is the number that should drive the ranking; the
+        # diluted one stays visible beside it rather than being replaced.
+        disc = [r for r in live if r["seed"] not in constant_seeds]
+        lb[-1]["clean_rate_excl_constant"] = (
+            round(sum(1 for r in disc if is_clean(r)) / len(disc), 4)
+            if disc else None)
+    lb.sort(key=lambda r: -(r["clean_rate_excl_constant"]
+                            if r["clean_rate_excl_constant"] is not None
+                            else (r["clean_handback_rate"] or 0)))
 
     # --- component reliability ------------------------------------------
     by_key = defaultdict(dict)
@@ -358,20 +416,39 @@ def main():
 
     print("Primary judge: %s" % primary)
     print("Headline: well-shaped = player present AND <=1 demand."
-          " Not comparable to the pilot's 5-way definition.\n")
-    print("%-24s %5s %17s %6s %6s %6s %6s %6s %7s" % (
-        "model", "live", "well-shaped%", "dem0", "dem1", "dem2+",
-        "dead%", "leak%", "meanObl"))
-    print("-" * 92)
+          " Not comparable to the pilot's 5-way definition.")
+    # The pilot's +0.479 was measured where player_present varied. In a
+    # narrator corpus it never goes false, so the conjunction collapses to its
+    # demands term and inherits that term's reliability instead. Say so rather
+    # than carrying the better number over.
+    if len({r.get("player_present", True) for r in scored}) == 1:
+        print("  NOTE: player_present is constant in this data, so the headline"
+              " has reduced to 'demands <= 1'.")
+        print("        Reliability is that term's alone: kappa %+.3f (%s), not"
+              " the pilot conjunction's +0.479."
+              % (src.get("demands", 0.0), reliability_label(src.get("demands"))))
+    if constant_seeds:
+        print("  NOTE: %d seed(s) score constant for every model and arm (%s)."
+              % (len(constant_seeds), ", ".join(sorted(constant_seeds))))
+        print("        excl-const% drops them; it is the column that carries"
+              " ranking signal.")
+    print()
+    print("%-24s %5s %17s %10s %6s %6s %6s %6s %7s %6s" % (
+        "model", "live", "well-shaped%", "excl-const", "dem0", "dem1", "dem2+",
+        "leak%", "meanObl", "words"))
+    print("-" * 104)
     for r in lb:
-        print("%-24s %5d  %5.1f [%4.1f-%4.1f] %5.0f%% %5.0f%% %5.0f%% %5.0f%%"
-              " %5.0f%% %6.2f" % (
+        ec = r["clean_rate_excl_constant"]
+        print("%-24s %5d  %5.1f [%4.1f-%4.1f] %9s %5.0f%% %5.0f%% %5.0f%%"
+              " %5.0f%% %6.2f %6s" % (
             r["model"], r["n_live_turns"], (r["clean_handback_rate"] or 0) * 100,
             r["clean_handback_ci"][0] * 100, r["clean_handback_ci"][1] * 100,
+            "-" if ec is None else "%.1f%%" % (ec * 100),
             (r["demands_0"] or 0) * 100, (r["demands_1"] or 0) * 100,
-            (r["demands_2plus"] or 0) * 100, (r["dead_scene_rate"] or 0) * 100,
+            (r["demands_2plus"] or 0) * 100,
             (r["pc_interiority_leak_rate"] or 0) * 100,
-            r["mean_obligations"]))
+            r["mean_obligations"],
+            "-" if r["mean_words"] is None else "%.0f" % r["mean_words"]))
     print("  meanObl is the continuous companion: judges agree on the count at"
           " rho +0.63..+0.75, better than on any binary derived from it.")
     print("  leak%% is reported at reliability '%s' — read it as indicative."
@@ -395,6 +472,27 @@ def main():
             live = [x for x in rs if x.get("player_present", True)]
             return (sum(1 for x in live if is_clean(x)) / len(live)) if live else None
 
+        # Report the headline delta beside a delta for each component, because
+        # the headline alone can read zero while the instruction is plainly
+        # working: on the NPC-free seed the smoke test cut interiority leak and
+        # turn length sharply and the headline did not move a point, since with
+        # no NPC present nothing can address the player. The dropped fields stay
+        # out of the headline and are shown here with their agreement attached,
+        # the same discipline the leaderboard's leak% column already uses.
+        ARM_METRICS = [
+            ("headline", None, lambda rs: cell_rate(rs)),
+            ("demands<=1", "demands",
+             lambda rs: _share(rs, lambda x: x.get("n_obligations", 0) <= 1)),
+            ("map", "handholds_not_none",
+             lambda rs: _share(rs, lambda x: x.get("handholds") == "map")),
+            ("genericQ", "handholds_not_none",
+             lambda rs: _share(rs, lambda x: x.get("handholds") == "generic_prompt")),
+            ("leak", "pc_interiority_leak",
+             lambda rs: _share(rs, lambda x: bool(x.get("pc_interiority_leak")))),
+            ("over_res", "handback_clean",
+             lambda rs: _share(rs, lambda x: x.get("handback") == "over_resolved")),
+        ]
+
         print("\nARM CONTRAST — does asking for the shape get it? (paired by"
               " model x seed, primary judge)")
         print("%-24s %10s %10s %8s %10s %7s"
@@ -402,12 +500,23 @@ def main():
         print("-" * 76)
         rowsy = []
         for model in sorted({m for m, _, _ in cells}):
-            paired = []
+            paired, comp_deltas, word_pairs = [], defaultdict(list), []
             for seed_id in sorted({s for m, s, _ in cells if m == model}):
-                b = cell_rate(cells.get((model, seed_id, base_arm), []))
-                t = cell_rate(cells.get((model, seed_id, test_arm), []))
+                brs = cells.get((model, seed_id, base_arm), [])
+                trs = cells.get((model, seed_id, test_arm), [])
+                if not brs or not trs:
+                    continue
+                b, t = cell_rate(brs), cell_rate(trs)
                 if b is not None and t is not None:
                     paired.append((b, t))
+                for label, _, fn in ARM_METRICS[1:]:
+                    bv, tv = fn(brs), fn(trs)
+                    if bv is not None and tv is not None:
+                        comp_deltas[label].append(tv - bv)
+                bw = _mean_words(brs, turn_words)
+                tw = _mean_words(trs, turn_words)
+                if bw and tw:
+                    word_pairs.append((bw, tw))
             if not paired:
                 continue
             mb = st.mean(p[0] for p in paired)
@@ -419,6 +528,12 @@ def main():
                 base_arm: round(mb, 4), test_arm: round(mt, 4),
                 "delta": round(mt - mb, 4), "seeds_up": up, "seeds_down": down,
                 "sign_test_p": sign_test(up, down),
+                "component_deltas": {k: round(st.mean(v), 4)
+                                     for k, v in comp_deltas.items()},
+                "words_delta_pct": (
+                    round((st.mean(t for _, t in word_pairs)
+                           / st.mean(b for b, _ in word_pairs) - 1) * 100, 1)
+                    if word_pairs else None),
             })
         rowsy.sort(key=lambda r: -r["delta"])
         for r in rowsy:
@@ -428,6 +543,39 @@ def main():
                      r["delta"] * 100, r["seeds_up"], r["seeds_down"],
                      "n/a" if p_ is None else "%.3f" % p_))
         arm_report = {"base": base_arm, "test": test_arm, "per_model": rowsy}
+
+        if rowsy:
+            comp_labels = [lbl for lbl, _, _ in ARM_METRICS[1:]]
+            print("\n  COMPONENT DELTAS (%s minus %s; the headline alone can"
+                  " read zero while the" % (test_arm, base_arm))
+            print("  instruction is plainly working — that is what the"
+                  " NPC-free smoke test did)")
+            # Built from the label list rather than a fixed slot count, so
+            # adding a component cannot silently desynchronize the header.
+            head = "  %-22s %9s" % ("model", "headline")
+            head += "".join("%11s" % lbl for lbl in comp_labels)
+            head += "%9s" % "words%"
+            print(head)
+            print("  " + "-" * (len(head) - 2))
+            for r in rowsy:
+                cd = r["component_deltas"]
+                cells_txt = "".join(
+                    "%11s" % ("-" if lbl not in cd else "%+.0f%%" % (cd[lbl] * 100))
+                    for lbl in comp_labels)
+                print("  %-22s %+8.0f%%%s %9s"
+                      % (r["model"], r["delta"] * 100, cells_txt,
+                         "-" if r["words_delta_pct"] is None
+                         else "%+.0f%%" % r["words_delta_pct"]))
+            print("  reliability: %s"
+                  % "  ".join("%s=%s" % (lbl, reliability_label(src.get(key)))
+                              for lbl, key, _ in ARM_METRICS[1:] if key))
+            print("  leak and over_res are WEAK fields kept OUT of the"
+                  " headline; they are shown here with")
+            print("  their agreement attached, as indicative, not as a verdict."
+                  " words% guards the other reading:")
+            print("  a prompt that only shortens turns buys brevity, not shape"
+                  " (headline vs length rho = -0.456).")
+
         if rowsy:
             print("  Read the delta as steerability. Low base + high delta ="
                   " usable if you ask for it;")
@@ -466,9 +614,27 @@ def main():
                  " confounded here"))
         for seed_id, rs in sorted(per_seed.items(),
                                   key=lambda kv: -sum(1 for r in kv[1] if is_clean(r)) / len(kv[1])):
-            print("  %-32s %5.1f%%  (n=%d, %d models)"
+            flag = ""
+            if seed_id in constant_seeds:
+                why = ("no NPC in the scene, so nothing can address the player"
+                       " and obligations are structurally 0"
+                       if all(r["n_obligations"] == 0 for r in rs)
+                       else "same verdict for every model and arm")
+                flag = "  <-- CONSTANT: %s; no ranking signal" % why
+            print("  %-32s %5.1f%%  (n=%d, %d models)%s"
                   % (seed_id, sum(1 for r in rs if is_clean(r)) / len(rs) * 100,
-                     len(rs), len({r["model"] for r in rs})))
+                     len(rs), len({r["model"] for r in rs}), flag))
+        if constant_seeds:
+            disc = [r for rs in per_seed.values() for r in rs
+                    if r["seed"] not in constant_seeds]
+            if disc:
+                print("  Headline over the %d discriminating seed(s): %.1f%%"
+                      " (vs %.1f%% with the constant one(s) averaged in)."
+                      % (len(per_seed) - len(constant_seeds),
+                         sum(1 for r in disc if is_clean(r)) / len(disc) * 100,
+                         sum(1 for rs in per_seed.values() for r in rs
+                             if is_clean(r))
+                         / sum(len(rs) for rs in per_seed.values()) * 100))
 
     sec = [(r["model"], r["npc_grading_rate"], r["monologue_rate"],
             r["manufactured_tension_rate"], r["handholds_map_rate"],
@@ -544,7 +710,6 @@ def main():
 
     # --- 3. rules vs judge -------------------------------------------------
     print("\nRULES vs JUDGE (obligation counts per turn, primary judge)")
-    rules = rule_based_per_turn(Path(args.sessions), Path(args.seeds_file))
     pairs = [(rules[(r["session_id"], r["turn"])], r["n_obligations"])
              for r in scored if r["judge_key"] == primary
              and (r["session_id"], r["turn"]) in rules]
@@ -604,6 +769,7 @@ def main():
         "correlations": {k: {"rho": v[0], "n": v[1]} for k, v in gate.items()},
         "inter_judge": inter,
         "arm_contrast": arm_report,
+        "constant_seeds": sorted(constant_seeds),
         "leaderboard": lb,
     }, indent=2))
     print("\nWrote %s" % args.out)
