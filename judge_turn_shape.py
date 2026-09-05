@@ -30,6 +30,13 @@ Usage:
     python3 judge_turn_shape.py --n-per-model 3 \
         --judges claude_sonnet gpt_4_1 gemini_3_1_pro --concurrency 4
 
+    # Discrimination probe: the seeds built to elicit the shape failures
+    python3 judge_turn_shape.py --concurrency 4 \
+        --seeds adv_agency_emotional_climax_09 adv_agency_combat_10 \
+                adv_pov_multi_npc_13 adv_passive_user_03 \
+        --models mistral_small_creative claude_opus_4_6 llama_4_maverick \
+                 gemini_2_5_flash
+
     # Full corpus, single judge
     python3 judge_turn_shape.py --judges claude_sonnet --concurrency 8
 """
@@ -227,6 +234,11 @@ def main():
     ap.add_argument("--out", default=str(RAW_OUT))
     ap.add_argument("--judges", nargs="+", default=["claude_sonnet"],
                     help="Short judge keys: %s" % ", ".join(sorted(ALL_JUDGES)))
+    ap.add_argument("--seeds", nargs="+", default=None,
+                    help="Only these seed_ids (e.g. adv_pov_multi_npc_13)")
+    ap.add_argument("--models", nargs="+", default=None,
+                    help="Only these test_model keys. Unlike --max-models this "
+                         "picks by name rather than taking the first N sorted.")
     ap.add_argument("--n-per-model", type=int, default=None,
                     help="Stratified pilot: N sessions per model (default: all)")
     ap.add_argument("--max-models", type=int, default=None)
@@ -258,6 +270,18 @@ def main():
         if key not in seen:
             seen.add(key)
             sessions.append(s)
+    if args.seeds:
+        want = set(args.seeds)
+        unknown = want - {s["seed_id"] for s in sessions}
+        if unknown:
+            ap.error("unknown seed(s): %s" % ", ".join(sorted(unknown)))
+        sessions = [s for s in sessions if s["seed_id"] in want]
+    if args.models:
+        want = set(args.models)
+        unknown = want - {s["test_model"] for s in sessions}
+        if unknown:
+            ap.error("unknown model(s): %s" % ", ".join(sorted(unknown)))
+        sessions = [s for s in sessions if s["test_model"] in want]
     if args.max_models:
         keep = sorted({s["test_model"] for s in sessions})[:args.max_models]
         sessions = [s for s in sessions if s["test_model"] in keep]

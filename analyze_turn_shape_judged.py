@@ -234,11 +234,23 @@ def main():
                  (hm or 0) * 100, (gp or 0) * 100))
 
     print("\nFIELD VARIANCE (a field that never varies is not contributing)")
-    for field in ("handholds", "handback", "player_present"):
+    for field in ("handholds", "handback", "player_present", "pc_interiority_leak",
+                  "npc_grading", "monologue", "manufactured_tension"):
         dist = Counter(r.get(field) for r in scored)
-        flat = " <-- CONSTANT, contributes nothing to the headline" if len(dist) == 1 else ""
-        print("  %-15s %s%s"
+        flat = (" <-- CONSTANT, contributes nothing to the headline"
+                if len(dist) == 1 else "")
+        print("  %-22s %s%s"
               % (field, ", ".join("%s=%d" % kv for kv in dist.most_common()), flat))
+    # Collinearity: if the three shape fields only ever move together they are
+    # one signal wearing three names, and is_clean() reduces to that one signal.
+    combos = Counter((r.get("player_present"), r.get("handholds"), r.get("handback"))
+                     for r in scored)
+    print("  distinct (present, handholds, handback) combos: %d" % len(combos))
+    for c, n in combos.most_common():
+        print("      %-40s %d" % (str(c), n))
+    if len(combos) <= 2:
+        print("  <-- COLLINEAR: these fields move together, so the headline"
+              " reduces to one signal")
 
     # --- 2. correlation gate ----------------------------------------------
     composite, mt_arena = {}, {}
