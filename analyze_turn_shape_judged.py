@@ -51,14 +51,75 @@ OUTPUT = Path("results/turn_shape_judged.json")
 
 BUNDLED_THRESHOLD = 2
 
-# A turn counts as well-shaped when the player can still act, the turn stops where
-# they act, it leaves purchase, and it does not stack demands or answer for them.
-def is_clean(r: dict) -> bool:
-    return (r.get("player_present", True)
-            and r.get("handback") == "clean"
-            and r.get("handholds") in ("map", "generic_prompt")
-            and r.get("n_obligations", 0) <= 1
-            and not r.get("pc_interiority_leak"))
+# Per-component inter-judge agreement measured on the 3-judge pilot
+# (claude_sonnet / gpt_4_1 / gemini_3_1_pro, 459 turns each). Used to label
+# reported rates when the loaded data has only one judge and live kappa cannot
+# be computed. Recomputed from the data whenever >= 2 judges are present.
+PILOT_KAPPA = {
+    "player_present": 0.715,
+    "crosstalk_present": 0.647,
+    "handholds_not_none": 0.439,
+    "monologue": 0.512,
+    "demands": 0.466,
+    "pc_interiority_leak": 0.314,
+    "handback_clean": 0.285,
+}
+
+
+def reliability_label(kappa: float | None) -> str:
+    """Landis-Koch bands, the same ones the kappa printout already uses."""
+    if kappa is None:
+        return "unknown"
+    if kappa >= 0.6:
+        return "substantial"
+    if kappa >= 0.4:
+        return "moderate"
+    return "WEAK"
+
+
+# The components behind the headline and the secondary flags, as predicates, so
+# agreement can be measured on each one rather than only on their conjunction.
+COMPONENTS = [
+    ("player_present", lambda r: bool(r.get("player_present", True))),
+    ("demands", lambda r: r.get("n_obligations", 0) <= 1),
+    ("crosstalk_present", lambda r: bool(r.get("crosstalk_present"))),
+    ("monologue", lambda r: bool(r.get("monologue"))),
+    ("handholds_not_none", lambda r: r.get("handholds") != "none"),
+    ("pc_interiority_leak", lambda r: bool(r.get("pc_interiority_leak"))),
+    ("handback_clean", lambda r: r.get("handback") == "clean"),
+]
+
+def is_well_shaped(r: dict) -> bool:
+    """The player can still act, and the turn handed them at most one thing.
+
+    Reduced from a five-way conjunction after the three-judge pilot. The dropped
+    terms are the two least reliable fields in the schema -- handback == clean
+    falls to kappa +0.145 between judges and pc_interiority_leak to +0.215 --
+    and a conjunction inherits the noise of its worst member, which is why the
+    old verdict scored 0.25-0.40 while its best components reached +0.82.
+
+    Measured on the pilot (459 turns x 3 judges), mean pairwise kappa:
+        five-way AND         +0.347
+        drop handback        +0.357
+        drop handback+leak   +0.431
+        this form            +0.479   (all pairs >= +0.398)
+
+    It stays independent of the composite (rho = -0.103), of human multi-turn
+    arena ELO (-0.070), and of response length (-0.456), with 36 points of
+    spread across 21 models -- so the reliability was bought without losing
+    what made the axis worth having.
+
+    handholds is not needed here: handholds == "none" was collinear with
+    player_present == False in every observation, so the "nothing to act on"
+    case the GM-card spec cares about is already carried by player_present.
+    The dropped fields are still recorded and still reported, with their
+    measured agreement attached.
+    """
+    return r.get("player_present", True) and r.get("n_obligations", 0) <= 1
+
+
+# Kept under the old name so nothing silently changes meaning mid-file.
+is_clean = is_well_shaped
 
 
 def load_judged() -> list[dict]:
@@ -213,27 +274,67 @@ def main():
         })
     lb.sort(key=lambda r: -(r["clean_handback_rate"] or 0))
 
+    # --- component reliability ------------------------------------------
+    by_key = defaultdict(dict)
+    for r in scored:
+        by_key[(r["session_id"], r["turn"])][r["judge_key"]] = r
+    live_kappa = {}
+    if len(judges) > 1:
+        for name, fn in COMPONENTS:
+            ks = []
+            for j1, j2 in combinations(judges, 2):
+                both = [(v[j1], v[j2]) for v in by_key.values()
+                        if j1 in v and j2 in v]
+                if len(both) < 3:
+                    continue
+                k, _, _, _ = cohens_kappa([fn(a) for a, _ in both],
+                                          [fn(b) for _, b in both])
+                if k is not None:
+                    ks.append(k)
+            if ks:
+                live_kappa[name] = sum(ks) / len(ks)
+
+    src = live_kappa or PILOT_KAPPA
+    print("COMPONENT RELIABILITY (mean pairwise kappa, %s)"
+          % ("this data, %d judges" % len(judges) if live_kappa
+             else "from the 3-judge pilot — NOT from this single-judge data"))
+    for name, _ in COMPONENTS:
+        k = src.get(name)
+        print("  %-22s %s  %s"
+              % (name, "  n/a" if k is None else "%+.3f" % k,
+                 reliability_label(k)))
+    print("  headline = player_present AND demands<=1; the two weakest fields"
+          " (handback_clean, pc_interiority_leak) are reported but NOT in it.")
+    print()
+
     print("Primary judge: %s" % primary)
-    print("Headline: clean handback = player present, stops where they act,"
-          " leaves purchase, <=1 demand, no interiority leak.\n")
-    print("%-24s %5s %17s %6s %6s %6s %6s %6s %6s" % (
-        "model", "live", "clean handback%", "dem0", "dem1", "dem2+",
-        "dead%", "noOpn%", "leak%"))
+    print("Headline: well-shaped = player present AND <=1 demand."
+          " Not comparable to the pilot's 5-way definition.\n")
+    print("%-24s %5s %17s %6s %6s %6s %6s %6s %7s" % (
+        "model", "live", "well-shaped%", "dem0", "dem1", "dem2+",
+        "dead%", "leak%", "meanObl"))
     print("-" * 92)
     for r in lb:
         print("%-24s %5d  %5.1f [%4.1f-%4.1f] %5.0f%% %5.0f%% %5.0f%% %5.0f%%"
-              " %5.0f%% %5.0f%%" % (
+              " %5.0f%% %6.2f" % (
             r["model"], r["n_live_turns"], (r["clean_handback_rate"] or 0) * 100,
             r["clean_handback_ci"][0] * 100, r["clean_handback_ci"][1] * 100,
             (r["demands_0"] or 0) * 100, (r["demands_1"] or 0) * 100,
             (r["demands_2plus"] or 0) * 100, (r["dead_scene_rate"] or 0) * 100,
-            (r["no_opening_rate"] or 0) * 100,
-            (r["pc_interiority_leak_rate"] or 0) * 100))
+            (r["pc_interiority_leak_rate"] or 0) * 100,
+            r["mean_obligations"]))
+    print("  meanObl is the continuous companion: judges agree on the count at"
+          " rho +0.63..+0.75, better than on any binary derived from it.")
+    print("  leak%% is reported at reliability '%s' — read it as indicative."
+          % reliability_label(src.get("pc_interiority_leak")))
 
     sec = [(r["model"], r["npc_grading_rate"], r["monologue_rate"],
             r["manufactured_tension_rate"], r["handholds_map_rate"],
             r["generic_prompt_rate"]) for r in lb]
-    print("\nSECONDARY (anti-patterns from the same spine)")
+    print("\nSECONDARY (anti-patterns from the same spine) — reliability: "
+          "grading=%s monolog=%s leak-not-shown-here"
+          % (reliability_label(src.get("npc_grading")),
+             reliability_label(src.get("monologue"))))
     print("%-24s %8s %8s %10s %8s %9s"
           % ("model", "grading%", "monolog%", "spawnTens%", "map%", "genericQ%"))
     print("-" * 74)
