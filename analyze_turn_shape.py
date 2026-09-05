@@ -155,11 +155,16 @@ def main():
             for mdl, v in per_model_seed.items() if v.get(seed_id)
         ]
         scored.sort(key=lambda x: x[1])
+        k = len(scored)
         for i, (mdl, _) in enumerate(scored):
-            seed_ranks[mdl].append(i + 1)
-    within_seed = {m: round(st.mean(r), 2) for m, r in seed_ranks.items()}
+            # Normalize to [0, 1]. Seeds cover different numbers of models
+            # (12 seeds have all 21, 8 have only 13), so averaging raw ordinal
+            # ranks would reward models that appear on the thinner seeds, where
+            # the worst achievable rank is smaller.
+            seed_ranks[mdl].append(i / (k - 1) if k > 1 else 0.5)
+    within_seed = {m: round(st.mean(r), 4) for m, r in seed_ranks.items()}
     for r in rows:
-        r["within_seed_avg_rank"] = within_seed.get(r["model"])
+        r["within_seed_position"] = within_seed.get(r["model"])
 
     # --- correlation gate --------------------------------------------------
     composite, mt_arena = {}, {}
@@ -181,6 +186,11 @@ def main():
     # rho here means bundling tracks with being ranked worse.
     rho_comp, n_comp = rho_against(composite, "bundled_rate_loose")
     rho_arena, n_arena = rho_against(mt_arena, "bundled_rate_loose")
+    # Length-normalized readings. The raw rate tracks response length closely,
+    # so these are the ones that say whether turn shape carries any signal of
+    # its own once "writes longer turns" is divided out.
+    rho_comp_n, _ = rho_against(composite, "obligations_per_1k_chars")
+    rho_arena_n, _ = rho_against(mt_arena, "obligations_per_1k_chars")
     length_pairs = [(r["bundled_rate_loose"], r["mean_words"]) for r in rows]
     rho_length = spearman([p[0] for p in length_pairs], [p[1] for p in length_pairs])
 
@@ -198,6 +208,8 @@ def main():
             "bundled_rate_vs_composite": {"rho": rho_comp, "n": n_comp},
             "bundled_rate_vs_mt_arena_elo": {"rho": rho_arena, "n": n_arena},
             "bundled_rate_vs_mean_words": {"rho": rho_length, "n": len(rows)},
+            "obligations_per_1k_vs_composite": {"rho": rho_comp_n, "n": n_comp},
+            "obligations_per_1k_vs_mt_arena_elo": {"rho": rho_arena_n, "n": n_arena},
         },
         "per_seed_mean_obligations": {
             s: round(st.mean(v), 3) for s, v in sorted(per_seed.items())
@@ -240,6 +252,11 @@ def main():
         "n/a" if rho_arena is None else "%+.3f" % rho_arena, n_arena))
     print("  mean_words        rho = %s (n=%d)  [length confound]" % (
         "n/a" if rho_length is None else "%+.3f" % rho_length, len(rows)))
+    print("  length-normalized (obligations_per_1k_chars):")
+    print("    composite       rho = %s" % (
+        "n/a" if rho_comp_n is None else "%+.3f" % rho_comp_n))
+    print("    mt_arena_elo    rho = %s" % (
+        "n/a" if rho_arena_n is None else "%+.3f" % rho_arena_n))
     print("\nWrote %s" % OUTPUT)
 
 

@@ -264,7 +264,9 @@ def count_blocks(text: str, spans: list[dict]) -> int:
 # ============================================================
 # ADDRESSEE CLASSIFICATION
 # ============================================================
-def classify_addressee(text: str, span: dict, roster: dict) -> str:
+def classify_addressee(text: str, span: dict, roster: dict,
+                       prev_end: int | None = None,
+                       next_start: int | None = None) -> str:
     """Return "player", "npc", or "ambiguous" for one quoted span.
 
     Heuristic ladder, first match wins. Ordering carries real weight: the NPC
@@ -281,9 +283,25 @@ def classify_addressee(text: str, span: dict, roster: dict) -> str:
     if COURT_ADDRESS.search(inner) or _mentions(inner, roster["npc"]):
         return "npc"
 
-    # 3. Attribution frame in the surrounding narration.
-    before = text[max(0, span["start"] - ATTRIBUTION_WINDOW_BEFORE):span["start"]]
-    after = text[span["end"]:span["end"] + ATTRIBUTION_WINDOW_AFTER]
+    # 3. Attribution frame in the surrounding narration, clipped to this
+    # paragraph and to the neighbouring spans. Without clipping the window
+    # reaches back past a blank line and picks up the *previous* speaker's
+    # narration — "...his eyes burned at you." — which flips an NPC's jab into
+    # a player obligation.
+    lo = max(0, span["start"] - ATTRIBUTION_WINDOW_BEFORE)
+    para = text.rfind("\n\n", 0, span["start"])
+    if para != -1:
+        lo = max(lo, para + 2)
+    if prev_end is not None:
+        lo = max(lo, prev_end)
+    hi = span["end"] + ATTRIBUTION_WINDOW_AFTER
+    para_end = text.find("\n\n", span["end"])
+    if para_end != -1:
+        hi = min(hi, para_end)
+    if next_start is not None:
+        hi = min(hi, next_start)
+    before = text[lo:span["start"]]
+    after = text[span["end"]:max(span["end"], hi)]
     frame = before + " " + after
     if re.search(r"\b(to|at|toward|towards|asked|told)\s+you\b", frame, re.I):
         return "player"
@@ -353,8 +371,12 @@ def analyze_turn(text: str, roster: dict, character_name: str | None = None) -> 
     q_amb = i_amb = 0
     terminal = 0
 
-    for span in spans:
-        who = classify_addressee(norm, span, roster)
+    for i, span in enumerate(spans):
+        who = classify_addressee(
+            norm, span, roster,
+            prev_end=spans[i - 1]["end"] if i else None,
+            next_start=spans[i + 1]["start"] if i + 1 < len(spans) else None,
+        )
         counts[who] += 1
         q = count_questions(span["text"])
         imp = count_imperatives(span["text"])

@@ -10,22 +10,30 @@
   },
   "correlations": {
     "bundled_rate_vs_composite": {
-      "rho": 0.4467532467532468,
+      "rho": 0.4415584415584416,
       "n": 21
     },
     "bundled_rate_vs_mt_arena_elo": {
-      "rho": 0.5015037593984962,
+      "rho": 0.4759398496240601,
       "n": 20
     },
     "bundled_rate_vs_mean_words": {
-      "rho": 0.7376623376623377,
+      "rho": 0.738961038961039,
       "n": 21
+    },
+    "obligations_per_1k_vs_composite": {
+      "rho": -0.17662337662337668,
+      "n": 21
+    },
+    "obligations_per_1k_vs_mt_arena_elo": {
+      "rho": -0.1729323308270676,
+      "n": 20
     }
   },
   "per_seed_mean_obligations": {
     "adv_agency_bait_01": 0.265,
-    "adv_agency_combat_10": 0.336,
-    "adv_agency_emotional_climax_09": 0.444,
+    "adv_agency_combat_10": 0.332,
+    "adv_agency_emotional_climax_09": 0.437,
     "adv_agency_romance_11": 0.335,
     "adv_bigcard_buried_details_18": 0.448,
     "adv_bigcard_relationship_web_19": 0.817,
@@ -33,11 +41,11 @@
     "adv_character_break_bait_07": 0.462,
     "adv_contradictory_lore_02": 1.192,
     "adv_genre_shift_08": 0,
-    "adv_impossible_physics_04": 1.128,
+    "adv_impossible_physics_04": 1.122,
     "adv_passive_user_03": 0.692,
-    "adv_pov_multi_npc_13": 0.803,
-    "adv_pov_second_person_12": 0.206,
-    "adv_pov_tense_action_14": 0.165,
+    "adv_pov_multi_npc_13": 0.787,
+    "adv_pov_second_person_12": 0.202,
+    "adv_pov_tense_action_14": 0.153,
     "adv_subtle_ooc_06": 0.609,
     "adv_sysprompt_forbidden_topic_17": 0.706,
     "adv_sysprompt_speech_pattern_15": 0.502,
@@ -68,8 +76,8 @@
       "mean_words": 172.037,
       "no_dialogue_rate": 0.2917,
       "no_player_directed_rate": 0.5583,
-      "ambiguous_span_rate": 0.6008,
-      "within_seed_avg_rank": 5.75
+      "ambiguous_span_rate": 0.6028,
+      "within_seed_position": 0.2925
     },
     {
       "model": "kimi_k2_5",
@@ -94,8 +102,8 @@
       "mean_words": 251.868,
       "no_dialogue_rate": 0.1458,
       "no_player_directed_rate": 0.4375,
-      "ambiguous_span_rate": 0.6203,
-      "within_seed_avg_rank": 9.08
+      "ambiguous_span_rate": 0.6219,
+      "within_seed_position": 0.4042
     },
     {
       "model": "grok_4_1",
@@ -121,7 +129,7 @@
       "no_dialogue_rate": 0.1255,
       "no_player_directed_rate": 0.5021,
       "ambiguous_span_rate": 0.5957,
-      "within_seed_avg_rank": 8.25
+      "within_seed_position": 0.4367
     },
     {
       "model": "deepseek_v3_2",
@@ -146,8 +154,8 @@
       "mean_words": 176.296,
       "no_dialogue_rate": 0.1792,
       "no_player_directed_rate": 0.4583,
-      "ambiguous_span_rate": 0.6272,
-      "within_seed_avg_rank": 5.9
+      "ambiguous_span_rate": 0.6299,
+      "within_seed_position": 0.285
     },
     {
       "model": "gemini_3_1_pro",
@@ -173,7 +181,7 @@
       "no_dialogue_rate": 0.1387,
       "no_player_directed_rate": 0.3869,
       "ambiguous_span_rate": 0.6523,
-      "within_seed_avg_rank": 10.83
+      "within_seed_position": 0.4917
     },
     {
       "model": "gemini_2_5_flash",
@@ -199,7 +207,7 @@
       "no_dialogue_rate": 0.2167,
       "no_player_directed_rate": 0.5083,
       "ambiguous_span_rate": 0.5989,
-      "within_seed_avg_rank": 6.05
+      "within_seed_position": 0.3008
     },
     {
       "model": "glm_5_1",
@@ -214,18 +222,18 @@
         0.1204,
         0.2437
       ],
-      "mean_obligations_loose": 0.326,
+      "mean_obligations_loose": 0.319,
       "mean_obligations_strict": 0.688,
       "mean_terminal_obligations": 0.111,
       "mean_shape_score_loose": 98.472,
       "mean_shape_score_strict": 95.139,
-      "obligations_per_1k_chars": 0.216,
+      "obligations_per_1k_chars": 0.213,
       "mean_dialogue_blocks": 5.229,
       "mean_words": 240.785,
       "no_dialogue_rate": 0.0764,
-      "no_player_directed_rate": 0.2708,
-      "ambiguous_span_rate": 0.6252,
-      "within_seed_avg_rank": 10.58
+      "no_player_directed_rate": 0.2847,
+      "ambiguous_span_rate": 0.6366,
+      "within_seed_position": 0.4833
     },
     {
       "model": "deepseek_v4_flash",
@@ -240,18 +248,44 @@
         0.0711,
         0.1764
       ],
-      "mean_obligations_loose": 0.348,
+      "mean_obligations_loose": 0.34,
       "mean_obligations_strict": 0.546,
       "mean_terminal_obligations": 0.184,
       "mean_shape_score_loose": 98.014,
       "mean_shape_score_strict": 96.596,
-      "obligations_per_1k_chars": 0.354,
+      "obligations_per_1k_chars": 0.349,
       "mean_dialogue_blocks": 2.879,
       "mean_words": 171.78,
       "no_dialogue_rate": 0.0993,
-      "no_player_directed_rate": 0.3404,
-      "ambiguous_span_rate": 0.5352,
-      "within_seed_avg_rank": 11.25
+      "no_player_directed_rate": 0.3475,
+      "ambiguous_span_rate": 0.5423,
+      "within_seed_position": 0.5125
+    },
+    {
+      "model": "kimi_k2_6",
+      "n_turns": 129,
+      "bundled_rate_loose": 0.0853,
+      "bundled_ci_loose": [
+        0.0483,
+        0.1462
+      ],
+      "bundled_rate_strict": 0.1395,
+      "bundled_ci_strict": [
+        0.0901,
+        0.2098
+      ],
+      "mean_obligations_loose": 0.372,
+      "mean_obligations_strict": 0.636,
+      "mean_terminal_obligations": 0.24,
+      "mean_shape_score_loose": 98.14,
+      "mean_shape_score_strict": 95.969,
+      "obligations_per_1k_chars": 0.363,
+      "mean_dialogue_blocks": 3.302,
+      "mean_words": 218.922,
+      "no_dialogue_rate": 0.186,
+      "no_player_directed_rate": 0.3953,
+      "ambiguous_span_rate": 0.615,
+      "within_seed_position": 0.5042
     },
     {
       "model": "qwen3_5_flash",
@@ -276,8 +310,8 @@
       "mean_words": 229.104,
       "no_dialogue_rate": 0.2333,
       "no_player_directed_rate": 0.375,
-      "ambiguous_span_rate": 0.6506,
-      "within_seed_avg_rank": 7.4
+      "ambiguous_span_rate": 0.6543,
+      "within_seed_position": 0.3867
     },
     {
       "model": "glm_4_7",
@@ -302,34 +336,8 @@
       "mean_words": 219.833,
       "no_dialogue_rate": 0.1967,
       "no_player_directed_rate": 0.3808,
-      "ambiguous_span_rate": 0.549,
-      "within_seed_avg_rank": 7.75
-    },
-    {
-      "model": "kimi_k2_6",
-      "n_turns": 129,
-      "bundled_rate_loose": 0.093,
-      "bundled_ci_loose": [
-        0.054,
-        0.1556
-      ],
-      "bundled_rate_strict": 0.1395,
-      "bundled_ci_strict": [
-        0.0901,
-        0.2098
-      ],
-      "mean_obligations_loose": 0.38,
-      "mean_obligations_strict": 0.636,
-      "mean_terminal_obligations": 0.24,
-      "mean_shape_score_loose": 97.984,
-      "mean_shape_score_strict": 95.969,
-      "obligations_per_1k_chars": 0.366,
-      "mean_dialogue_blocks": 3.302,
-      "mean_words": 218.922,
-      "no_dialogue_rate": 0.186,
-      "no_player_directed_rate": 0.3953,
-      "ambiguous_span_rate": 0.6106,
-      "within_seed_avg_rank": 11.08
+      "ambiguous_span_rate": 0.5538,
+      "within_seed_position": 0.3975
     },
     {
       "model": "claude_opus_4_7",
@@ -344,18 +352,18 @@
         0.1681,
         0.3043
       ],
-      "mean_obligations_loose": 0.451,
+      "mean_obligations_loose": 0.438,
       "mean_obligations_strict": 1.139,
       "mean_terminal_obligations": 0.118,
-      "mean_shape_score_loose": 97.083,
+      "mean_shape_score_loose": 97.222,
       "mean_shape_score_strict": 91.25,
-      "obligations_per_1k_chars": 0.232,
+      "obligations_per_1k_chars": 0.226,
       "mean_dialogue_blocks": 5.444,
       "mean_words": 411.417,
       "no_dialogue_rate": 0.1528,
       "no_player_directed_rate": 0.2153,
-      "ambiguous_span_rate": 0.5632,
-      "within_seed_avg_rank": 13
+      "ambiguous_span_rate": 0.5791,
+      "within_seed_position": 0.5917
     },
     {
       "model": "deepseek_v4_pro",
@@ -380,8 +388,8 @@
       "mean_words": 259.326,
       "no_dialogue_rate": 0.1528,
       "no_player_directed_rate": 0.2847,
-      "ambiguous_span_rate": 0.6014,
-      "within_seed_avg_rank": 11.58
+      "ambiguous_span_rate": 0.6043,
+      "within_seed_position": 0.5417
     },
     {
       "model": "gpt_4_1",
@@ -406,8 +414,8 @@
       "mean_words": 204.887,
       "no_dialogue_rate": 0.1667,
       "no_player_directed_rate": 0.3,
-      "ambiguous_span_rate": 0.4685,
-      "within_seed_avg_rank": 9.25
+      "ambiguous_span_rate": 0.4699,
+      "within_seed_position": 0.4917
     },
     {
       "model": "gemini_3_1_flash_lite",
@@ -432,8 +440,8 @@
       "mean_words": 259.583,
       "no_dialogue_rate": 0.1181,
       "no_player_directed_rate": 0.2569,
-      "ambiguous_span_rate": 0.4619,
-      "within_seed_avg_rank": 14.33
+      "ambiguous_span_rate": 0.4703,
+      "within_seed_position": 0.6667
     },
     {
       "model": "gemma_4_26b",
@@ -458,8 +466,8 @@
       "mean_words": 346.775,
       "no_dialogue_rate": 0.1708,
       "no_player_directed_rate": 0.3875,
-      "ambiguous_span_rate": 0.5909,
-      "within_seed_avg_rank": 9.8
+      "ambiguous_span_rate": 0.595,
+      "within_seed_position": 0.5442
     },
     {
       "model": "deepseek_r1_0528",
@@ -474,44 +482,70 @@
         0.2964,
         0.4165
       ],
-      "mean_obligations_loose": 0.567,
+      "mean_obligations_loose": 0.562,
       "mean_obligations_strict": 1.696,
-      "mean_terminal_obligations": 0.225,
+      "mean_terminal_obligations": 0.221,
       "mean_shape_score_loose": 94.833,
       "mean_shape_score_strict": 83.833,
-      "obligations_per_1k_chars": 0.321,
+      "obligations_per_1k_chars": 0.318,
       "mean_dialogue_blocks": 5.246,
       "mean_words": 268.475,
       "no_dialogue_rate": 0.1458,
       "no_player_directed_rate": 0.3958,
-      "ambiguous_span_rate": 0.67,
-      "within_seed_avg_rank": 10.85
+      "ambiguous_span_rate": 0.6708,
+      "within_seed_position": 0.5808
     },
     {
       "model": "claude_opus_4_6",
       "n_turns": 240,
-      "bundled_rate_loose": 0.15,
+      "bundled_rate_loose": 0.1417,
       "bundled_ci_loose": [
-        0.1104,
-        0.2007
+        0.1032,
+        0.1914
       ],
       "bundled_rate_strict": 0.2458,
       "bundled_ci_strict": [
         0.1956,
         0.304
       ],
-      "mean_obligations_loose": 0.583,
+      "mean_obligations_loose": 0.575,
       "mean_obligations_strict": 1.038,
       "mean_terminal_obligations": 0.1,
-      "mean_shape_score_loose": 95.5,
+      "mean_shape_score_loose": 95.667,
       "mean_shape_score_strict": 91.083,
-      "obligations_per_1k_chars": 0.199,
+      "obligations_per_1k_chars": 0.197,
       "mean_dialogue_blocks": 5.117,
       "mean_words": 539.925,
       "no_dialogue_rate": 0.2333,
+      "no_player_directed_rate": 0.3333,
+      "ambiguous_span_rate": 0.5998,
+      "within_seed_position": 0.61
+    },
+    {
+      "model": "claude_sonnet_4_5",
+      "n_turns": 240,
+      "bundled_rate_loose": 0.1708,
+      "bundled_ci_loose": [
+        0.1285,
+        0.2235
+      ],
+      "bundled_rate_strict": 0.3542,
+      "bundled_ci_strict": [
+        0.2964,
+        0.4165
+      ],
+      "mean_obligations_loose": 0.646,
+      "mean_obligations_strict": 1.342,
+      "mean_terminal_obligations": 0.138,
+      "mean_shape_score_loose": 94.833,
+      "mean_shape_score_strict": 86.917,
+      "obligations_per_1k_chars": 0.342,
+      "mean_dialogue_blocks": 6.1,
+      "mean_words": 314.892,
+      "no_dialogue_rate": 0.15,
       "no_player_directed_rate": 0.3292,
-      "ambiguous_span_rate": 0.5877,
-      "within_seed_avg_rank": 11
+      "ambiguous_span_rate": 0.5896,
+      "within_seed_position": 0.5833
     },
     {
       "model": "minimax_m2_7",
@@ -536,34 +570,8 @@
       "mean_words": 261.987,
       "no_dialogue_rate": 0.1548,
       "no_player_directed_rate": 0.2385,
-      "ambiguous_span_rate": 0.5814,
-      "within_seed_avg_rank": 13.9
-    },
-    {
-      "model": "claude_sonnet_4_5",
-      "n_turns": 240,
-      "bundled_rate_loose": 0.175,
-      "bundled_ci_loose": [
-        0.1322,
-        0.2281
-      ],
-      "bundled_rate_strict": 0.3542,
-      "bundled_ci_strict": [
-        0.2964,
-        0.4165
-      ],
-      "mean_obligations_loose": 0.658,
-      "mean_obligations_strict": 1.342,
-      "mean_terminal_obligations": 0.15,
-      "mean_shape_score_loose": 94.75,
-      "mean_shape_score_strict": 86.917,
-      "obligations_per_1k_chars": 0.351,
-      "mean_dialogue_blocks": 6.1,
-      "mean_words": 314.892,
-      "no_dialogue_rate": 0.15,
-      "no_player_directed_rate": 0.3292,
-      "ambiguous_span_rate": 0.5852,
-      "within_seed_avg_rank": 11.3
+      "ambiguous_span_rate": 0.587,
+      "within_seed_position": 0.7692
     },
     {
       "model": "mistral_small_creative",
@@ -578,18 +586,18 @@
         0.3601,
         0.4841
       ],
-      "mean_obligations_loose": 1.092,
+      "mean_obligations_loose": 1.087,
       "mean_obligations_strict": 2.087,
       "mean_terminal_obligations": 0.071,
       "mean_shape_score_loose": 90.417,
       "mean_shape_score_strict": 82.5,
-      "obligations_per_1k_chars": 0.413,
+      "obligations_per_1k_chars": 0.412,
       "mean_dialogue_blocks": 7.271,
       "mean_words": 421.212,
       "no_dialogue_rate": 0.1083,
-      "no_player_directed_rate": 0.2625,
-      "ambiguous_span_rate": 0.6229,
-      "within_seed_avg_rank": 12.75
+      "no_player_directed_rate": 0.2667,
+      "ambiguous_span_rate": 0.6251,
+      "within_seed_position": 0.7042
     }
   ],
   "limitations": [
