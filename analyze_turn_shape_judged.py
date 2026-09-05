@@ -4,17 +4,23 @@
 Reads results/turn_shape_judged.jsonl (produced by judge_turn_shape.py) and
 reports four things:
 
-  1. Per-model judged leaderboard — the bundling rate with a Wilson CI, mean
-     obligations, and the puppeted-user rate the rule-based version could not see.
-  2. The correlation gate — bundling vs composite, vs human multi-turn arena ELO,
-     vs response length, and length-normalized. Low correlation with the composite
-     is what would justify a separate leaderboard axis (METHODOLOGY 13.2).
+  1. Per-model judged leaderboard, headlined by clean-handback rate: the share of
+     live turns that describe-then-stop, leave something to act on, and stack at
+     most one demand. Obligation count is one input, not the headline — per the
+     GM-card spec a well-formed turn often asks nothing at all, carrying the handoff
+     through the affordances in the scene ("scene-as-map"), and a bare "what do you
+     do?" is the weaker handoff. What separates a good silent turn from a bad one is
+     whether anything was left to act on.
+  2. The correlation gate — clean-handback and demand-stacking against the
+     composite, human multi-turn arena ELO, and response length. Low correlation
+     with the composite is what would justify a separate leaderboard axis
+     (METHODOLOGY 13.2).
   3. Rules vs judge — per-turn agreement between this and harness/turn_shape.py.
      If the judge merely reproduces the rule-based numbers, the spend bought
      nothing and that should be visible.
-  4. Inter-judge agreement — Cohen's kappa on the bundled flag for every judge
-     pair on turns they both scored. The benchmark's single-judge dependence is
-     its most-documented weakness; this metric should not repeat it.
+  4. Inter-judge agreement — Cohen's kappa on the clean-handback verdict for every
+     judge pair on turns they both scored. The benchmark's single-judge dependence
+     is its most-documented weakness; this metric should not repeat it.
 
 Note on kappa: analyze_round3_kappa.py uses quadratic-weighted kappa over a 1-5
 Likert, which degenerates on a binary flag (both values clip into one level), so
@@ -44,6 +50,15 @@ MT_ARENA_FILE = Path("results/multiturn_arena_bayesian.json")
 OUTPUT = Path("results/turn_shape_judged.json")
 
 BUNDLED_THRESHOLD = 2
+
+# A turn counts as well-shaped when the player can still act, the turn stops where
+# they act, it leaves purchase, and it does not stack demands or answer for them.
+def is_clean(r: dict) -> bool:
+    return (r.get("player_present", True)
+            and r.get("handback") == "clean"
+            and r.get("handholds") in ("map", "generic_prompt")
+            and r.get("n_obligations", 0) <= 1
+            and not r.get("pc_interiority_leak"))
 
 
 def load_judged() -> list[dict]:
@@ -129,33 +144,70 @@ def main():
     lb = []
     for model, rs in per_model.items():
         n = len(rs)
-        k = sum(1 for r in rs if r["n_obligations"] >= BUNDLED_THRESHOLD)
-        lo, hi = wilson_ci(k, n)
+        live = [r for r in rs if r.get("player_present", True)]
+        nl = len(live)
+        k = sum(1 for r in live if is_clean(r))
+        lo, hi = wilson_ci(k, nl) if nl else (0, 0)
+        def rate(pred, rows=None):
+            rows = rs if rows is None else rows
+            return round(sum(1 for r in rows if pred(r)) / len(rows), 4) if rows else None
         lb.append({
             "model": model,
             "n_turns": n,
-            "bundled_rate": round(k / n, 4),
-            "bundled_ci": [round(lo, 4), round(hi, 4)],
+            "n_live_turns": nl,
+            "clean_handback_rate": round(k / nl, 4) if nl else None,
+            "clean_handback_ci": [round(lo, 4), round(hi, 4)],
+            "dead_scene_rate": rate(lambda r: not r.get("player_present", True)),
+            "demands_0": rate(lambda r: r["n_obligations"] == 0, live),
+            "demands_1": rate(lambda r: r["n_obligations"] == 1, live),
+            "demands_2plus": rate(
+                lambda r: r["n_obligations"] >= BUNDLED_THRESHOLD, live),
+            "handholds_map_rate": rate(lambda r: r.get("handholds") == "map", live),
+            "generic_prompt_rate": rate(
+                lambda r: r.get("handholds") == "generic_prompt", live),
+            "no_opening_rate": rate(
+                lambda r: r.get("handholds") == "none"
+                or r.get("handback") == "no_opening", live),
+            "over_resolved_rate": rate(
+                lambda r: r.get("handback") == "over_resolved", live),
+            "pc_interiority_leak_rate": rate(
+                lambda r: r.get("pc_interiority_leak")),
+            "npc_grading_rate": rate(lambda r: r.get("npc_grading")),
+            "monologue_rate": rate(lambda r: r.get("monologue")),
+            "manufactured_tension_rate": rate(
+                lambda r: r.get("manufactured_tension")),
             "mean_obligations": round(st.mean(r["n_obligations"] for r in rs), 3),
-            "mean_rhetorical": round(
-                st.mean(r.get("n_rhetorical", 0) for r in rs), 3),
-            "crosstalk_rate": round(
-                sum(1 for r in rs if r.get("crosstalk_present")) / n, 4),
-            "puppeted_rate": round(
-                sum(1 for r in rs if r.get("puppeted_user")) / n, 4),
         })
-    lb.sort(key=lambda r: r["bundled_rate"])
+    lb.sort(key=lambda r: -(r["clean_handback_rate"] or 0))
 
     print("Primary judge: %s" % primary)
-    print("%-26s %6s %18s %7s %8s %9s" % (
-        "model", "turns", "bundled%", "mean", "cross%", "puppet%"))
-    print("-" * 80)
+    print("Headline: clean handback = player present, stops where they act,"
+          " leaves purchase, <=1 demand, no interiority leak.\n")
+    print("%-24s %5s %17s %6s %6s %6s %6s %6s %6s" % (
+        "model", "live", "clean handback%", "dem0", "dem1", "dem2+",
+        "dead%", "noOpn%", "leak%"))
+    print("-" * 92)
     for r in lb:
-        print("%-26s %6d  %5.1f [%4.1f-%4.1f] %7.2f %7.1f %8.1f" % (
-            r["model"], r["n_turns"], r["bundled_rate"] * 100,
-            r["bundled_ci"][0] * 100, r["bundled_ci"][1] * 100,
-            r["mean_obligations"], r["crosstalk_rate"] * 100,
-            r["puppeted_rate"] * 100))
+        print("%-24s %5d  %5.1f [%4.1f-%4.1f] %5.0f%% %5.0f%% %5.0f%% %5.0f%%"
+              " %5.0f%% %5.0f%%" % (
+            r["model"], r["n_live_turns"], (r["clean_handback_rate"] or 0) * 100,
+            r["clean_handback_ci"][0] * 100, r["clean_handback_ci"][1] * 100,
+            (r["demands_0"] or 0) * 100, (r["demands_1"] or 0) * 100,
+            (r["demands_2plus"] or 0) * 100, (r["dead_scene_rate"] or 0) * 100,
+            (r["no_opening_rate"] or 0) * 100,
+            (r["pc_interiority_leak_rate"] or 0) * 100))
+
+    sec = [(r["model"], r["npc_grading_rate"], r["monologue_rate"],
+            r["manufactured_tension_rate"], r["handholds_map_rate"],
+            r["generic_prompt_rate"]) for r in lb]
+    print("\nSECONDARY (anti-patterns from the same spine)")
+    print("%-24s %8s %8s %10s %8s %9s"
+          % ("model", "grading%", "monolog%", "spawnTens%", "map%", "genericQ%"))
+    print("-" * 74)
+    for m, g, mo, mt, hm, gp in sec:
+        print("%-24s %7.0f%% %7.0f%% %9.0f%% %7.0f%% %8.0f%%"
+              % (m, (g or 0) * 100, (mo or 0) * 100, (mt or 0) * 100,
+                 (hm or 0) * 100, (gp or 0) * 100))
 
     # --- 2. correlation gate ----------------------------------------------
     composite, mt_arena = {}, {}
@@ -171,6 +223,7 @@ def main():
         w = words.get(r["model"])
         r["obligations_per_1k_words"] = (
             round(r["mean_obligations"] / w * 1000, 3) if w else None)
+        r["mean_words"] = w
 
     def rho(ref, field):
         pairs = [(r[field], ref[r["model"]]) for r in lb
@@ -180,19 +233,22 @@ def main():
         return spearman([p[0] for p in pairs], [p[1] for p in pairs]), len(pairs)
 
     gate = {
-        "bundled_vs_composite": rho(composite, "bundled_rate"),
-        "bundled_vs_mt_arena_elo": rho(mt_arena, "bundled_rate"),
-        "bundled_vs_mean_words": rho(words, "bundled_rate"),
+        "clean_handback_vs_composite": rho(composite, "clean_handback_rate"),
+        "clean_handback_vs_mt_arena_elo": rho(mt_arena, "clean_handback_rate"),
+        "clean_handback_vs_mean_words": rho(words, "clean_handback_rate"),
+        "demands_2plus_vs_composite": rho(composite, "demands_2plus"),
+        "demands_2plus_vs_mt_arena_elo": rho(mt_arena, "demands_2plus"),
         "per_1k_vs_composite": rho(composite, "obligations_per_1k_words"),
         "per_1k_vs_mt_arena_elo": rho(mt_arena, "obligations_per_1k_words"),
     }
-    print("\nCORRELATION GATE (negative = bundling tracks a worse ranking)")
+    print("\nCORRELATION GATE (clean_handback is GOOD: positive = tracks a better"
+          " ranking. demands_2plus is BAD: negative tracks better.)")
     for name, (v, n) in gate.items():
         print("  %-26s rho = %s (n=%d)"
               % (name, "n/a" if v is None else "%+.3f" % v, n))
 
     # --- 3. rules vs judge -------------------------------------------------
-    print("\nRULES vs JUDGE (per turn, primary judge)")
+    print("\nRULES vs JUDGE (obligation counts per turn, primary judge)")
     rules = rule_based_per_turn()
     pairs = [(rules[(r["session_id"], r["turn"])], r["n_obligations"])
              for r in scored if r["judge_key"] == primary
@@ -217,18 +273,20 @@ def main():
     # --- 4. inter-judge agreement ------------------------------------------
     inter = {}
     if len(judges) > 1:
-        print("\nINTER-JUDGE AGREEMENT (bundled flag, turns both judges scored)")
+        print("\nINTER-JUDGE AGREEMENT (clean-handback verdict; rho on raw"
+              " obligation counts)")
         by_key = defaultdict(dict)
         for r in scored:
-            by_key[(r["session_id"], r["turn"])][r["judge_key"]] = r["n_obligations"]
+            by_key[(r["session_id"], r["turn"])][r["judge_key"]] = (
+                r["n_obligations"], is_clean(r))
         for j1, j2 in combinations(judges, 2):
             both = [(v[j1], v[j2]) for v in by_key.values() if j1 in v and j2 in v]
             if len(both) < 3:
                 continue
-            b1 = [x >= BUNDLED_THRESHOLD for x, _ in both]
-            b2 = [y >= BUNDLED_THRESHOLD for _, y in both]
+            b1 = [x[1] for x, _ in both]
+            b2 = [y[1] for _, y in both]
             k = cohens_kappa(b1, b2)
-            r_ = spearman([x for x, _ in both], [y for _, y in both])
+            r_ = spearman([x[0] for x, _ in both], [y[0] for _, y in both])
             inter["%s|%s" % (j1, j2)] = {"n": len(both), "kappa": k, "rho": r_}
             print("  %-22s vs %-22s n=%4d  kappa=%s  rho=%s"
                   % (j1, j2, len(both),

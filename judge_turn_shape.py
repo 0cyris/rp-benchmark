@@ -59,9 +59,9 @@ EXTRA_JUDGES = {
 }
 ALL_JUDGES = {**JUDGE_MODELS, **EXTRA_JUDGES}
 
-# Extraction, not composition: keep it deterministic and short. The output is a
-# handful of quotes, so 4096 tokens of headroom is generous.
-JUDGE_CONFIG = {"temperature": 0.0, "max_tokens": 1500}
+# Extraction, not composition: keep it deterministic. The output is a handful of
+# quotes plus the shape flags for each turn in the batch.
+JUDGE_CONFIG = {"temperature": 0.0, "max_tokens": 2500}
 
 MIN_TURN_CHARS = 50
 
@@ -336,8 +336,16 @@ def main():
                 rec["obligations"] = counted
                 rec["n_obligations"] = len(counted)   # counted client-side
                 rec["n_rhetorical"] = sum(1 for o in raw if o.get("rhetorical"))
+                # Shape, per the GM-card spec's system-agnostic behavioral spine:
+                # describe-then-stop, scene-as-map, never act for the player.
+                rec["player_present"] = entry.get("player_present", True) is not False
+                rec["handholds"] = entry.get("handholds")
+                rec["handback"] = entry.get("handback")
+                rec["pc_interiority_leak"] = bool(entry.get("pc_interiority_leak"))
                 rec["crosstalk_present"] = bool(entry.get("crosstalk_present"))
-                rec["puppeted_user"] = bool(entry.get("puppeted_user"))
+                rec["npc_grading"] = bool(entry.get("npc_grading"))
+                rec["monologue"] = bool(entry.get("monologue"))
+                rec["manufactured_tension"] = bool(entry.get("manufactured_tension"))
                 rec["notes"] = entry.get("notes", "")
             rows.append(rec)
 
