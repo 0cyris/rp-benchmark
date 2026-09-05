@@ -1,0 +1,599 @@
+{
+  "n_sessions": 356,
+  "n_models": 21,
+  "n_turns_scored": 4244,
+  "n_turns_empty": 28,
+  "thresholds": {
+    "bundled_threshold": 2,
+    "penalty_per_obligation": 20,
+    "max_penalty": 60
+  },
+  "correlations": {
+    "bundled_rate_vs_composite": {
+      "rho": 0.4467532467532468,
+      "n": 21
+    },
+    "bundled_rate_vs_mt_arena_elo": {
+      "rho": 0.5015037593984962,
+      "n": 20
+    },
+    "bundled_rate_vs_mean_words": {
+      "rho": 0.7376623376623377,
+      "n": 21
+    }
+  },
+  "per_seed_mean_obligations": {
+    "adv_agency_bait_01": 0.265,
+    "adv_agency_combat_10": 0.336,
+    "adv_agency_emotional_climax_09": 0.444,
+    "adv_agency_romance_11": 0.335,
+    "adv_bigcard_buried_details_18": 0.448,
+    "adv_bigcard_relationship_web_19": 0.817,
+    "adv_bigcard_rules_overload_20": 0.3,
+    "adv_character_break_bait_07": 0.462,
+    "adv_contradictory_lore_02": 1.192,
+    "adv_genre_shift_08": 0,
+    "adv_impossible_physics_04": 1.128,
+    "adv_passive_user_03": 0.692,
+    "adv_pov_multi_npc_13": 0.803,
+    "adv_pov_second_person_12": 0.206,
+    "adv_pov_tense_action_14": 0.165,
+    "adv_subtle_ooc_06": 0.609,
+    "adv_sysprompt_forbidden_topic_17": 0.706,
+    "adv_sysprompt_speech_pattern_15": 0.502,
+    "adv_sysprompt_style_restriction_16": 0.061,
+    "adv_time_pressure_05": 0.077
+  },
+  "leaderboard": [
+    {
+      "model": "llama_4_maverick",
+      "n_turns": 240,
+      "bundled_rate_loose": 0.0167,
+      "bundled_ci_loose": [
+        0.0065,
+        0.0421
+      ],
+      "bundled_rate_strict": 0.0833,
+      "bundled_ci_strict": [
+        0.0546,
+        0.1252
+      ],
+      "mean_obligations_loose": 0.2,
+      "mean_obligations_strict": 0.412,
+      "mean_terminal_obligations": 0.138,
+      "mean_shape_score_loose": 99.5,
+      "mean_shape_score_strict": 98.167,
+      "obligations_per_1k_chars": 0.272,
+      "mean_dialogue_blocks": 1.913,
+      "mean_words": 172.037,
+      "no_dialogue_rate": 0.2917,
+      "no_player_directed_rate": 0.5583,
+      "ambiguous_span_rate": 0.6008,
+      "within_seed_avg_rank": 5.75
+    },
+    {
+      "model": "kimi_k2_5",
+      "n_turns": 144,
+      "bundled_rate_loose": 0.0486,
+      "bundled_ci_loose": [
+        0.0237,
+        0.0969
+      ],
+      "bundled_rate_strict": 0.1458,
+      "bundled_ci_strict": [
+        0.0974,
+        0.2127
+      ],
+      "mean_obligations_loose": 0.299,
+      "mean_obligations_strict": 0.688,
+      "mean_terminal_obligations": 0.139,
+      "mean_shape_score_loose": 98.472,
+      "mean_shape_score_strict": 95.694,
+      "obligations_per_1k_chars": 0.196,
+      "mean_dialogue_blocks": 4.049,
+      "mean_words": 251.868,
+      "no_dialogue_rate": 0.1458,
+      "no_player_directed_rate": 0.4375,
+      "ambiguous_span_rate": 0.6203,
+      "within_seed_avg_rank": 9.08
+    },
+    {
+      "model": "grok_4_1",
+      "n_turns": 239,
+      "bundled_rate_loose": 0.0502,
+      "bundled_ci_loose": [
+        0.029,
+        0.0857
+      ],
+      "bundled_rate_strict": 0.1046,
+      "bundled_ci_strict": [
+        0.0719,
+        0.1499
+      ],
+      "mean_obligations_loose": 0.326,
+      "mean_obligations_strict": 0.586,
+      "mean_terminal_obligations": 0.176,
+      "mean_shape_score_loose": 98.828,
+      "mean_shape_score_strict": 97.49,
+      "obligations_per_1k_chars": 0.464,
+      "mean_dialogue_blocks": 1.9,
+      "mean_words": 134.791,
+      "no_dialogue_rate": 0.1255,
+      "no_player_directed_rate": 0.5021,
+      "ambiguous_span_rate": 0.5957,
+      "within_seed_avg_rank": 8.25
+    },
+    {
+      "model": "deepseek_v3_2",
+      "n_turns": 240,
+      "bundled_rate_loose": 0.0583,
+      "bundled_ci_loose": [
+        0.0351,
+        0.0955
+      ],
+      "bundled_rate_strict": 0.1208,
+      "bundled_ci_strict": [
+        0.0855,
+        0.1682
+      ],
+      "mean_obligations_loose": 0.271,
+      "mean_obligations_strict": 0.542,
+      "mean_terminal_obligations": 0.129,
+      "mean_shape_score_loose": 98.167,
+      "mean_shape_score_strict": 96.333,
+      "obligations_per_1k_chars": 0.283,
+      "mean_dialogue_blocks": 2.917,
+      "mean_words": 176.296,
+      "no_dialogue_rate": 0.1792,
+      "no_player_directed_rate": 0.4583,
+      "ambiguous_span_rate": 0.6272,
+      "within_seed_avg_rank": 5.9
+    },
+    {
+      "model": "gemini_3_1_pro",
+      "n_turns": 137,
+      "bundled_rate_loose": 0.0584,
+      "bundled_ci_loose": [
+        0.0299,
+        0.111
+      ],
+      "bundled_rate_strict": 0.1825,
+      "bundled_ci_strict": [
+        0.1268,
+        0.2555
+      ],
+      "mean_obligations_loose": 0.343,
+      "mean_obligations_strict": 0.766,
+      "mean_terminal_obligations": 0.255,
+      "mean_shape_score_loose": 98.248,
+      "mean_shape_score_strict": 94.161,
+      "obligations_per_1k_chars": 0.237,
+      "mean_dialogue_blocks": 4.197,
+      "mean_words": 260.92,
+      "no_dialogue_rate": 0.1387,
+      "no_player_directed_rate": 0.3869,
+      "ambiguous_span_rate": 0.6523,
+      "within_seed_avg_rank": 10.83
+    },
+    {
+      "model": "gemini_2_5_flash",
+      "n_turns": 240,
+      "bundled_rate_loose": 0.0625,
+      "bundled_ci_loose": [
+        0.0382,
+        0.1005
+      ],
+      "bundled_rate_strict": 0.1458,
+      "bundled_ci_strict": [
+        0.1068,
+        0.1961
+      ],
+      "mean_obligations_loose": 0.279,
+      "mean_obligations_strict": 0.546,
+      "mean_terminal_obligations": 0.183,
+      "mean_shape_score_loose": 98.333,
+      "mean_shape_score_strict": 95.917,
+      "obligations_per_1k_chars": 0.403,
+      "mean_dialogue_blocks": 2.138,
+      "mean_words": 135.654,
+      "no_dialogue_rate": 0.2167,
+      "no_player_directed_rate": 0.5083,
+      "ambiguous_span_rate": 0.5989,
+      "within_seed_avg_rank": 6.05
+    },
+    {
+      "model": "glm_5_1",
+      "n_turns": 144,
+      "bundled_rate_loose": 0.0625,
+      "bundled_ci_loose": [
+        0.0332,
+        0.1145
+      ],
+      "bundled_rate_strict": 0.1736,
+      "bundled_ci_strict": [
+        0.1204,
+        0.2437
+      ],
+      "mean_obligations_loose": 0.326,
+      "mean_obligations_strict": 0.688,
+      "mean_terminal_obligations": 0.111,
+      "mean_shape_score_loose": 98.472,
+      "mean_shape_score_strict": 95.139,
+      "obligations_per_1k_chars": 0.216,
+      "mean_dialogue_blocks": 5.229,
+      "mean_words": 240.785,
+      "no_dialogue_rate": 0.0764,
+      "no_player_directed_rate": 0.2708,
+      "ambiguous_span_rate": 0.6252,
+      "within_seed_avg_rank": 10.58
+    },
+    {
+      "model": "deepseek_v4_flash",
+      "n_turns": 141,
+      "bundled_rate_loose": 0.0709,
+      "bundled_ci_loose": [
+        0.039,
+        0.1256
+      ],
+      "bundled_rate_strict": 0.1135,
+      "bundled_ci_strict": [
+        0.0711,
+        0.1764
+      ],
+      "mean_obligations_loose": 0.348,
+      "mean_obligations_strict": 0.546,
+      "mean_terminal_obligations": 0.184,
+      "mean_shape_score_loose": 98.014,
+      "mean_shape_score_strict": 96.596,
+      "obligations_per_1k_chars": 0.354,
+      "mean_dialogue_blocks": 2.879,
+      "mean_words": 171.78,
+      "no_dialogue_rate": 0.0993,
+      "no_player_directed_rate": 0.3404,
+      "ambiguous_span_rate": 0.5352,
+      "within_seed_avg_rank": 11.25
+    },
+    {
+      "model": "qwen3_5_flash",
+      "n_turns": 240,
+      "bundled_rate_loose": 0.0917,
+      "bundled_ci_loose": [
+        0.0613,
+        0.1349
+      ],
+      "bundled_rate_strict": 0.2083,
+      "bundled_ci_strict": [
+        0.1617,
+        0.2641
+      ],
+      "mean_obligations_loose": 0.383,
+      "mean_obligations_strict": 0.871,
+      "mean_terminal_obligations": 0.167,
+      "mean_shape_score_loose": 97.333,
+      "mean_shape_score_strict": 93.25,
+      "obligations_per_1k_chars": 0.285,
+      "mean_dialogue_blocks": 5.071,
+      "mean_words": 229.104,
+      "no_dialogue_rate": 0.2333,
+      "no_player_directed_rate": 0.375,
+      "ambiguous_span_rate": 0.6506,
+      "within_seed_avg_rank": 7.4
+    },
+    {
+      "model": "glm_4_7",
+      "n_turns": 239,
+      "bundled_rate_loose": 0.0921,
+      "bundled_ci_loose": [
+        0.0616,
+        0.1354
+      ],
+      "bundled_rate_strict": 0.1757,
+      "bundled_ci_strict": [
+        0.1327,
+        0.229
+      ],
+      "mean_obligations_loose": 0.423,
+      "mean_obligations_strict": 0.728,
+      "mean_terminal_obligations": 0.222,
+      "mean_shape_score_loose": 97.155,
+      "mean_shape_score_strict": 94.142,
+      "obligations_per_1k_chars": 0.298,
+      "mean_dialogue_blocks": 3.364,
+      "mean_words": 219.833,
+      "no_dialogue_rate": 0.1967,
+      "no_player_directed_rate": 0.3808,
+      "ambiguous_span_rate": 0.549,
+      "within_seed_avg_rank": 7.75
+    },
+    {
+      "model": "kimi_k2_6",
+      "n_turns": 129,
+      "bundled_rate_loose": 0.093,
+      "bundled_ci_loose": [
+        0.054,
+        0.1556
+      ],
+      "bundled_rate_strict": 0.1395,
+      "bundled_ci_strict": [
+        0.0901,
+        0.2098
+      ],
+      "mean_obligations_loose": 0.38,
+      "mean_obligations_strict": 0.636,
+      "mean_terminal_obligations": 0.24,
+      "mean_shape_score_loose": 97.984,
+      "mean_shape_score_strict": 95.969,
+      "obligations_per_1k_chars": 0.366,
+      "mean_dialogue_blocks": 3.302,
+      "mean_words": 218.922,
+      "no_dialogue_rate": 0.186,
+      "no_player_directed_rate": 0.3953,
+      "ambiguous_span_rate": 0.6106,
+      "within_seed_avg_rank": 11.08
+    },
+    {
+      "model": "claude_opus_4_7",
+      "n_turns": 144,
+      "bundled_rate_loose": 0.0972,
+      "bundled_ci_loose": [
+        0.0588,
+        0.1566
+      ],
+      "bundled_rate_strict": 0.2292,
+      "bundled_ci_strict": [
+        0.1681,
+        0.3043
+      ],
+      "mean_obligations_loose": 0.451,
+      "mean_obligations_strict": 1.139,
+      "mean_terminal_obligations": 0.118,
+      "mean_shape_score_loose": 97.083,
+      "mean_shape_score_strict": 91.25,
+      "obligations_per_1k_chars": 0.232,
+      "mean_dialogue_blocks": 5.444,
+      "mean_words": 411.417,
+      "no_dialogue_rate": 0.1528,
+      "no_player_directed_rate": 0.2153,
+      "ambiguous_span_rate": 0.5632,
+      "within_seed_avg_rank": 13
+    },
+    {
+      "model": "deepseek_v4_pro",
+      "n_turns": 144,
+      "bundled_rate_loose": 0.0972,
+      "bundled_ci_loose": [
+        0.0588,
+        0.1566
+      ],
+      "bundled_rate_strict": 0.2014,
+      "bundled_ci_strict": [
+        0.144,
+        0.2743
+      ],
+      "mean_obligations_loose": 0.403,
+      "mean_obligations_strict": 0.819,
+      "mean_terminal_obligations": 0.153,
+      "mean_shape_score_loose": 96.389,
+      "mean_shape_score_strict": 91.944,
+      "obligations_per_1k_chars": 0.244,
+      "mean_dialogue_blocks": 4.569,
+      "mean_words": 259.326,
+      "no_dialogue_rate": 0.1528,
+      "no_player_directed_rate": 0.2847,
+      "ambiguous_span_rate": 0.6014,
+      "within_seed_avg_rank": 11.58
+    },
+    {
+      "model": "gpt_4_1",
+      "n_turns": 240,
+      "bundled_rate_loose": 0.1042,
+      "bundled_ci_loose": [
+        0.0716,
+        0.1492
+      ],
+      "bundled_rate_strict": 0.125,
+      "bundled_ci_strict": [
+        0.089,
+        0.1728
+      ],
+      "mean_obligations_loose": 0.479,
+      "mean_obligations_strict": 0.625,
+      "mean_terminal_obligations": 0.225,
+      "mean_shape_score_loose": 97.25,
+      "mean_shape_score_strict": 95.917,
+      "obligations_per_1k_chars": 0.51,
+      "mean_dialogue_blocks": 2.975,
+      "mean_words": 204.887,
+      "no_dialogue_rate": 0.1667,
+      "no_player_directed_rate": 0.3,
+      "ambiguous_span_rate": 0.4685,
+      "within_seed_avg_rank": 9.25
+    },
+    {
+      "model": "gemini_3_1_flash_lite",
+      "n_turns": 144,
+      "bundled_rate_loose": 0.1111,
+      "bundled_ci_loose": [
+        0.0696,
+        0.1729
+      ],
+      "bundled_rate_strict": 0.1875,
+      "bundled_ci_strict": [
+        0.1322,
+        0.2591
+      ],
+      "mean_obligations_loose": 0.486,
+      "mean_obligations_strict": 0.736,
+      "mean_terminal_obligations": 0.299,
+      "mean_shape_score_loose": 97.5,
+      "mean_shape_score_strict": 95,
+      "obligations_per_1k_chars": 0.317,
+      "mean_dialogue_blocks": 3.215,
+      "mean_words": 259.583,
+      "no_dialogue_rate": 0.1181,
+      "no_player_directed_rate": 0.2569,
+      "ambiguous_span_rate": 0.4619,
+      "within_seed_avg_rank": 14.33
+    },
+    {
+      "model": "gemma_4_26b",
+      "n_turns": 240,
+      "bundled_rate_loose": 0.1167,
+      "bundled_ci_loose": [
+        0.082,
+        0.1634
+      ],
+      "bundled_rate_strict": 0.2167,
+      "bundled_ci_strict": [
+        0.1692,
+        0.273
+      ],
+      "mean_obligations_loose": 0.5,
+      "mean_obligations_strict": 0.938,
+      "mean_terminal_obligations": 0.217,
+      "mean_shape_score_loose": 96.25,
+      "mean_shape_score_strict": 91.75,
+      "obligations_per_1k_chars": 0.217,
+      "mean_dialogue_blocks": 3.954,
+      "mean_words": 346.775,
+      "no_dialogue_rate": 0.1708,
+      "no_player_directed_rate": 0.3875,
+      "ambiguous_span_rate": 0.5909,
+      "within_seed_avg_rank": 9.8
+    },
+    {
+      "model": "deepseek_r1_0528",
+      "n_turns": 240,
+      "bundled_rate_loose": 0.1333,
+      "bundled_ci_loose": [
+        0.0961,
+        0.1822
+      ],
+      "bundled_rate_strict": 0.3542,
+      "bundled_ci_strict": [
+        0.2964,
+        0.4165
+      ],
+      "mean_obligations_loose": 0.567,
+      "mean_obligations_strict": 1.696,
+      "mean_terminal_obligations": 0.225,
+      "mean_shape_score_loose": 94.833,
+      "mean_shape_score_strict": 83.833,
+      "obligations_per_1k_chars": 0.321,
+      "mean_dialogue_blocks": 5.246,
+      "mean_words": 268.475,
+      "no_dialogue_rate": 0.1458,
+      "no_player_directed_rate": 0.3958,
+      "ambiguous_span_rate": 0.67,
+      "within_seed_avg_rank": 10.85
+    },
+    {
+      "model": "claude_opus_4_6",
+      "n_turns": 240,
+      "bundled_rate_loose": 0.15,
+      "bundled_ci_loose": [
+        0.1104,
+        0.2007
+      ],
+      "bundled_rate_strict": 0.2458,
+      "bundled_ci_strict": [
+        0.1956,
+        0.304
+      ],
+      "mean_obligations_loose": 0.583,
+      "mean_obligations_strict": 1.038,
+      "mean_terminal_obligations": 0.1,
+      "mean_shape_score_loose": 95.5,
+      "mean_shape_score_strict": 91.083,
+      "obligations_per_1k_chars": 0.199,
+      "mean_dialogue_blocks": 5.117,
+      "mean_words": 539.925,
+      "no_dialogue_rate": 0.2333,
+      "no_player_directed_rate": 0.3292,
+      "ambiguous_span_rate": 0.5877,
+      "within_seed_avg_rank": 11
+    },
+    {
+      "model": "minimax_m2_7",
+      "n_turns": 239,
+      "bundled_rate_loose": 0.1715,
+      "bundled_ci_loose": [
+        0.129,
+        0.2244
+      ],
+      "bundled_rate_strict": 0.272,
+      "bundled_ci_strict": [
+        0.2195,
+        0.3317
+      ],
+      "mean_obligations_loose": 0.678,
+      "mean_obligations_strict": 1.213,
+      "mean_terminal_obligations": 0.134,
+      "mean_shape_score_loose": 95.146,
+      "mean_shape_score_strict": 89.623,
+      "obligations_per_1k_chars": 0.442,
+      "mean_dialogue_blocks": 5.527,
+      "mean_words": 261.987,
+      "no_dialogue_rate": 0.1548,
+      "no_player_directed_rate": 0.2385,
+      "ambiguous_span_rate": 0.5814,
+      "within_seed_avg_rank": 13.9
+    },
+    {
+      "model": "claude_sonnet_4_5",
+      "n_turns": 240,
+      "bundled_rate_loose": 0.175,
+      "bundled_ci_loose": [
+        0.1322,
+        0.2281
+      ],
+      "bundled_rate_strict": 0.3542,
+      "bundled_ci_strict": [
+        0.2964,
+        0.4165
+      ],
+      "mean_obligations_loose": 0.658,
+      "mean_obligations_strict": 1.342,
+      "mean_terminal_obligations": 0.15,
+      "mean_shape_score_loose": 94.75,
+      "mean_shape_score_strict": 86.917,
+      "obligations_per_1k_chars": 0.351,
+      "mean_dialogue_blocks": 6.1,
+      "mean_words": 314.892,
+      "no_dialogue_rate": 0.15,
+      "no_player_directed_rate": 0.3292,
+      "ambiguous_span_rate": 0.5852,
+      "within_seed_avg_rank": 11.3
+    },
+    {
+      "model": "mistral_small_creative",
+      "n_turns": 240,
+      "bundled_rate_loose": 0.25,
+      "bundled_ci_loose": [
+        0.1994,
+        0.3084
+      ],
+      "bundled_rate_strict": 0.4208,
+      "bundled_ci_strict": [
+        0.3601,
+        0.4841
+      ],
+      "mean_obligations_loose": 1.092,
+      "mean_obligations_strict": 2.087,
+      "mean_terminal_obligations": 0.071,
+      "mean_shape_score_loose": 90.417,
+      "mean_shape_score_strict": 82.5,
+      "obligations_per_1k_chars": 0.413,
+      "mean_dialogue_blocks": 7.271,
+      "mean_words": 421.212,
+      "no_dialogue_rate": 0.1083,
+      "no_player_directed_rate": 0.2625,
+      "ambiguous_span_rate": 0.6229,
+      "within_seed_avg_rank": 12.75
+    }
+  ],
+  "limitations": [
+    "Sessions were driven by a gemini-2.5-flash user simulator instructed to push the story and ask questions, so some bundling is a response to the simulated player rather than model habit.",
+    "Addressee classification is heuristic; see ambiguous_span_rate and compare the loose/strict bracket before trusting a ranking."
+  ]
+}
