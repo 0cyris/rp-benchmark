@@ -32,7 +32,7 @@ Usage:
 import json
 import statistics as st
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 from itertools import combinations
 from pathlib import Path
 
@@ -120,17 +120,41 @@ def main():
         return 1
 
     rows = load_judged()
-    scored = [r for r in rows if "n_obligations" in r]
+    all_scored = [r for r in rows if "n_obligations" in r]
     failed = [r for r in rows if r.get("parse_error") or r.get("error")]
-    judges = sorted({r["judge_key"] for r in rows})
     cost = sum((r.get("usage") or {}).get("cost") or 0.0 for r in rows)
 
-    print("JUDGED TURN SHAPE — player-directed response obligations")
+    # Never aggregate across prompt versions. A row written before the shape
+    # fields existed has no handback, so is_clean() would score it unclean and
+    # the ranking would become an artifact of which rows predate a prompt edit.
+    shaped = [r for r in all_scored if "handback" in r]
+    dominant = (Counter(r.get("prompt_sha", "legacy") for r in shaped)
+                .most_common(1)[0][0] if shaped else None)
+    scored = [r for r in shaped if r.get("prompt_sha", "legacy") == dominant]
+    stale = [r for r in all_scored if r not in scored]
+
+    judges = sorted({r["judge_key"] for r in scored}) or sorted(
+        {r["judge_key"] for r in rows})
+
+    print("JUDGED TURN SHAPE — response obligations and handback quality")
     print("%d turn records (%d scored, %d failed) across %d judge(s): %s"
-          % (len(rows), len(scored), len(failed), len(judges), ", ".join(judges)))
-    print("Actual spend: $%.2f\n" % cost)
+          % (len(rows), len(all_scored), len(failed), len(judges),
+             ", ".join(judges)))
+    print("Prompt version: %s | Actual spend: $%.2f" % (dominant, cost))
+    if stale:
+        by_model = Counter(r["model"] for r in stale)
+        print("\n" + "!" * 72)
+        print("EXCLUDED %d row(s) written under a different prompt version."
+              % len(stale))
+        for m, n in sorted(by_model.items()):
+            total = sum(1 for r in all_scored if r["model"] == m)
+            note = "  <-- ALL rows stale, model not ranked" if n == total else ""
+            print("   %-24s %3d/%d stale%s" % (m, n, total, note))
+        print("Refresh them:  python3 judge_turn_shape.py --stale-only")
+        print("!" * 72)
+    print()
     if not scored:
-        print("Nothing scored successfully.")
+        print("No rows at the current prompt version. Nothing to report.")
         return 1
 
     # --- 1. per-model leaderboard, primary judge --------------------------
@@ -208,6 +232,13 @@ def main():
         print("%-24s %7.0f%% %7.0f%% %9.0f%% %7.0f%% %8.0f%%"
               % (m, (g or 0) * 100, (mo or 0) * 100, (mt or 0) * 100,
                  (hm or 0) * 100, (gp or 0) * 100))
+
+    print("\nFIELD VARIANCE (a field that never varies is not contributing)")
+    for field in ("handholds", "handback", "player_present"):
+        dist = Counter(r.get(field) for r in scored)
+        flat = " <-- CONSTANT, contributes nothing to the headline" if len(dist) == 1 else ""
+        print("  %-15s %s%s"
+              % (field, ", ".join("%s=%d" % kv for kv in dist.most_common()), flat))
 
     # --- 2. correlation gate ----------------------------------------------
     composite, mt_arena = {}, {}

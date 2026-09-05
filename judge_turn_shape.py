@@ -14,8 +14,10 @@ Counting is done client-side from len(obligations) — a model-supplied integer 
 never trusted (same reasoning as judge_session_flaw_hunter.py).
 
 Output: results/turn_shape_judged.jsonl, append-only, one record per
-(session_id, turn, judge). The file is its own checkpoint — rerunning skips work
-already done, including for a different judge.
+(session_id, turn, judge, prompt version). The file is its own checkpoint —
+rerunning skips work already done, including for a different judge. The judge
+prompt's content hash is part of the key, so editing the prompt re-judges rather
+than silently leaving two schemas interleaved in one file.
 
 Usage:
     # Cost nothing, see what would be sent:
@@ -32,12 +34,13 @@ Usage:
     python3 judge_turn_shape.py --judges claude_sonnet --concurrency 8
 """
 import argparse
+import hashlib
 import json
 import random
 import sys
 import threading
 import time
-from collections import defaultdict
+from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
@@ -66,24 +69,45 @@ JUDGE_CONFIG = {"temperature": 0.0, "max_tokens": 2500}
 MIN_TURN_CHARS = 50
 
 
-def load_done(path: Path) -> set:
-    """Completed (session_id, turn, judge) keys.
+def prompt_fingerprint(text: str) -> str:
+    """Short content hash of the judge prompt.
 
-    The JSONL is the checkpoint — there is no separate state file. Unlike
-    judge_per_turn_failures.py the judge is part of the key, so a second judge
-    over the same turns is not skipped as already-done.
+    A content hash rather than a hand-maintained version constant: the failure
+    this guards against is a human forgetting that the output schema moved, and
+    a hash cannot forget.
     """
-    done = set()
+    return hashlib.sha256(text.encode()).hexdigest()[:12]
+
+
+def load_done(path: Path) -> tuple[set, set, Counter]:
+    """Read the checkpoint.
+
+    Returns (done, seen_any, by_sha):
+      done     — (session_id, turn, judge_key, prompt_sha) already judged
+      seen_any — (session_id, turn, judge_key) judged under *any* prompt version
+      by_sha   — row counts per prompt version, for reporting
+
+    The JSONL is the checkpoint; there is no separate state file. The prompt
+    fingerprint is part of the key because it has to be: keyed only on
+    (session, turn, judge), a rerun after a prompt rewrite silently skips every
+    previously judged turn and leaves one file holding two incompatible
+    schemas — which is exactly what happened, and it produced a leaderboard
+    that was pure artifact of which rows predated the change.
+    """
+    done, seen_any, by_sha = set(), set(), Counter()
     if not path.exists():
-        return done
+        return done, seen_any, by_sha
     with open(path) as f:
         for line in f:
             try:
                 r = json.loads(line)
-                done.add((r["session_id"], r["turn"], r["judge_key"]))
+                sha = r.get("prompt_sha", "legacy")
+                by_sha[sha] += 1
+                done.add((r["session_id"], r["turn"], r["judge_key"], sha))
+                seen_any.add((r["session_id"], r["turn"], r["judge_key"]))
             except Exception:
                 pass  # a torn final line costs one redone call
-    return done
+    return done, seen_any, by_sha
 
 
 def stratified(sessions: list, n_per_model: int, rng: random.Random) -> list:
@@ -131,7 +155,8 @@ def parse_judge_json(content: str) -> dict | None:
 
 
 def build_work(sessions: list, seeds: dict, judges: dict, done: set,
-               batch_size: int) -> list:
+               batch_size: int, prompt_sha: str, seen_any: set | None = None,
+               stale_only: bool = False) -> list:
     """Batches of turns from one session, for one judge.
 
     The system prompt is ~1.4k tokens and dominates cost: sent once per turn it
@@ -160,7 +185,13 @@ def build_work(sessions: list, seeds: dict, judges: dict, done: set,
                 turns.append({"turn": msg["turn"], "content": content})
 
         for jkey in judges:
-            pending = [t for t in turns if (sid, t["turn"], jkey) not in done]
+            pending = [t for t in turns
+                       if (sid, t["turn"], jkey, prompt_sha) not in done]
+            if stale_only:
+                # Only turns that already have a row under some *other* prompt
+                # version — the recovery path after a prompt edit.
+                pending = [t for t in pending
+                           if (sid, t["turn"], jkey) in (seen_any or set())]
             for i in range(0, len(pending), batch_size):
                 work.append({
                     "session_id": sid,
@@ -207,6 +238,9 @@ def main():
                          "(65%% of input tokens at batch size 1); keep it small "
                          "so a parse failure costs few turns.")
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--stale-only", action="store_true",
+                    help="Re-judge only turns already scored under an older "
+                         "prompt version (recovery after a prompt edit)")
     ap.add_argument("--dry-run", action="store_true",
                     help="Print assembled prompts and a cost estimate, call nothing")
     args = ap.parse_args()
@@ -232,17 +266,27 @@ def main():
 
     seeds = {s["id"]: s for s in json.loads(SEEDS_FILE.read_text())}
     system_prompt = PROMPT_FILE.read_text()
+    prompt_sha = prompt_fingerprint(system_prompt)
     out_path = Path(args.out)
-    done = load_done(out_path)
-    work = build_work(sessions, seeds, judges, done, args.batch_size)
+    done, seen_any, by_sha = load_done(out_path)
+    work = build_work(sessions, seeds, judges, done, args.batch_size,
+                      prompt_sha, seen_any, args.stale_only)
     if args.limit:
         work = work[:args.limit]
 
     n_turns = sum(len(w["turns"]) for w in work)
-    print("Sessions: %d | judges: %s | done: %d turns | to do: %d turns in %d calls"
-          " (batch %d)"
-          % (len(sessions), ", ".join(judges), len(done), n_turns, len(work),
-             args.batch_size))
+    print("Prompt version: %s" % prompt_sha)
+    stale = {sha: n for sha, n in by_sha.items() if sha != prompt_sha}
+    if stale:
+        print("WARNING: %d existing row(s) from %d older prompt version(s): %s"
+              % (sum(stale.values()), len(stale),
+                 ", ".join("%s=%d" % kv for kv in sorted(stale.items()))))
+        print("         They will be re-judged (or use --stale-only to do just"
+              " those). Analysis excludes rows from other versions.")
+    print("Sessions: %d | judges: %s | done at this version: %d turns |"
+          " to do: %d turns in %d calls (batch %d)"
+          % (len(sessions), ", ".join(judges), by_sha.get(prompt_sha, 0),
+             n_turns, len(work), args.batch_size))
 
     if args.dry_run:
         # Rough token estimate at ~4 chars/token; the real number comes back in
@@ -297,6 +341,7 @@ def main():
         base = {
             "session_id": w["session_id"], "model": w["model"], "seed": w["seed"],
             "judge_key": w["judge_key"], "judge": judges[w["judge_key"]],
+            "prompt_sha": prompt_sha,
         }
         usage = (res.get("resp") or {}).get("usage")
         parsed = res.get("parsed")
