@@ -72,17 +72,26 @@ def load_judged() -> list[dict]:
     return rows
 
 
-def cohens_kappa(a: list[bool], b: list[bool]) -> float | None:
-    """Unweighted Cohen's kappa for two binary raters."""
+def cohens_kappa(a: list[bool], b: list[bool]) -> tuple:
+    """Unweighted Cohen's kappa, plus the raw numbers behind it.
+
+    Returns (kappa, observed_agreement, positive_rate_a, positive_rate_b).
+    kappa is None when it is undefined (no data, or both raters constant).
+
+    The raw agreement matters as much as kappa here: clean_handback runs ~80%
+    positive, and kappa is base-rate sensitive, so two judges agreeing on 90%
+    of turns can still post a mediocre kappa purely from the skew. Reporting
+    kappa alone would invite reading a usable metric as a broken one.
+    """
     n = len(a)
     if n == 0:
-        return None
+        return None, None, None, None
     obs = sum(1 for x, y in zip(a, b) if x == y) / n
     pa1, pb1 = sum(a) / n, sum(b) / n
     exp = pa1 * pb1 + (1 - pa1) * (1 - pb1)
     if exp >= 1.0:
-        return None  # both raters constant: kappa undefined
-    return (obs - exp) / (1 - exp)
+        return None, obs, pa1, pb1  # both raters constant: kappa undefined
+    return (obs - exp) / (1 - exp), obs, pa1, pb1
 
 
 def safe_load(path: Path):
@@ -300,7 +309,7 @@ def main():
         rb = [p[0] >= BUNDLED_THRESHOLD for p in pairs]
         jb = [p[1] >= BUNDLED_THRESHOLD for p in pairs]
         agree = sum(1 for x, y in zip(rb, jb) if x == y) / len(pairs)
-        k = cohens_kappa(rb, jb)
+        k, _, _, _ = cohens_kappa(rb, jb)
         print("  n=%d turns | exact count match %.1f%% | bundled agreement %.1f%%"
               % (len(pairs),
                  sum(1 for a_, b_ in pairs if a_ == b_) / len(pairs) * 100,
@@ -328,14 +337,23 @@ def main():
                 continue
             b1 = [x[1] for x, _ in both]
             b2 = [y[1] for _, y in both]
-            k = cohens_kappa(b1, b2)
+            k, obs, p1, p2 = cohens_kappa(b1, b2)
             r_ = spearman([x[0] for x, _ in both], [y[0] for _, y in both])
-            inter["%s|%s" % (j1, j2)] = {"n": len(both), "kappa": k, "rho": r_}
-            print("  %-22s vs %-22s n=%4d  kappa=%s  rho=%s"
+            inter["%s|%s" % (j1, j2)] = {
+                "n": len(both), "kappa": k, "rho": r_,
+                "observed_agreement": obs,
+                "positive_rate": [p1, p2],
+            }
+            print("  %-20s vs %-20s n=%4d  kappa=%s  agree=%5.1f%%"
+                  "  pos=%.0f%%/%.0f%%  rho=%s"
                   % (j1, j2, len(both),
                      "n/a" if k is None else "%+.3f" % k,
+                     obs * 100, p1 * 100, p2 * 100,
                      "n/a" if r_ is None else "%+.3f" % r_))
         print("  (kappa > 0.60 substantial, 0.40-0.60 moderate, < 0.40 poor)")
+        print("  Read kappa against agree% and pos%: a low kappa alongside high")
+        print("  agreement and a lopsided positive rate is base-rate skew, not")
+        print("  judges disagreeing about what a clean handback is.")
 
     OUTPUT.write_text(json.dumps({
         "n_records": len(rows), "n_scored": len(scored), "n_failed": len(failed),
