@@ -137,6 +137,44 @@ def is_well_shaped(r: dict) -> bool:
 is_clean = is_well_shaped
 
 
+def hands_back(r: dict) -> bool:
+    """Did the turn hand the player anything to answer?
+
+    The headline is one-sided: n_obligations <= 1 treats a turn that asks one
+    clean question and a turn that asks nothing as equally good. On the court
+    smoke test that hid the clearest arm difference produced so far -- the
+    unprompted arm addressed the player in 0 of 9 turns, running a five-way
+    NPC argument past them at ~180 words each, and still scored 100% well
+    shaped, while the prompted arm asked one question and stopped.
+
+    Reported beside the headline, never folded into it: a silent turn is
+    genuinely the best shape when the description carries the handoff (the
+    GM-card 'scene-as-map' case, and what ts_empty_room_06 exists to test).
+    What this separates is one silent turn from a scene the model is running
+    without the player -- see the run-length statistic, which is the part a
+    per-turn rate cannot express.
+    """
+    return r.get("n_obligations", 0) >= 1 or r.get("handholds") == "generic_prompt"
+
+
+def longest_silent_run(rows: list[dict]) -> int:
+    """Longest consecutive stretch of turns handing the player nothing.
+
+    Rows are one cell (model x seed x arm); ordering is by turn number, and
+    gaps (a turn the judge dropped) do not join two runs across the hole.
+    """
+    best = run = 0
+    prev_turn = None
+    for r in sorted(rows, key=lambda x: x["turn"]):
+        if hands_back(r):
+            run = 0
+        else:
+            run = run + 1 if prev_turn is not None and r["turn"] - prev_turn <= 2 else 1
+            best = max(best, run)
+        prev_turn = r["turn"]
+    return best
+
+
 def load_judged(path: Path = JUDGED) -> list[dict]:
     rows = []
     with open(path) as f:
@@ -172,6 +210,14 @@ def cohens_kappa(a: list[bool], b: list[bool]) -> tuple:
 
 def safe_load(path: Path):
     return json.loads(path.read_text()) if path.exists() else None
+
+
+def _by_cell(rows: list[dict]) -> dict:
+    """Group judged rows by (seed, arm) — one scene run, in turn order."""
+    out = defaultdict(list)
+    for r in rows:
+        out[(r["seed"], r.get("arm"))].append(r)
+    return out
 
 
 def _share(rows: list[dict], pred) -> float | None:
@@ -369,6 +415,12 @@ def main():
                 lambda r: r.get("manufactured_tension")),
             "mean_obligations": round(st.mean(r["n_obligations"] for r in rs), 3),
             "mean_words": _mean_words(rs, turn_words),
+            "floor_rate": rate(hands_back, live),
+            # Worst cell, not the mean: one model-seed-arm where the model ran
+            # nine straight turns without the player is the finding, and
+            # averaging it against well-behaved cells would erase it.
+            "max_silent_run": max(
+                (longest_silent_run(g) for g in _by_cell(rs).values()), default=0),
         })
         # The same headline over discriminating seeds only. Where a constant
         # seed exists this is the number that should drive the ranking; the
@@ -433,22 +485,32 @@ def main():
         print("        excl-const% drops them; it is the column that carries"
               " ranking signal.")
     print()
-    print("%-24s %5s %17s %10s %6s %6s %6s %6s %7s %6s" % (
-        "model", "live", "well-shaped%", "excl-const", "dem0", "dem1", "dem2+",
-        "leak%", "meanObl", "words"))
-    print("-" * 104)
+    print("%-24s %5s %17s %10s %6s %6s %6s %6s %6s %5s %7s %6s" % (
+        "model", "live", "well-shaped%", "excl-const", "floor%", "dem0", "dem1",
+        "dem2+", "leak%", "run", "meanObl", "words"))
+    print("-" * 118)
     for r in lb:
         ec = r["clean_rate_excl_constant"]
-        print("%-24s %5d  %5.1f [%4.1f-%4.1f] %9s %5.0f%% %5.0f%% %5.0f%%"
-              " %5.0f%% %6.2f %6s" % (
+        print("%-24s %5d  %5.1f [%4.1f-%4.1f] %9s %5.0f%% %5.0f%% %5.0f%% %5.0f%%"
+              " %5.0f%% %5d %6.2f %6s" % (
             r["model"], r["n_live_turns"], (r["clean_handback_rate"] or 0) * 100,
             r["clean_handback_ci"][0] * 100, r["clean_handback_ci"][1] * 100,
             "-" if ec is None else "%.1f%%" % (ec * 100),
+            (r["floor_rate"] or 0) * 100,
             (r["demands_0"] or 0) * 100, (r["demands_1"] or 0) * 100,
             (r["demands_2plus"] or 0) * 100,
             (r["pc_interiority_leak_rate"] or 0) * 100,
+            r["max_silent_run"],
             r["mean_obligations"],
             "-" if r["mean_words"] is None else "%.0f" % r["mean_words"]))
+    print("  floor% = share of turns handing the player anything to answer."
+          " The headline is one-sided and")
+    print("  scores 'asked one clean question' and 'ran the scene past you for"
+          " 180 words' identically;")
+    print("  floor% and run separate them. run = longest consecutive silent"
+          " stretch in any one scene —")
+    print("  one silent turn is good shape, nine in a row is the model playing"
+          " without the player.")
     print("  meanObl is the continuous companion: judges agree on the count at"
           " rho +0.63..+0.75, better than on any binary derived from it.")
     print("  leak%% is reported at reliability '%s' — read it as indicative."
@@ -481,12 +543,15 @@ def main():
         # the same discipline the leaderboard's leak% column already uses.
         ARM_METRICS = [
             ("headline", None, lambda rs: cell_rate(rs)),
+            ("floor", "demands", lambda rs: _share(rs, hands_back)),
             ("demands<=1", "demands",
              lambda rs: _share(rs, lambda x: x.get("n_obligations", 0) <= 1)),
             ("map", "handholds_not_none",
              lambda rs: _share(rs, lambda x: x.get("handholds") == "map")),
             ("genericQ", "handholds_not_none",
              lambda rs: _share(rs, lambda x: x.get("handholds") == "generic_prompt")),
+            ("monologue", "monologue",
+             lambda rs: _share(rs, lambda x: bool(x.get("monologue")))),
             ("leak", "pc_interiority_leak",
              lambda rs: _share(rs, lambda x: bool(x.get("pc_interiority_leak")))),
             ("over_res", "handback_clean",
