@@ -75,6 +75,14 @@ questions each expecting an answer: **3 obligations**.
 words, actions, or thoughts in the player character's mouth, the AI has already
 answered for them. Set `pc_interiority_leak` and do not count those lines.
 
+Use the `<preceding>` block to judge this. Echoing or reacting to something the
+player just did is correct and is NOT a leak — the AI must be able to say what the
+player's action met. A leak is the AI supplying what the player did not: performing an
+action they only offered, delivering their dialogue for them, or narrating their
+thoughts, body, or choices. When the player says *"I could describe the missing bolts,
+if that would help"* and the turn then delivers that description in the player's voice,
+the AI has taken their turn — that is both a leak and `over_resolved`.
+
 ## Part 2 — Shape
 
 For each turn also report:
@@ -94,7 +102,11 @@ scene.
 **`handback`** — how control is returned:
 - `clean` — the turn describes and stops at the point where the player acts.
 - `over_resolved` — it plays out the player's action, assumes their turn is over, or
-  resolves the outcome of something the player should have decided.
+  resolves the outcome of something the player should have decided. Judge this against
+  the `<preceding>` block: compare what the player actually committed to with what the
+  turn treats as already done. Carrying a scene past the point where the player would
+  next act — closing the hearing, ending the meeting, moving them to another location —
+  is `over_resolved` even when the prose is graceful.
 - `no_opening` — the turn closes the scene or leaves no point of entry.
 
 **`pc_interiority_leak`** — the turn narrated the player character's thoughts,
@@ -119,14 +131,25 @@ The AI plays: [character name and description]
 The player plays: [player character name and description]
 </scene>
 
+<preceding speaker="[player name]">
+[what the player did immediately before the turn below]
+</preceding>
 <turn n="2">
 [an AI-written turn]
 </turn>
 
+<preceding speaker="[player name]">
+[the player's next move]
+</preceding>
 <turn n="4">
 [another AI-written turn from the same scene]
 </turn>
 ```
+
+**Score only the `<turn>` blocks.** A `<preceding>` block is the player's own move,
+given so you can tell a turn that answered it from one that performed it for them.
+Never count obligations inside `<preceding>`, and never report a result for it. The
+first turn of a scene may have no `<preceding>` block.
 
 ## Output Format
 

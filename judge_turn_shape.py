@@ -236,15 +236,33 @@ def build_work(sessions: list, seeds: dict, judges: dict, done: set,
                 "user_name": scene["character_name"],
                 "user_setting": scene["character_setting"],
             }
+        # The turn immediately before each judged turn -- the player's move, or
+        # the seed opening for the first one. Two schema fields are unjudgeable
+        # without it: handback == over_resolved is defined as playing out the
+        # player's action, and pc_interiority_leak as writing their words or
+        # choices. Both need to know what the player actually did. They were the
+        # two weakest fields in the pilot (kappa +0.285 and +0.314) and fired on
+        # 0 of 18 turns in the court smoke test even where the model wrote the
+        # player's entire testimony -- the judge was blindfolded, not
+        # disagreeing.
+        dialogue = s.get("dialogue", [])
+        prior_by_turn = {}
+        for i, msg in enumerate(dialogue):
+            if msg.get("role") == role and i > 0:
+                prev = dialogue[i - 1]
+                if prev.get("role") != role:
+                    prior_by_turn[msg["turn"]] = (prev.get("content") or "").strip()
+
         turns = []
-        for msg in s.get("dialogue", []):
+        for msg in dialogue:
             if msg.get("role") != role or msg.get("turn") in (0, 1):
                 continue  # turns 0 and 1 come from the seed, not from a model
             if msg.get("is_challenge"):
                 continue  # scripted seed input, identical across models
             content = (msg.get("content") or "").strip()
             if len(content) >= MIN_TURN_CHARS:
-                turns.append({"turn": msg["turn"], "content": content})
+                turns.append({"turn": msg["turn"], "content": content,
+                              "prior": prior_by_turn.get(msg["turn"], "")})
 
         for jkey in judges:
             if retry_failed:
@@ -287,7 +305,14 @@ def build_user_content(w: dict) -> str:
         w["character_name"], w["character_setting"],
         w["user_name"], w["user_setting"],
     )
+    # Each judged turn is preceded by the move it is answering. The <preceding>
+    # block is context and is never scored -- only the <turn> body is. Without
+    # it the judge cannot tell an AI that played out the player's action from
+    # one that responded to it.
     turns = "\n".join(
+        '\n<preceding speaker="%s">\n%s\n</preceding>\n<turn n="%d">\n%s\n</turn>'
+        % (w["user_name"], t["prior"], t["turn"], t["content"])
+        if t.get("prior") else
         '\n<turn n="%d">\n%s\n</turn>' % (t["turn"], t["content"])
         for t in w["turns"]
     )
